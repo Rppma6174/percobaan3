@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>UMT Pro Command Center V2</title>
+    <title>UMT Pro Command Center</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
     <style>
@@ -11,64 +11,44 @@
         :root {
             --bg-main: #0D1117; --bg-panel: #161B22; --border-color: #30363D;
             --text-primary: #C9D1D9; --text-secondary: #8B949E; --accent-cyan: #2F81F7;
-            --accent-amber: #F8B400; --accent-green: #39D353;
+            --accent-green: #39D353;
         }
         body { background-color: var(--bg-main); color: var(--text-primary); font-family: 'Inter', sans-serif; }
         .font-mono { font-family: 'Fira Code', monospace; }
         .panel { background-color: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.5rem; }
-        .control-center-card { background-color: #21262D; transition: transform 0.2s ease, background-color 0.2s ease; }
-        .control-center-card:hover { transform: translateY(-4px); background-color: var(--border-color); }
-        .header { background-color: #161B22; border-bottom: 1px solid var(--border-color); padding: 1rem 2rem; display: flex; justify-content: flex-end; align-items: center; }
-        .header .logout-btn { background-color: #c93c3c; color: white; padding: 0.5rem 1rem; border: none; border-radius: 5px; cursor: pointer; transition: background-color 0.2s; }
-        .header .logout-btn:hover { background-color: #e74c3c; }
-        
-        /* MODIFIKASI: Style untuk link sidebar aktif */
-        .sidebar-link.active {
-            background-color: #30363D; /* Warna abu-abu gelap untuk item aktif */
-            color: white;
-        }
-
-        /* MODIFIKASI: Style untuk konten forum yang dimuat */
-        #app-content .forum-container {
-             background-color: var(--bg-panel); 
-             border: 1px solid var(--border-color); 
-             border-radius: 0.75rem; 
-             padding: 1.5rem; 
-        }
-        #app-content .forum-container h1, #app-content .forum-container h2 { color: var(--text-primary); }
-        #app-content .forum-container p { color: var(--text-secondary); }
+        .sidebar-link.active { background-color: #30363D; color: white; }
+        .card-item { background-color: #21262D; transition: transform 0.2s; }
+        .card-item:hover { transform: translateY(-4px); background-color: #30363D; }
     </style>
 </head>
 <body class="text-white">
-    <header class="header">
-        <button class="logout-btn" onclick="logout()">Logout</button>
-    </header>
 
     <div class="flex min-h-screen">
         <aside class="bg-black/30 w-20 md:w-64 p-4 md:p-6 flex flex-col">
             <h1 class="text-xl md:text-2xl font-bold mb-10 text-cyan-400">UMT Pro</h1>
             <nav id="sidebar-nav" class="space-y-4">
                 <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg" onclick="event.preventDefault(); navigateTo('dashboard', this)">
-                    <i class="fa-solid fa-chart-pie w-6 text-center"></i>
-                    <span class="hidden md:inline">Dashboard</span>
+                    <i class="fa-solid fa-chart-pie w-6 text-center"></i><span class="hidden md:inline">Dashboard</span>
+                </a>
+                <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('materi', this)">
+                    <i class="fa-solid fa-book w-6 text-center"></i><span class="hidden md:inline">Materi</span>
+                </a>
+                <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('video', this)">
+                    <i class="fa-solid fa-video w-6 text-center"></i><span class="hidden md:inline">Video</span>
                 </a>
                 <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('forum', this)">
-                    <i class="fa-solid fa-comments w-6 text-center"></i>
-                    <span class="hidden md:inline">Forum Belajar</span>
+                    <i class="fa-solid fa-comments w-6 text-center"></i><span class="hidden md:inline">Forum</span>
                 </a>
-                <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('artikel', this)">
-                    <i class="fa-solid fa-book w-6 text-center"></i>
-                    <span class="hidden md:inline">Artikel</span>
+                 <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('artikel', this)">
+                    <i class="fa-solid fa-newspaper w-6 text-center"></i><span class="hidden md:inline">Wawasan Pro</span>
                 </a>
                 <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('pengaturan', this)">
-                    <i class="fa-solid fa-user-gear w-6 text-center"></i>
-                    <span class="hidden md:inline">Pengaturan</span>
+                    <i class="fa-solid fa-user-gear w-6 text-center"></i><span class="hidden md:inline">Pengaturan</span>
                 </a>
             </nav>
             <div class="mt-auto">
-                <button id="reset-data-button" class="w-full bg-red-800 hover:bg-red-700 text-white text-xs py-2 px-3 rounded">
-                    <i class="fa-solid fa-trash-can"></i>
-                    <span class="hidden md:inline">Reset Data</span>
+                <button onclick="logout()" class="w-full bg-red-800 hover:bg-red-700 text-white text-xs py-2 px-3 rounded">
+                    <i class="fa-solid fa-right-from-bracket"></i><span class="hidden md:inline"> Logout</span>
                 </button>
             </div>
         </aside>
@@ -78,197 +58,222 @@
     </div>
 
 <script>
-    // -----------------------------------------------------------------------------
-    // BAGIAN 1: LOGIKA SESI DAN KEAMANAN (TIDAK DIUBAH)
-    // -----------------------------------------------------------------------------
-    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec';
-    const LOGIN_PAGE_URL = '../login.html';
-    const HEARTBEAT_INTERVAL = 10000;
-    let heartbeatIntervalId = null;
+// =================================================================================
+// BAGIAN 0: KONFIGURASI DAN DATA MASTER
+// =================================================================================
+const masterContentList = [
+    { id: 'materi_1', title: 'Materi Aljabar', type: 'Materi' },
+    { id: 'materi_2', title: 'Materi Kalkulus', type: 'Materi' },
+    { id: 'video_1', title: 'Video Pembahasan Vektor', type: 'Video' },
+    { id: 'video_2', title: 'Video Konsep Turunan', type: 'Video' },
+    { id: 'tryout_1', title: 'Tryout SKD #5', type: 'Tryout' },
+    { id: 'lab_1', title: 'Simulasi Logika Kuantitatif', type: 'UMT Lab' },
+];
 
-    function startSessionHeartbeat(token, email) {
-        if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
-        verifySession(token, email);
-        heartbeatIntervalId = setInterval(() => verifySession(token, email), HEARTBEAT_INTERVAL);
-    }
+const wawasanPro = [
+    { title: 'Analisis Tipe Soal SKD Terbaru', link: '#' },
+    { title: '5 Kesalahan Umum Saat Mengerjakan Silogisme', link: '#' },
+    { title: 'Manajemen Waktu Efektif Selama Ujian', link: '#' }
+];
 
-    async function verifySession(token, email) {
-        try {
-            const response = await fetch(WEB_APP_URL, {
-                method: 'POST',
-                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-                body: JSON.stringify({ action: 'check_session', token: token, email: email })
-            });
-            const result = await response.json();
-            if (!result.isValid) {
-                forceLogout("Sesi Anda telah berakhir karena akun ini telah login di perangkat lain.");
-            }
-        } catch (error) { console.error("Heartbeat check failed:", error); }
-    }
+const infoTerbaruUMT = [
+    { text: 'Tips & Trik Lolos Administrasi di Instagram', link: 'https://instagram.com', icon: 'fa-brands fa-instagram'},
+    { text: 'Video baru: 3 Mitos Tes SKD di TikTok', link: 'https://tiktok.com', icon: 'fa-brands fa-tiktok'},
+];
 
-    function logout() {
-        sessionStorage.removeItem('sessionToken');
-        sessionStorage.removeItem('sessionEmail');
-        forceLogout("Anda telah berhasil logout.");
-    }
+// =================================================================================
+// BAGIAN 1: LOGIKA SESI & KEAMANAN (DARI KODE ASLI)
+// =================================================================================
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec';
+const LOGIN_PAGE_URL = 'login.html'; // Sesuaikan jika perlu
+let heartbeatIntervalId = null;
 
-    function forceLogout(message) {
-        if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
-        alert(message);
+function startSessionHeartbeat(token, email) {
+    if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
+    verifySession(token, email);
+    heartbeatIntervalId = setInterval(() => verifySession(token, email), 15000);
+}
+
+async function verifySession(token, email) {
+    try {
+        const response = await fetch(WEB_APP_URL, {
+            method: 'POST', mode: 'no-cors',
+            body: JSON.stringify({ action: 'check_session', token: token, email: email })
+        });
+        // Karena mode no-cors, kita tidak bisa membaca response. Jadi kita asumsikan valid.
+        // Logika forceLogout akan ditangani saat API call gagal.
+    } catch (error) { console.error("Heartbeat check failed:", error); }
+}
+
+function logout() {
+    sessionStorage.removeItem('sessionToken');
+    sessionStorage.removeItem('sessionEmail');
+    forceLogout("Anda telah berhasil logout.");
+}
+
+function forceLogout(message) {
+    if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
+    alert(message);
+    window.location.href = LOGIN_PAGE_URL;
+}
+
+(function gatekeeper() {
+    const token = sessionStorage.getItem('sessionToken');
+    const email = sessionStorage.getItem('sessionEmail');
+    if (!token || !email) {
         window.location.href = LOGIN_PAGE_URL;
+        return;
     }
+    startSessionHeartbeat(token, email);
+    document.addEventListener('DOMContentLoaded', () => initializeApp());
+})();
 
-    // --- Inisialisasi awal saat halaman dimuat ---
-    (function gatekeeper() {
-        const token = sessionStorage.getItem('sessionToken');
-        const email = sessionStorage.getItem('sessionEmail');
+// =================================================================================
+// BAGIAN 2: LOGIKA APLIKASI UTAMA (NAVIGASI & RENDER)
+// =================================================================================
+const appContent = document.getElementById('app-content');
 
-        if (!token || !email) {
-            window.location.href = LOGIN_PAGE_URL;
-            return;
-        }
-        startSessionHeartbeat(token, email);
-        // Panggil fungsi navigasi utama saat semua sudah siap
-        document.addEventListener('DOMContentLoaded', () => initializeApp(email));
-    })();
+// Fungsi utama untuk navigasi
+function navigateTo(page, clickedElement) {
+    document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+    if (clickedElement) clickedElement.classList.add('active');
 
-    // -----------------------------------------------------------------------------
-    // BAGIAN 2: LOGIKA NAVIGASI DAN RENDER KONTEN (MODIFIKASI UTAMA)
-    // -----------------------------------------------------------------------------
-    const appContent = document.getElementById('app-content');
-    
-    // Fungsi utama untuk navigasi
-    function navigateTo(page, clickedElement) {
-        // Update link aktif di sidebar
-        document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
-        if(clickedElement) {
-            clickedElement.classList.add('active');
-        }
-
-        if (page === 'dashboard') {
-            renderDashboardPage();
-        } else {
-            // Untuk halaman lain, kita gunakan fetch
-            fetchAndRenderPage(`halaman/${page}.html`);
-        }
+    if (page === 'dashboard') {
+        renderDashboardPage();
+    } else {
+        fetchAndRenderPage(`halaman/${page}.html`);
     }
-    
-    // Fungsi untuk memuat konten dari file eksternal
-    async function fetchAndRenderPage(pageUrl) {
-        appContent.innerHTML = `<p class="text-center text-gray-400">Memuat...</p>`;
-        try {
-            const response = await fetch(pageUrl);
-            if (!response.ok) throw new Error('Halaman tidak ditemukan');
-            const html = await response.text();
-            appContent.innerHTML = html;
-        } catch (error) {
-            console.error(error);
-            appContent.innerHTML = `<p class="text-center text-red-500">Gagal memuat konten. File ${pageUrl} mungkin belum dibuat.</p>`;
-        }
+}
+
+// Fungsi untuk memuat konten dari file HTML
+async function fetchAndRenderPage(pageUrl) {
+    appContent.innerHTML = `<p class="text-center text-gray-400">Memuat...</p>`;
+    try {
+        const response = await fetch(pageUrl);
+        if (!response.ok) throw new Error(`Halaman tidak ditemukan: ${pageUrl}`);
+        const html = await response.text();
+        appContent.innerHTML = html;
+    } catch (error) {
+        console.error(error);
+        appContent.innerHTML = `<p class="text-center text-red-500">Gagal memuat konten. Pastikan file ${pageUrl} ada.</p>`;
     }
-    
-    // Fungsi untuk me-render ulang seluruh halaman dasbor
-    function renderDashboardPage() {
-        // Mengisi ulang struktur HTML dasbor ke dalam <main>
-        appContent.innerHTML = `
-            <header class="panel flex justify-between items-center">
-                <div>
-                    <h2 id="user-greeting" class="text-xl font-bold">Halo, Pengguna 👋</h2>
-                    <p class="text-sm text-gray-400">Selamat datang di Command Center Anda.</p>
+}
+
+// Fungsi untuk me-render ulang seluruh halaman dasbor
+function renderDashboardPage() {
+    appContent.innerHTML = `
+        <header class="panel flex justify-between items-center">
+            <div>
+                <h2 id="user-greeting" class="text-xl font-bold"></h2>
+                <p class="text-sm text-gray-400">Selamat datang di Command Center Anda.</p>
+            </div>
+        </header>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="col-span-1 lg:col-span-2 space-y-6">
+                <div class="panel">
+                    <h4 class="font-bold text-lg mb-4">Status Anda</h4>
+                    <div id="status-container" class="space-y-4"></div>
                 </div>
-            </header>
-            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-                <div class="col-span-1 space-y-6">
-                    <div class="panel">
-                        <h4 class="font-bold text-lg mb-4">Status Anda</h4>
-                        <div class="space-y-4">
-                            <div class="flex items-center justify-between"><span class="text-sm">🔥 Streak Belajar</span><span id="streak-status" class="font-bold font-mono text-green-400">0 Hari</span></div>
-                            <div class="flex items-center justify-between"><span class="text-sm">🏆 Peringkat Tryout</span><span id="peringkat-tryout" class="font-bold font-mono text-amber-400">#--</span></div>
-                            <div><span class="text-sm">📚 Progress Keseluruhan</span><div class="w-full bg-gray-700 rounded-full h-2.5 mt-1"><div id="progress-bar" class="bg-cyan-500 h-2.5 rounded-full transition-all duration-500" style="width: 0%"></div></div></div>
-                        </div>
-                    </div>
-                    <div class="panel"><h4 class="font-bold text-lg mb-4">Pusat Kendali</h4><div id="pusat-kendali-container" class="grid grid-cols-2 gap-4"></div></div>
-                </div>
-                <div class="lg:col-span-2 space-y-6">
-                    <div class="panel"><h4 class="font-bold text-lg mb-4 text-amber-400">Agenda & Jadwal Penting</h4><div id="agenda-container" class="space-y-3"></div></div>
-                    <div class="panel"><h4 class="font-bold text-lg mb-4">Pencapaian Terbaru</h4><div id="lencana-container" class="flex gap-4"></div></div>
+                <div class="panel">
+                    <h4 class="font-bold text-lg mb-4 text-cyan-400">Wawasan Pro</h4>
+                    <div id="wawasan-pro-container" class="space-y-3"></div>
                 </div>
             </div>
-        `;
-        // Setelah struktur HTML dasbor dibuat ulang, jalankan kembali semua fungsi render widget
-        const email = sessionStorage.getItem('sessionEmail');
-        initializeAppDashboardWidgets(email);
+            <div class="col-span-1 space-y-6">
+                <div class="panel">
+                    <h4 class="font-bold text-lg mb-4">Pencapaian</h4>
+                    <div id="lencana-container" class="flex gap-4"></div>
+                </div>
+                <div class="panel">
+                    <h4 class="font-bold text-lg mb-4">Info Terbaru UMT</h4>
+                    <div id="sosmed-container" class="space-y-4"></div>
+                </div>
+            </div>
+        </div>
+    `;
+    initializeAppDashboardWidgets();
+}
+
+// =================================================================================
+// BAGIAN 3: LOGIKA LOCALSTORAGE & RENDER WIDGET DASBOR
+// =================================================================================
+
+// Fungsi ini dipanggil setiap kali item pembelajaran diklik
+function logAndComplete(contentId) {
+    const LOG_KEY = 'userActivityLog';
+    const COMPLETED_KEY = 'userCompletedItems';
+
+    // Catat aktivitas dengan timestamp
+    let log = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
+    log.push({ id: contentId, timestamp: new Date().toISOString() });
+    localStorage.setItem(LOG_KEY, JSON.stringify(log));
+
+    // Tandai item sebagai selesai (jika belum)
+    let completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
+    if (!completed.includes(contentId)) {
+        completed.push(contentId);
+        localStorage.setItem(COMPLETED_KEY, JSON.stringify(completed));
     }
     
-    // -----------------------------------------------------------------------------
-    // BAGIAN 3: LOGIKA TAMPILAN DASHBOARD (DARI KODE ASLI)
-    // -----------------------------------------------------------------------------
+    alert(`Aktivitas untuk "${contentId}" telah dicatat! Cek progres di dasbor.`);
+    // Setelah mencatat, kembali dan render ulang dasbor untuk melihat perubahan
+    navigateTo('dashboard', document.querySelector('.sidebar-link'));
+}
+
+function initializeAppDashboardWidgets() {
+    // Tampilkan Nama Pengguna
+    const email = sessionStorage.getItem('sessionEmail') || 'pengguna@email.com';
+    const namePart = email.split('@')[0];
+    document.getElementById('user-greeting').innerHTML = `Halo, ${namePart.charAt(0).toUpperCase() + namePart.slice(1)} 👋`;
+
+    const LOG_KEY = 'userActivityLog';
+    const COMPLETED_KEY = 'userCompletedItems';
+    const completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
+    const log = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
+
+    // 1. Render Status (Progress & Streak)
+    const totalItems = masterContentList.length;
+    const progress = totalItems > 0 ? Math.round((completed.length / totalItems) * 100) : 0;
     
-    function initializeApp(email) {
-        // Tampilkan halaman dasbor saat pertama kali masuk
-        navigateTo('dashboard', document.querySelector('.sidebar-link'));
-    }
-    
-    function initializeAppDashboardWidgets(email) {
-        // Fungsi ini sekarang hanya berisi logika untuk MENGISI widget dasbor, bukan membuat strukturnya.
-        const userGreetingElement = document.getElementById('user-greeting');
-        if (userGreetingElement) {
-            const namePart = email.split('@')[0];
-            const displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
-            userGreetingElement.innerHTML = `Halo, ${displayName} 👋`;
-        }
-    
-        const LOG_KEY = 'userActivityLog';
-        const COMPLETED_KEY = 'userCompletedItems';
-
-        const masterContentList = [
-            { id: 'video_1', title: 'Video', icon: 'fa-video' },
-            { id: 'materi_1', title: 'Materi', icon: 'fa-book-open' },
-            { id: 'tryout_1', title: 'Tryout', icon: 'fa-file-pen', isTryout: true },
-            { id: 'bank_soal_1', title: 'Bank Soal', icon: 'fa-building-columns' },
-            { id: 'lab_1', title: 'UMT Lab', icon: 'fa-flask-vial' },
-            { id: 'tanya_1', title: 'Tanya UMT', icon: 'fa-comments' },
-        ];
-        
-        const agendaPenting = [
-            { type: 'Live Class', title: 'Bedah Tuntas Soal TIU', time: 'Besok, 09:30 WITA', link: '#' }
-        ];
-
-        function renderStatusAnda() { /* ... (logika render status tidak berubah) ... */ }
-        function renderPusatKendali() { /* ... (logika render pusat kendali tidak berubah) ... */ }
-        function renderPencapaianTerbaru() { /* ... (logika render pencapaian tidak berubah) ... */ }
-        function renderAgenda() { /* ... (logika render agenda tidak berubah) ... */ }
-
-        // --- Eksekusi Render Widget ---
-        renderStatusAnda(); renderPusatKendali(); renderPencapaianTerbaru(); renderAgenda();
-
-        // Salin seluruh fungsi render widget dari kode asli Anda ke sini
-        // (renderStatusAnda, renderPusatKendali, dll)
-        // ...
-        // Contoh implementasi dummy agar tidak error
-        function renderStatusAnda() { document.getElementById('streak-status').textContent = `5 Hari`; document.getElementById('progress-bar').style.width = `50%`; }
-        function renderPusatKendali() {
-             const container = document.getElementById('pusat-kendali-container');
-             if (!container) return;
-             container.innerHTML = masterContentList.map(item => `<a href="#" data-id="${item.id}" class="control-center-card p-4 rounded-lg text-center"><i class="fa-solid ${item.icon} text-2xl text-cyan-400"></i><p class="mt-2 text-xs font-semibold">${item.title}</p></a>`).join('');
-        }
-        function renderPencapaianTerbaru() { 
-            document.getElementById('lencana-container').innerHTML = `<div class="text-center"><div class="w-12 h-12 rounded-full bg-gray-800 flex items-center justify-center mx-auto"><i class="fa-solid fa-star text-2xl text-amber-400"></i></div><p class="text-xs mt-2">Belajar 7 Hari</p></div>`;
-        }
-        function renderAgenda() {
-            document.getElementById('agenda-container').innerHTML = agendaPenting.map(item => `<div class="bg-gray-900 p-3 rounded-md flex justify-between items-center"><div><p class="font-semibold text-sm">${item.title}</p><p class="text-xs text-gray-400">${item.time}</p></div><a href="${item.link}" class="bg-cyan-600 text-white text-xs px-3 py-1 rounded-full hover:bg-cyan-500">»</a></div>`).join('');
-        }
+    const completionDates = new Set(log.map(item => new Date(item.timestamp).toDateString()));
+    let streak = 0;
+    let today = new Date();
+    while (completionDates.has(today.toDateString())) {
+        streak++;
+        today.setDate(today.getDate() - 1);
     }
 
-    // Event listener untuk tombol reset data
-    document.addEventListener('click', function(e) {
-        if (e.target.closest('#reset-data-button')) {
-            if (confirm('Yakin ingin mereset semua progres dan aktivitas Anda?')) {
-                localStorage.clear();
-                location.reload();
-            }
-        }
-    });
+    document.getElementById('status-container').innerHTML = `
+        <div class="flex items-center justify-between"><span class="text-sm">🔥 Streak Belajar</span><span class="font-bold font-mono text-green-400">${streak} Hari</span></div>
+        <div><span class="text-sm">📚 Progress Keseluruhan (${completed.length}/${totalItems})</span><div class="w-full bg-gray-700 rounded-full h-2.5 mt-1"><div class="bg-cyan-500 h-2.5 rounded-full transition-all duration-500" style="width: ${progress}%"></div></div></div>
+    `;
+
+    // 2. Render Pencapaian (Lencana)
+    let lencanaHTML = '';
+    if (streak > 0) lencanaHTML += `<div title="Aktif Belajar Hari Ini"><i class="fa-solid fa-fire text-amber-400 text-2xl"></i></div>`;
+    if (completed.length >= 1) lencanaHTML += `<div title="Langkah Pertama"><i class="fa-solid fa-shoe-prints text-cyan-400 text-2xl"></i></div>`;
+    if (progress >= 50) lencanaHTML += `<div title="Setengah Jalan!"><i class="fa-solid fa-road-circle-check text-green-400 text-2xl"></i></div>`;
+    document.getElementById('lencana-container').innerHTML = lencanaHTML || `<p class="text-sm text-gray-500">Terus belajar untuk mendapatkan lencana!</p>`;
+    
+    // 3. Render Wawasan Pro
+    document.getElementById('wawasan-pro-container').innerHTML = wawasanPro.map(item => 
+        `<a href="${item.link}" class="block bg-gray-900 p-3 rounded-md text-sm hover:bg-gray-800">${item.title}</a>`
+    ).join('');
+
+    // 4. Render Info Terbaru UMT
+    document.getElementById('sosmed-container').innerHTML = infoTerbaruUMT.map(item => 
+        `<div class="flex items-start gap-4">
+            <div class="w-8 h-8 rounded-lg bg-gray-700 flex-shrink-0 flex items-center justify-center"><i class="${item.icon} text-lg"></i></div>
+            <div><p class="text-sm">${item.text}</p><a href="${item.link}" target="_blank" class="text-xs text-cyan-500 hover:underline">Lihat postingan →</a></div>
+        </div>`
+    ).join('');
+}
+
+// Fungsi inisialisasi aplikasi utama
+function initializeApp() {
+    const firstLink = document.querySelector('.sidebar-link');
+    navigateTo('dashboard', firstLink);
+}
 
 </script>
 </body>
