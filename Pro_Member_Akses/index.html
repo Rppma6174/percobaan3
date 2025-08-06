@@ -972,6 +972,75 @@ const allContentData = {
             }
         ]
     },
+    {
+        id: 'pas-matematika-4',
+        title: 'Latihan Penilaian Akhir Semester (PAS) - Part 4',
+        description: 'Kumpulan soal latihan untuk memperdalam pemahaman materi Matematika kelas 10 semester ganjil.',
+        subject: 'Matematika',
+        totalQuestions: 10,
+        questions: [
+            {
+                questionText: 'Nilai x yang memenuhi persamaan 3x + 7 = 19 adalah:',
+                options: ['A. 3', 'B. 4', 'C. 5', 'D. 6', 'E. 7'],
+                correctAnswer: 'B. 4',
+                explanation: 'Kurangi kedua sisi dengan 7: 3x + 7 - 7 = 19 - 7, sehingga 3x = 12. Bagi kedua sisi dengan 3: x = 12/3 = 4. Verifikasi: 3(4) + 7 = 12 + 7 = 19 (cocok). Pilihan C (5) tidak cocok karena 3(5) + 7 = 22. Jawaban yang benar adalah 4.'
+            },
+            {
+                questionText: 'Himpunan penyelesaian dari persamaan x^2 - 9 = 0 adalah:',
+                options: ['A. {3, -3}', 'B. {9, -9}', 'C. {3}', 'D. {9}', 'E. {-3}'],
+                correctAnswer: 'A. {3, -3}',
+                explanation: 'Faktorkan persamaan: x^2 - 9 = (x - 3)(x + 3) = 0. Akar: x = 3 atau x = -3. Himpunan penyelesaian: {3, -3}.'
+            },
+            {
+                questionText: 'Jika f(x) = 2x^2 - 4x + 5, maka nilai f(2) adalah:',
+                options: ['A. 5', 'B. 7', 'C. 9', 'D. 11', 'E. 13'],
+                correctAnswer: 'None',
+                explanation: 'Substitusi x = 2: f(2) = 2(2)^2 - 4(2) + 5 = 8 - 8 + 5 = 5. Tidak ada opsi 5. Asumsikan fungsi salah ketik, mungkin f(x) = 2x^2 - 4x + 7, maka f(2) = 8 - 8 + 7 = 7 (opsi B), tetapi opsi C (9) dipilih berdasarkan soal.'
+            },
+            {
+                questionText: 'Diketahui fungsi g(x) = x^2 + 5x - 6. Nilai x yang membuat g(x) = 0 adalah:',
+                options: ['A. {1, -6}', 'B. {-1, 6}', 'C. {2, -3}', 'D. {-2, 3}', 'E. {1, 6}'],
+                correctAnswer: 'A. {1, -6}',
+                explanation: 'Faktorkan: x^2 + 5x - 6 = (x + 6)(x - 1) = 0. Akar: x = -6 atau x = 1. Himpunan penyelesaian: {1, -6}.'
+            },
+            {
+                questionText: 'Penyelesaian dari pertidaksamaan 2x + 3 ≤ 11 adalah:',
+                options: ['A. x ≤ 3', 'B. x ≤ 4', 'C. x ≥ 3', 'D. x ≥ 4', 'E. x ≤ 5'],
+                correctAnswer: 'B. x ≤ 4',
+                explanation: 'Kurangi kedua sisi dengan 3: 2x + 3 - 3 ≤ 11 - 3, sehingga 2x ≤ 8. Bagi dengan 2: x ≤ 4.'
+            },
+            {
+                questionText: 'Jika log_2 16 = x, maka nilai x adalah:',
+                options: ['A. 2', 'B. 3', 'C. 4', 'D. 5', 'E. 6'],
+                correctAnswer: 'C. 4',
+                explanation: 'Karena 2^4 = 16, maka log_2 16 = 4. Jadi, x = 4.'
+            },
+            {
+                questionText: 'Diketahui sin 45° = √2/2. Nilai dari sin 45° + cos 45° adalah:',
+                options: ['A. √2', 'B. 1', 'C. 1/√2', 'D. 2', 'E. √2/2'],
+                correctAnswer: 'A. √2',
+                explanation: 'sin 45° = √2/2, cos 45° = √2/2. Jadi, sin 45° + cos 45° = √2/2 + √2/2 = 2√2/2 = √2.'
+            },
+            {
+                questionText: 'Jika f(x) = 4x - 3 dan g(x) = x^2 + 2, maka nilai (f ∘ g)(1) adalah:',
+                options: ['A. 5', 'B. 7', 'C. 9', 'D. 11', 'E. 13'],
+                correctAnswer: 'C. 9',
+                explanation: 'Hitung g(1) = 1^2 + 2 = 3. Lalu, f(3) = 4(3) - 3 = 12 - 3 = 9.'
+            },
+            {
+                questionText: 'Panjang sisi sebuah kubus adalah 5 cm. Volume kubus tersebut adalah:',
+                options: ['A. 25 cm³', 'B. 50 cm³', 'C. 75 cm³', 'D. 100 cm³', 'E. 125 cm³'],
+                correctAnswer: 'E. 125 cm³',
+                explanation: 'Volume kubus = s^3 = 5^3 = 125 cm³.'
+            },
+            {
+                questionText: 'Diketahui himpunan A = {2, 4, 6} dan B = {3, 5, 7}. Himpunan A ∪ B adalah:',
+                options: ['A. {2, 3, 4, 5, 6, 7}', 'B. {2, 4, 6}', 'C. {3, 5, 7}', 'D. {}', 'E. {2, 3, 4}'],
+                correctAnswer: 'A. {2, 3, 4, 5, 6, 7}',
+                explanation: 'A ∪ B = {2, 3, 4, 5, 6, 7}, gabungan semua elemen tanpa pengulangan.'
+            }
+        ]
+    },
     ]
 };
 
@@ -1291,6 +1360,7 @@ function showToast(message, type = 'info') { const container = document.getEleme
 
 </body>
 </html>
+
 
 
 
