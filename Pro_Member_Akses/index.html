@@ -1202,7 +1202,8 @@ async function fetchAndRenderPage(pageName) {
 // BAGIAN 3: FUNGSI RENDER UNTUK SETIAP HALAMAN
 // =================================================================================
 function renderDashboardPage() {
-    appContent.innerHTML = `
+    // 1. Siapkan HTML untuk Dasbor
+    const dashboardHTML = `
         <header class="panel flex justify-between items-center">
             <div>
                 <h2 id="user-greeting" class="text-xl font-bold"></h2>
@@ -1222,16 +1223,19 @@ function renderDashboardPage() {
                     <h4 class="font-bold text-lg mb-4">Pencapaian</h4>
                     <div id="lencana-container" class="flex gap-4"></div>
                 </div>
-                 <div class="panel">
+                <div class="panel">
                     <h4 class="font-bold text-lg mb-4">Info Terbaru UMT</h4>
                     <div id="social-media-container" class="space-y-4"></div>
                 </div>
             </div>
         </div>
     `;
+    // 2. Terapkan HTML ke halaman
+    appContent.innerHTML = dashboardHTML;
+
+    // 3. Panggil fungsi untuk mengisi widget HANYA SETELAH HTML dasbor siap
     initializeAppDashboardWidgets();
 }
-
 function renderMateriPage() {
     // Logika untuk menampilkan daftar materi dari allContentData.materi
     const materiHTML = `
@@ -1461,6 +1465,7 @@ function showToast(message, type = 'info') { const container = document.getEleme
 
 </body>
 </html>
+
 
 
 
