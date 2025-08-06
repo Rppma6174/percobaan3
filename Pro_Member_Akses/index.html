@@ -11,14 +11,19 @@
         :root {
             --bg-main: #0D1117; --bg-panel: #161B22; --border-color: #30363D;
             --text-primary: #C9D1D9; --text-secondary: #8B949E; --accent-cyan: #2F81F7;
-            --accent-green: #39D353;
+            --accent-green: #39D353; --accent-red: #F85149;
         }
         body { background-color: var(--bg-main); color: var(--text-primary); font-family: 'Inter', sans-serif; }
         .font-mono { font-family: 'Fira Code', monospace; }
         .panel { background-color: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.5rem; }
         .sidebar-link.active { background-color: #30363D; color: white; }
-        .card-item { background-color: #21262D; transition: transform 0.2s; }
+        .card-item { background-color: #21262D; transition: transform 0.2s; cursor: pointer; }
         .card-item:hover { transform: translateY(-4px); background-color: #30363D; }
+        .quiz-option { border: 2px solid var(--border-color); }
+        .quiz-option:hover { border-color: var(--accent-cyan); }
+        .quiz-option.selected { border-color: var(--accent-cyan); background-color: rgba(47, 129, 247, 0.2); }
+        .correct-answer { background-color: rgba(57, 211, 83, 0.1); border-left: 4px solid var(--accent-green); }
+        .wrong-answer { background-color: rgba(248, 81, 73, 0.1); border-left: 4px solid var(--accent-red); }
     </style>
 </head>
 <body class="text-white">
@@ -32,6 +37,9 @@
                 </a>
                 <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('materi', this)">
                     <i class="fa-solid fa-book w-6 text-center"></i><span class="hidden md:inline">Materi</span>
+                </a>
+                <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('bank_soal', this)">
+                    <i class="fa-solid fa-list-check w-6 text-center"></i><span class="hidden md:inline">Bank Soal</span>
                 </a>
                 <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('video', this)">
                     <i class="fa-solid fa-video w-6 text-center"></i><span class="hidden md:inline">Video</span>
@@ -81,11 +89,49 @@ const infoTerbaruUMT = [
     { text: 'Video baru: 3 Mitos Tes SKD di TikTok', link: 'https://tiktok.com', icon: 'fa-brands fa-tiktok'},
 ];
 
+// DATA BARU UNTUK BANK SOAL
+const bankSoalData = [
+    {
+        id: 'tiu_1',
+        title: 'Paket Latihan TIU #1',
+        subject: 'Tes Intelegensi Umum - Analogi',
+        totalQuestions: 2,
+        questions: [
+            {
+                questionText: 'MATA : WAJAH',
+                options: ['A. Bantal : Ranjang', 'B. Buku : Perpustakaan', 'C. Jendela : Rumah', 'D. Air : Ember'],
+                correctAnswer: 'C. Jendela : Rumah',
+                explanation: 'Analogi ini adalah hubungan "bagian dari". MATA adalah bagian dari WAJAH, sebagaimana JENDELA adalah bagian dari RUMAH.'
+            },
+            {
+                questionText: 'API : BAKAR',
+                options: ['A. Air : Minum', 'B. Es : Beku', 'C. Angin : Sejuk', 'D. Tanah : Subur'],
+                correctAnswer: 'B. Es : Beku',
+                explanation: 'Analogi ini menunjukkan sifat atau fungsi. Sifat API adalah MEMBAKAR, sebagaimana sifat ES adalah MEMBEKUKAN (atau menjadi BEKU).'
+            }
+        ]
+    },
+    {
+        id: 'twk_1',
+        title: 'Paket Latihan TWK #1',
+        subject: 'Tes Wawasan Kebangsaan - Pancasila',
+        totalQuestions: 1,
+        questions: [
+             {
+                questionText: 'Sila ke-3 Pancasila, "Persatuan Indonesia", dilambangkan dengan gambar...',
+                options: ['A. Bintang', 'B. Rantai', 'C. Pohon Beringin', 'D. Kepala Banteng'],
+                correctAnswer: 'C. Pohon Beringin',
+                explanation: 'Pohon Beringin melambangkan persatuan dan kesatuan Indonesia yang kokoh dan berakar kuat, menaungi seluruh rakyat meskipun memiliki latar belakang yang beragam.'
+            }
+        ]
+    }
+];
+
 // =================================================================================
-// BAGIAN 1: LOGIKA SESI & KEAMANAN (DARI KODE ASLI)
+// BAGIAN 1: LOGIKA SESI & KEAMANAN (TIDAK BERUBAH)
 // =================================================================================
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec';
-const LOGIN_PAGE_URL = 'login.html'; // Sesuaikan jika perlu
+const LOGIN_PAGE_URL = '../Login/index.html'; // Sesuaikan jika perlu
 let heartbeatIntervalId = null;
 
 function startSessionHeartbeat(token, email) {
@@ -93,30 +139,24 @@ function startSessionHeartbeat(token, email) {
     verifySession(token, email);
     heartbeatIntervalId = setInterval(() => verifySession(token, email), 15000);
 }
-
 async function verifySession(token, email) {
     try {
         const response = await fetch(WEB_APP_URL, {
             method: 'POST', mode: 'no-cors',
             body: JSON.stringify({ action: 'check_session', token: token, email: email })
         });
-        // Karena mode no-cors, kita tidak bisa membaca response. Jadi kita asumsikan valid.
-        // Logika forceLogout akan ditangani saat API call gagal.
     } catch (error) { console.error("Heartbeat check failed:", error); }
 }
-
 function logout() {
     sessionStorage.removeItem('sessionToken');
     sessionStorage.removeItem('sessionEmail');
     forceLogout("Anda telah berhasil logout.");
 }
-
 function forceLogout(message) {
     if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
     alert(message);
     window.location.href = LOGIN_PAGE_URL;
 }
-
 (function gatekeeper() {
     const token = sessionStorage.getItem('sessionToken');
     const email = sessionStorage.getItem('sessionEmail');
@@ -129,23 +169,25 @@ function forceLogout(message) {
 })();
 
 // =================================================================================
-// BAGIAN 2: LOGIKA APLIKASI UTAMA (NAVIGASI & RENDER)
+// BAGIAN 2: LOGIKA APLIKASI UTAMA (NAVIGASI & RENDER) - DIMODIFIKASI
 // =================================================================================
 const appContent = document.getElementById('app-content');
 
-// Fungsi utama untuk navigasi
 function navigateTo(page, clickedElement) {
     document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
     if (clickedElement) clickedElement.classList.add('active');
 
+    // LOGIKA NAVIGASI DIMODIFIKASI
     if (page === 'dashboard') {
         renderDashboardPage();
-    } else {
+    } else if (page === 'bank_soal') {
+        renderBankSoalPage(); // Panggil fungsi untuk render halaman bank soal
+    }
+    else {
         fetchAndRenderPage(`halaman/${page}.html`);
     }
 }
 
-// Fungsi untuk memuat konten dari file HTML
 async function fetchAndRenderPage(pageUrl) {
     appContent.innerHTML = `<p class="text-center text-gray-400">Memuat...</p>`;
     try {
@@ -159,7 +201,6 @@ async function fetchAndRenderPage(pageUrl) {
     }
 }
 
-// Fungsi untuk me-render ulang seluruh halaman dasbor
 function renderDashboardPage() {
     appContent.innerHTML = `
         <header class="panel flex justify-between items-center">
@@ -195,20 +236,16 @@ function renderDashboardPage() {
 }
 
 // =================================================================================
-// BAGIAN 3: LOGIKA LOCALSTORAGE & RENDER WIDGET DASBOR
+// BAGIAN 3: LOGIKA LOCALSTORAGE & RENDER WIDGET DASBOR (TIDAK BERUBAH)
 // =================================================================================
 
-// Fungsi ini dipanggil setiap kali item pembelajaran diklik
 function logAndComplete(contentId) {
     const LOG_KEY = 'userActivityLog';
     const COMPLETED_KEY = 'userCompletedItems';
-
-    // Catat aktivitas dengan timestamp
     let log = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
     log.push({ id: contentId, timestamp: new Date().toISOString() });
     localStorage.setItem(LOG_KEY, JSON.stringify(log));
 
-    // Tandai item sebagai selesai (jika belum)
     let completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
     if (!completed.includes(contentId)) {
         completed.push(contentId);
@@ -216,22 +253,17 @@ function logAndComplete(contentId) {
     }
     
     alert(`Aktivitas untuk "${contentId}" telah dicatat! Cek progres di dasbor.`);
-    // Setelah mencatat, kembali dan render ulang dasbor untuk melihat perubahan
     navigateTo('dashboard', document.querySelector('.sidebar-link'));
 }
 
 function initializeAppDashboardWidgets() {
-    // Tampilkan Nama Pengguna
     const email = sessionStorage.getItem('sessionEmail') || 'pengguna@email.com';
     const namePart = email.split('@')[0];
     document.getElementById('user-greeting').innerHTML = `Halo, ${namePart.charAt(0).toUpperCase() + namePart.slice(1)} 👋`;
-
     const LOG_KEY = 'userActivityLog';
     const COMPLETED_KEY = 'userCompletedItems';
     const completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
     const log = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
-
-    // 1. Render Status (Progress & Streak)
     const totalItems = masterContentList.length;
     const progress = totalItems > 0 ? Math.round((completed.length / totalItems) * 100) : 0;
     
@@ -242,25 +274,19 @@ function initializeAppDashboardWidgets() {
         streak++;
         today.setDate(today.getDate() - 1);
     }
-
     document.getElementById('status-container').innerHTML = `
         <div class="flex items-center justify-between"><span class="text-sm">🔥 Streak Belajar</span><span class="font-bold font-mono text-green-400">${streak} Hari</span></div>
         <div><span class="text-sm">📚 Progress Keseluruhan (${completed.length}/${totalItems})</span><div class="w-full bg-gray-700 rounded-full h-2.5 mt-1"><div class="bg-cyan-500 h-2.5 rounded-full transition-all duration-500" style="width: ${progress}%"></div></div></div>
     `;
-
-    // 2. Render Pencapaian (Lencana)
     let lencanaHTML = '';
     if (streak > 0) lencanaHTML += `<div title="Aktif Belajar Hari Ini"><i class="fa-solid fa-fire text-amber-400 text-2xl"></i></div>`;
     if (completed.length >= 1) lencanaHTML += `<div title="Langkah Pertama"><i class="fa-solid fa-shoe-prints text-cyan-400 text-2xl"></i></div>`;
     if (progress >= 50) lencanaHTML += `<div title="Setengah Jalan!"><i class="fa-solid fa-road-circle-check text-green-400 text-2xl"></i></div>`;
     document.getElementById('lencana-container').innerHTML = lencanaHTML || `<p class="text-sm text-gray-500">Terus belajar untuk mendapatkan lencana!</p>`;
     
-    // 3. Render Wawasan Pro
     document.getElementById('wawasan-pro-container').innerHTML = wawasanPro.map(item => 
         `<a href="${item.link}" class="block bg-gray-900 p-3 rounded-md text-sm hover:bg-gray-800">${item.title}</a>`
     ).join('');
-
-    // 4. Render Info Terbaru UMT
     document.getElementById('sosmed-container').innerHTML = infoTerbaruUMT.map(item => 
         `<div class="flex items-start gap-4">
             <div class="w-8 h-8 rounded-lg bg-gray-700 flex-shrink-0 flex items-center justify-center"><i class="${item.icon} text-lg"></i></div>
@@ -268,6 +294,156 @@ function initializeAppDashboardWidgets() {
         </div>`
     ).join('');
 }
+
+// =================================================================================
+// BAGIAN 4: LOGIKA BANK SOAL & QUIZ (KODE BARU)
+// =================================================================================
+let currentQuizData = null;
+let currentQuestionIndex = 0;
+let userAnswers = [];
+
+// Fungsi untuk menampilkan halaman utama Bank Soal (daftar kartu)
+function renderBankSoalPage() {
+    const bankSoalHTML = `
+        <div class="panel">
+            <h2 class="text-2xl font-bold mb-1 text-cyan-400">Bank Soal</h2>
+            <p class="text-sm text-gray-400 mb-6">Pilih paket soal untuk mulai berlatih.</p>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                ${bankSoalData.map(quiz => `
+                    <div class="card-item p-6 rounded-lg flex flex-col" onclick="startQuiz('${quiz.id}')">
+                        <h3 class="font-bold text-lg mb-2">${quiz.title}</h3>
+                        <p class="text-sm text-gray-400 mb-4">${quiz.subject}</p>
+                        <div class="mt-auto text-xs font-mono bg-gray-900/50 text-cyan-300 rounded-full px-3 py-1 self-start">
+                            ${quiz.totalQuestions} Soal
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+        </div>
+    `;
+    appContent.innerHTML = bankSoalHTML;
+}
+
+// Fungsi untuk memulai sebuah kuis
+function startQuiz(quizId) {
+    currentQuizData = bankSoalData.find(q => q.id === quizId);
+    if (!currentQuizData) {
+        alert('Kuis tidak ditemukan!');
+        return;
+    }
+    currentQuestionIndex = 0;
+    userAnswers = new Array(currentQuizData.questions.length).fill(null);
+    renderQuizInterface();
+}
+
+// Fungsi untuk menampilkan antarmuka kuis (pertanyaan & pilihan)
+function renderQuizInterface() {
+    const quiz = currentQuizData;
+    const question = quiz.questions[currentQuestionIndex];
+    
+    const quizHTML = `
+        <div class="panel max-w-4xl mx-auto">
+            <div class="flex justify-between items-start mb-4">
+                <div>
+                    <h2 class="text-xl font-bold text-cyan-400">${quiz.title}</h2>
+                    <p class="text-sm text-gray-400">Pertanyaan ${currentQuestionIndex + 1} dari ${quiz.totalQuestions}</p>
+                </div>
+                <button onclick="renderBankSoalPage()" class="text-xs text-gray-400 hover:text-white">&times; Tutup</button>
+            </div>
+            <hr class="border-gray-700 my-4"/>
+            <div class="mb-6">
+                <p class="text-lg text-gray-200">${question.questionText}</p>
+            </div>
+            <div id="quiz-options" class="space-y-3">
+                ${question.options.map((opt, index) => `
+                    <div id="option-${index}" class="quiz-option p-4 rounded-lg cursor-pointer transition-colors" onclick="selectAnswer('${opt}', ${index})">
+                        ${opt}
+                    </div>
+                `).join('')}
+            </div>
+            <hr class="border-gray-700 my-6"/>
+            <div class="flex justify-end">
+                <button id="next-btn" onclick="submitQuiz()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg">
+                    ${currentQuestionIndex === quiz.questions.length - 1 ? 'Selesai & Lihat Hasil' : 'Lanjut'}
+                </button>
+            </div>
+        </div>
+    `;
+    appContent.innerHTML = quizHTML;
+}
+
+// Fungsi yang dipanggil saat user memilih jawaban
+function selectAnswer(answer, optionIndex) {
+    userAnswers[currentQuestionIndex] = answer;
+    // Highlight jawaban yang dipilih
+    document.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
+    document.getElementById(`option-${optionIndex}`).classList.add('selected');
+}
+
+// Fungsi untuk submit (ke soal berikutnya atau selesai)
+function submitQuiz() {
+    // Cek apakah user sudah menjawab sebelum lanjut
+    if (userAnswers[currentQuestionIndex] === null) {
+        alert('Silakan pilih jawaban terlebih dahulu!');
+        return;
+    }
+
+    if (currentQuestionIndex < currentQuizData.questions.length - 1) {
+        currentQuestionIndex++;
+        renderQuizInterface();
+    } else {
+        // Kuis selesai, tampilkan hasil
+        renderQuizResults();
+    }
+}
+
+// Fungsi untuk menampilkan hasil kuis dan pembahasan
+function renderQuizResults() {
+    const quiz = currentQuizData;
+    let score = 0;
+    quiz.questions.forEach((q, index) => {
+        if (q.correctAnswer === userAnswers[index]) {
+            score++;
+        }
+    });
+    const finalScorePercentage = Math.round((score / quiz.totalQuestions) * 100);
+
+    const resultHTML = `
+        <div class="panel max-w-4xl mx-auto">
+            <h2 class="text-2xl font-bold text-center">Hasil Kuis: ${quiz.title}</h2>
+            <div class="text-center my-6">
+                <p class="text-gray-400">Skor Anda</p>
+                <p class="text-5xl font-bold text-cyan-400 mt-2">${finalScorePercentage}%</p>
+                <p class="text-gray-300 mt-2">(${score} dari ${quiz.totalQuestions} soal benar)</p>
+            </div>
+            
+            <h3 class="font-bold text-xl mt-10 mb-4">⭐ Pembahasan Soal</h3>
+            <div class="space-y-6">
+                ${quiz.questions.map((q, index) => `
+                    <div class="bg-gray-900/50 p-4 rounded-lg">
+                        <p class="mb-3 text-gray-300">${index + 1}. ${q.questionText}</p>
+                        <div class="space-y-2 text-sm">
+                            <p class="${userAnswers[index] === q.correctAnswer ? 'correct-answer' : 'wrong-answer'} p-2 rounded">Jawaban Anda: ${userAnswers[index] || 'Tidak dijawab'}</p>
+                            <p class="correct-answer p-2 rounded">Jawaban Benar: ${q.correctAnswer}</p>
+                            <div class="bg-gray-800 p-3 mt-3 rounded-md">
+                                <p class="font-bold text-cyan-300">Pembahasan:</p>
+                                <p class="text-gray-400">${q.explanation}</p>
+                            </div>
+                        </div>
+                    </div>
+                `).join('')}
+            </div>
+
+            <div class="text-center mt-8">
+                 <button onclick="renderBankSoalPage()" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg">
+                    Kembali ke Bank Soal
+                </button>
+            </div>
+        </div>
+    `;
+    appContent.innerHTML = resultHTML;
+}
+
 
 // Fungsi inisialisasi aplikasi utama
 function initializeApp() {
