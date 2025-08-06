@@ -35,6 +35,34 @@
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-20px); } }
         .toast-in { animation: slideInRight 0.5s forwards; }
         .toast-out { animation: fadeOut 0.5s forwards; }
+ @media (max-width: 640px) {
+     #single-explanation-container > div {
+         padding: 1rem;
+         margin-bottom: 1rem;
+         overflow-x: auto; /* Tambahkan scroll horizontal jika konten terlalu lebar */
+     }
+
+     #single-explanation-container .text-lg {
+         font-size: 1rem;
+     }
+
+     #single-explanation-container .text-sm {
+         font-size: 0.875rem;
+     }
+
+     #single-explanation-container .font-bold {
+         font-size: 1rem;
+     }
+
+     .flex.justify-between.items-center.mt-8 {
+         flex-direction: column;
+         gap: 0.75rem;
+     }
+
+     .flex.justify-between.items-center.mt-8 > button {
+         width: 100%;
+     }
+ }
     </style>
 </head>
 <body class="text-white">
@@ -458,3 +486,4 @@ function showToast(message, type = 'info') {
 </script>
 </body>
 </html>
+
