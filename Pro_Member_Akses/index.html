@@ -174,7 +174,7 @@
  }
  
 /* ================================================= */
-/* ==  STYLE UNTUK MODAL KONFIRMASI (BARU)        == */
+/* ==  STYLE UNTUK MODAL KONFIRMASI               == */
 /* ================================================= */
 @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 @keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
@@ -430,7 +430,6 @@ const socialMediaUpdates = [
             });
             const result = await response.json();
             if (!result.isValid) {
-                // MODIFIKASI: Menggunakan modal kustom, bukan alert
                 forceLogout("Sesi Anda tidak valid atau telah berakhir. Silakan login kembali.");
             }
         } catch (error) {
@@ -444,7 +443,6 @@ const socialMediaUpdates = [
         heartbeatIntervalId = setInterval(() => verifySession(token, email), 10000);
     }
 
-    // MODIFIKASI: Fungsi ini sekarang menampilkan modal, bukan alert
     function forceLogout(message) {
         if (heartbeatIntervalId) {
             clearInterval(heartbeatIntervalId);
@@ -462,17 +460,16 @@ const socialMediaUpdates = [
             message: message,
             confirmText: 'OK',
             confirmAction: onConfirmAction,
-            showCancelButton: false // Hanya ada satu tombol aksi
+            showCancelButton: false
         });
     }
 
-    // MODIFIKASI: Fungsi ini sekarang menampilkan modal konfirmasi
     function logout() {
         showConfirmationModal({
             title: 'Konfirmasi Logout',
             message: 'Apakah Anda yakin ingin keluar dari sesi Anda?',
             confirmText: 'Logout',
-            confirmButtonClass: 'modal-btn-danger', // Menggunakan class tombol merah
+            confirmButtonClass: 'modal-btn-danger',
             confirmAction: () => {
                 sessionStorage.removeItem('sessionToken');
                 sessionStorage.removeItem('sessionEmail');
@@ -480,7 +477,6 @@ const socialMediaUpdates = [
                     clearInterval(heartbeatIntervalId);
                     heartbeatIntervalId = null;
                 }
-                // Redirect setelah konfirmasi
                 window.location.href = LOGIN_PAGE_URL;
             }
         });
@@ -658,10 +654,38 @@ function renderForumPage() {
     appContent.innerHTML = forumHTML;
 }
 
+// MODIFIKASI: Menambahkan bagian Logout di halaman Pengaturan
 function renderPengaturanPage() {
-    const pengaturanHTML = `<div class="panel max-w-2xl mx-auto"><h2 class="text-2xl font-bold mb-1 text-cyan-400">Pengaturan</h2><p class="text-sm text-gray-400 mb-6">Kelola data aplikasi Anda di sini.</p><div class="bg-gray-900/50 p-4 rounded-lg"><div class="flex items-center justify-between"><div><h4 class="font-bold">Reset Progres Belajar</h4><p class="text-xs text-gray-400 mt-1">Aksi ini akan menghapus semua progres dan lencana Anda. Tidak dapat diurungkan.</p></div><button onclick="resetProgress()" class="bg-red-800 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded-lg flex-shrink-0">Reset Data</button></div></div></div>`;
+    const pengaturanHTML = `
+    <div class="panel max-w-2xl mx-auto">
+        <h2 class="text-2xl font-bold mb-1 text-cyan-400">Pengaturan</h2>
+        <p class="text-sm text-gray-400 mb-6">Kelola data aplikasi dan akun Anda di sini.</p>
+
+        <div class="bg-gray-900/50 p-4 rounded-lg">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <div>
+                    <h4 class="font-bold">Reset Progres Belajar</h4>
+                    <p class="text-xs text-gray-400 mt-1">Aksi ini akan menghapus semua progres dan lencana Anda.</p>
+                </div>
+                <button onclick="resetProgress()" class="bg-red-800 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded-lg flex-shrink-0">Reset Data</button>
+            </div>
+        </div>
+
+        <div class="mt-4 bg-gray-900/50 p-4 rounded-lg">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <div>
+                    <h4 class="font-bold">Akun</h4>
+                    <p class="text-xs text-gray-400 mt-1">Keluar dari akun Anda pada perangkat ini.</p>
+                </div>
+                <button onclick="logout()" class="w-full sm:w-auto bg-red-800 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded-lg flex-shrink-0">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>`;
     appContent.innerHTML = pengaturanHTML;
 }
+
 
 // =================================================================================
 // BAGIAN 4: LOGIKA WIDGET DASBOR & PROGRES
@@ -707,7 +731,6 @@ function initializeAppDashboardWidgets() {
     }
 }
 
-// MODIFIKASI: Fungsi ini sekarang menampilkan modal konfirmasi
 function resetProgress() {
     showConfirmationModal({
         title: 'Konfirmasi Reset Progres',
@@ -733,7 +756,6 @@ function markAsCompleted(itemId) {
         completed.push(itemId);
         localStorage.setItem(COMPLETED_KEY, JSON.stringify(completed));
         showToast("Progres telah dicatat!", "success");
-        // Jangan redirect jika itu adalah kuis, karena ada halaman hasil
         if (!itemId.startsWith('pas-') && !itemId.startsWith('tka-') && !itemId.startsWith('hots-') && !itemId.startsWith('mots-') && !itemId.startsWith('lots-')) {
              navigateTo('dashboard', document.querySelector('.sidebar-link'));
         }
@@ -828,7 +850,7 @@ function initializeApp() {
 function showToast(message, type = 'info') { const container = document.getElementById('toast-container'); const toast = document.createElement('div'); const icons = { info: 'fa-solid fa-circle-info', success: 'fa-solid fa-check-circle', error: 'fa-solid fa-triangle-exclamation' }; const colors = { info: 'text-cyan-400', success: 'text-green-400', error: 'text-red-400' }; const iconClass = icons[type] || icons['info']; const colorClass = colors[type] || colors['info']; toast.className = 'toast-in flex items-start p-4 rounded-lg shadow-lg text-sm'; toast.style.backgroundColor = 'var(--bg-panel)'; toast.style.border = '1px solid var(--border-color)'; toast.innerHTML = `<div class="flex-shrink-0"><i class="${iconClass} ${colorClass} text-xl"></i></div><div class="ml-3"><p class="font-bold capitalize ${colorClass}">${type}</p><p class="text-gray-300 mt-1">${message}</p></div>`; container.appendChild(toast); setTimeout(() => { toast.classList.remove('toast-in'); toast.classList.add('toast-out'); toast.addEventListener('animationend', () => { toast.remove(); }); }, 5000); }
 
 // =================================================================================
-// BAGIAN 7: SISTEM MODAL KUSTOM (BARU)
+// BAGIAN 7: SISTEM MODAL KUSTOM
 // =================================================================================
 function showConfirmationModal(options) {
     const {
@@ -844,7 +866,6 @@ function showConfirmationModal(options) {
 
     const modalContainer = document.getElementById('modal-container');
     
-    // Membuat HTML untuk modal
     const modalHTML = `
         <div class="modal-overlay" id="modal-overlay">
             <div class="modal-box">
@@ -884,7 +905,6 @@ function showConfirmationModal(options) {
         });
     }
 
-    // Menutup modal jika klik di luar area box
     const overlay = document.getElementById('modal-overlay');
     overlay.addEventListener('click', (event) => {
         if (event.target === overlay && showCancelButton) {
