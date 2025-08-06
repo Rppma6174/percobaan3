@@ -4690,12 +4690,70 @@ const socialMediaUpdates = [
 // =================================================================================
 // BAGIAN 1: LOGIKA SESI & KEAMANAN
 // =================================================================================
-// ... (Kode Bagian 1 tidak berubah, jadi saya singkat)
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec'; const LOGIN_PAGE_URL = '../'; let heartbeatIntervalId = null;
-function startSessionHeartbeat(token, email) { /* ... */ } async function verifySession(token, email) { /* ... */ }
-function logout() { sessionStorage.clear(); if (heartbeatIntervalId) clearInterval(heartbeatIntervalId); showToast("Anda telah berhasil logout.", "success"); setTimeout(() => { window.location.href = LOGIN_PAGE_URL; }, 1500); }
-function forceLogout(message) { if (heartbeatIntervalId) clearInterval(heartbeatIntervalId); showToast(message, 'error'); setTimeout(() => { window.location.href = LOGIN_PAGE_URL; }, 2000); }
-(function gatekeeper() { const token = sessionStorage.getItem('sessionToken'); const email = sessionStorage.getItem('sessionEmail'); if (!token || !email) { /* window.location.href = LOGIN_PAGE_URL; return; */ } /* startSessionHeartbeat(token, email); */ document.addEventListener('DOMContentLoaded', () => initializeApp()); })();
+    // URL dan halaman login tetap sama
+    const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec';
+    const LOGIN_PAGE_URL = '../';
+
+    // Fungsi sesi disalin dari kode sebelumnya, tidak perlu diubah
+    let heartbeatIntervalId = null;
+    
+    async function verifySession(token, email) {
+        try {
+            const response = await fetch(WEB_APP_URL, {
+                method: 'POST',
+                headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                body: JSON.stringify({ action: 'check_session', token: token, email: email })
+            });
+            const result = await response.json();
+            if (!result.isValid) {
+                forceLogout("Sesi Anda tidak valid atau telah berakhir.");
+            }
+        } catch (error) {
+            console.error("Heartbeat check failed:", error);
+        }
+    }
+
+    function startSessionHeartbeat(token, email) {
+        if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
+        verifySession(token, email);
+        heartbeatIntervalId = setInterval(() => verifySession(token, email), 10000);
+    }
+
+    function forceLogout(message) {
+        if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
+        alert(message);
+        window.location.href = LOGIN_PAGE_URL;
+    }
+
+    // Fungsi logout dibuat global agar bisa dipanggil oleh tombol
+    function logout() {
+        sessionStorage.removeItem('sessionToken');
+        sessionStorage.removeItem('sessionEmail');
+        forceLogout("Anda telah berhasil logout.");
+    }
+
+    // Fungsi utama untuk menjaga halaman (gatekeeper)
+    (function initializePage() {
+        const token = sessionStorage.getItem('sessionToken');
+        const email = sessionStorage.getItem('sessionEmail');
+
+        // 1. Jika tidak ada token/email, tendang ke halaman login
+        if (!token || !email) {
+            window.location.href = LOGIN_PAGE_URL;
+            return;
+        }
+        
+        // 2. Personalisasi sapaan
+        const userGreetingElement = document.getElementById('user-greeting');
+        if (userGreetingElement) {
+            const namePart = email.split('@')[0];
+            const displayName = namePart.charAt(0).toUpperCase() + namePart.slice(1);
+            userGreetingElement.textContent = displayName;
+        }
+        
+        // 3. Mulai pengecekan sesi berkala
+        startSessionHeartbeat(token, email);
+    })();
 
 
 // =================================================================================
@@ -5024,4 +5082,5 @@ function showToast(message, type = 'info') { const container = document.getEleme
 
 </body>
 </html>
+
 
