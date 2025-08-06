@@ -145,33 +145,108 @@
 
 /* Bagian Bank Soal  */
  @media (max-width: 640px) {
-     #single-explanation-container > div {
-         padding: 1rem;
-         margin-bottom: 1rem;
-         overflow-x: auto; /* Tambahkan scroll horizontal jika konten terlalu lebar */
-     }
+      #single-explanation-container > div {
+          padding: 1rem;
+          margin-bottom: 1rem;
+          overflow-x: auto; /* Tambahkan scroll horizontal jika konten terlalu lebar */
+      }
 
-     #single-explanation-container .text-lg {
-         font-size: 1rem;
-     }
+      #single-explanation-container .text-lg {
+          font-size: 1rem;
+      }
 
-     #single-explanation-container .text-sm {
-         font-size: 0.875rem;
-     }
+      #single-explanation-container .text-sm {
+          font-size: 0.875rem;
+      }
 
-     #single-explanation-container .font-bold {
-         font-size: 1rem;
-     }
+      #single-explanation-container .font-bold {
+          font-size: 1rem;
+      }
 
-     .flex.justify-between.items-center.mt-8 {
-         flex-direction: column;
-         gap: 0.75rem;
-     }
+      .flex.justify-between.items-center.mt-8 {
+          flex-direction: column;
+          gap: 0.75rem;
+      }
 
-     .flex.justify-between.items-center.mt-8 > button {
-         width: 100%;
-     }
+      .flex.justify-between.items-center.mt-8 > button {
+          width: 100%;
+      }
  }
+ 
+/* ================================================= */
+/* ==  STYLE UNTUK MODAL KONFIRMASI               == */
+/* ================================================= */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes scaleIn { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+
+.modal-overlay {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.modal-box {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 450px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    animation: scaleIn 0.3s ease;
+}
+
+.modal-title {
+    font-size: 1.25rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.75rem;
+}
+
+.modal-content {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.modal-buttons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
+
+.modal-btn {
+    padding: 0.5rem 1.25rem;
+    border-radius: 0.5rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.modal-btn-confirm {
+    background-color: var(--accent-cyan);
+    color: white;
+}
+.modal-btn-confirm:hover { background-color: #2577e3; }
+
+.modal-btn-danger {
+    background-color: var(--accent-red);
+    color: white;
+}
+.modal-btn-danger:hover { background-color: #e4433b; }
+
+.modal-btn-cancel {
+    background-color: #30363D;
+    color: var(--text-primary);
+}
+.modal-btn-cancel:hover { background-color: #484f58; }
+
     </style>
 </head>
 <body class="text-white">
@@ -213,6 +288,9 @@
     </div>
 
     <div id="toast-container" class="fixed top-5 right-5 z-[100] space-y-3 w-80"></div>
+    
+    <div id="modal-container" style="display: none;"></div>
+
 
 <script>
 // =================================================================================
@@ -4674,9 +4752,7 @@ const allContentData = {
                 "explanation": "Salah satu aplikasi utama matriks adalah untuk memecahkan sistem persamaan linear, misalnya dengan metode eliminasi Gauss atau invers matriks. Pilihan C sesuai."
             }
         ]
-    },
-    
-    
+    }, 
     ]
 };
 
@@ -4690,12 +4766,9 @@ const socialMediaUpdates = [
 // =================================================================================
 // BAGIAN 1: LOGIKA SESI & KEAMANAN
 // =================================================================================
-// ... (Kode Bagian 1 tidak berubah, jadi saya singkat)
-    // URL dan halaman login tetap sama
     const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec';
     const LOGIN_PAGE_URL = '../login.html';
 
-    // Fungsi sesi disalin dari kode sebelumnya, tidak perlu diubah
     let heartbeatIntervalId = null;
     
     async function verifySession(token, email) {
@@ -4707,7 +4780,7 @@ const socialMediaUpdates = [
             });
             const result = await response.json();
             if (!result.isValid) {
-                forceLogout("Sesi Anda tidak valid atau telah berakhir.");
+                forceLogout("Sesi Anda tidak valid atau telah berakhir. Silakan login kembali.");
             }
         } catch (error) {
             console.error("Heartbeat check failed:", error);
@@ -4721,30 +4794,53 @@ const socialMediaUpdates = [
     }
 
     function forceLogout(message) {
-        if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
-        alert(message);
-        window.location.href = LOGIN_PAGE_URL;
+        if (heartbeatIntervalId) {
+            clearInterval(heartbeatIntervalId);
+            heartbeatIntervalId = null;
+        }
+
+        const onConfirmAction = () => {
+            sessionStorage.removeItem('sessionToken');
+            sessionStorage.removeItem('sessionEmail');
+            window.location.href = LOGIN_PAGE_URL;
+        };
+
+        showConfirmationModal({
+            title: 'Sesi Berakhir',
+            message: message,
+            confirmText: 'OK',
+            confirmAction: onConfirmAction,
+            showCancelButton: false
+        });
     }
 
-    // Fungsi logout dibuat global agar bisa dipanggil oleh tombol
     function logout() {
-        sessionStorage.removeItem('sessionToken');
-        sessionStorage.removeItem('sessionEmail');
-        forceLogout("Anda telah berhasil logout.");
+        showConfirmationModal({
+            title: 'Konfirmasi Logout',
+            message: 'Apakah Anda yakin ingin keluar dari sesi Anda?',
+            confirmText: 'Logout',
+            confirmButtonClass: 'modal-btn-danger',
+            confirmAction: () => {
+                sessionStorage.removeItem('sessionToken');
+                sessionStorage.removeItem('sessionEmail');
+                if (heartbeatIntervalId) {
+                    clearInterval(heartbeatIntervalId);
+                    heartbeatIntervalId = null;
+                }
+                window.location.href = LOGIN_PAGE_URL;
+            }
+        });
     }
 
-    // Fungsi utama untuk menjaga halaman (gatekeeper)
     (function initializePage() {
         const token = sessionStorage.getItem('sessionToken');
         const email = sessionStorage.getItem('sessionEmail');
 
-        // 1. Jika tidak ada token/email, tendang ke halaman login
         if (!token || !email) {
             window.location.href = LOGIN_PAGE_URL;
             return;
         }
         
-        // 2. Personalisasi sapaan
         const userGreetingElement = document.getElementById('user-greeting');
         if (userGreetingElement) {
             const namePart = email.split('@')[0];
@@ -4752,7 +4848,6 @@ const socialMediaUpdates = [
             userGreetingElement.textContent = displayName;
         }
         
-        // 3. Mulai pengecekan sesi berkala
         startSessionHeartbeat(token, email);
     })();
 
@@ -4774,15 +4869,13 @@ function navigateTo(page, clickedElement) {
 }
 
 async function fetchAndRenderPage(pageName) {
-    // Fungsi ini sekarang hanya akan memuat file HTML statis
-    // Logika dinamis akan ditangani oleh fungsi render masing-masing
     appContent.innerHTML = `<p class="text-center text-gray-400">Memuat...</p>`;
     try {
         const response = await fetch(`halaman/${pageName}.html`);
         if (!response.ok) throw new Error(`Halaman tidak ditemukan`);
         const html = await response.text();
         appContent.innerHTML = html;
-        // Panggil fungsi spesifik setelah memuat HTML
+        
         if(pageName === 'bank_soal') renderBankSoalPage();
         if(pageName === 'materi') renderMateriPage();
         if(pageName === 'video') renderVideoPage();
@@ -4829,7 +4922,6 @@ function renderDashboardPage() {
 }
 
 function renderMateriPage() {
-    // Logika untuk menampilkan daftar materi dari allContentData.materi
     const materiHTML = `
         <div class="panel">
             <h2 class="text-2xl font-bold text-cyan-400">Materi Belajar</h2>
@@ -4847,7 +4939,6 @@ function renderMateriPage() {
 }
 
 function renderVideoPage() {
-    // Logika untuk menampilkan daftar video dari allContentData.video
     const videoHTML = `
         <div class="panel">
             <h2 class="text-2xl font-bold text-cyan-400">Video Pembelajaran</h2>
@@ -4865,7 +4956,6 @@ function renderVideoPage() {
 }
 
 function renderBankSoalPage() {
-    // 1. Kelompokkan soal berdasarkan kategori
     const groupedQuizzes = allContentData.bankSoal.reduce((acc, quiz) => {
         const category = quiz.category || 'Lainnya';
         if (!acc[category]) {
@@ -4875,7 +4965,6 @@ function renderBankSoalPage() {
         return acc;
     }, {});
 
-    // 2. Buat HTML untuk setiap kategori
     const categoriesHTML = Object.keys(groupedQuizzes).map(category => {
         const quizzes = groupedQuizzes[category];
         const cardsHTML = quizzes.map(quiz => `
@@ -4898,7 +4987,6 @@ function renderBankSoalPage() {
         `;
     }).join('');
 
-    // PERBAIKAN: Tambahkan kelas "overflow-x-hidden" pada div panel utama
     const bankSoalHTML = `
         <div class="panel">
             <h2 class="text-2xl font-bold mb-1 text-cyan-400">Bank Soal</h2>
@@ -4916,10 +5004,38 @@ function renderForumPage() {
     appContent.innerHTML = forumHTML;
 }
 
+// MODIFIKASI: Menambahkan bagian Logout di halaman Pengaturan
 function renderPengaturanPage() {
-    const pengaturanHTML = `<div class="panel max-w-2xl mx-auto"><h2 class="text-2xl font-bold mb-1 text-cyan-400">Pengaturan</h2><p class="text-sm text-gray-400 mb-6">Kelola data aplikasi Anda di sini.</p><div class="bg-gray-900/50 p-4 rounded-lg"><div class="flex items-center justify-between"><div><h4 class="font-bold">Reset Progres Belajar</h4><p class="text-xs text-gray-400 mt-1">Aksi ini akan menghapus semua progres dan lencana Anda. Tidak dapat diurungkan.</p></div><button onclick="resetProgress()" class="bg-red-800 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded-lg flex-shrink-0">Reset Data</button></div></div></div>`;
+    const pengaturanHTML = `
+    <div class="panel max-w-2xl mx-auto">
+        <h2 class="text-2xl font-bold mb-1 text-cyan-400">Pengaturan</h2>
+        <p class="text-sm text-gray-400 mb-6">Kelola data aplikasi dan akun Anda di sini.</p>
+
+        <div class="bg-gray-900/50 p-4 rounded-lg">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <div>
+                    <h4 class="font-bold">Reset Progres Belajar</h4>
+                    <p class="text-xs text-gray-400 mt-1">Aksi ini akan menghapus semua progres dan lencana Anda.</p>
+                </div>
+                <button onclick="resetProgress()" class="bg-red-800 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded-lg flex-shrink-0">Reset Data</button>
+            </div>
+        </div>
+
+        <div class="mt-4 bg-gray-900/50 p-4 rounded-lg">
+            <div class="flex items-center justify-between flex-wrap gap-3">
+                <div>
+                    <h4 class="font-bold">Akun</h4>
+                    <p class="text-xs text-gray-400 mt-1">Keluar dari akun Anda pada perangkat ini.</p>
+                </div>
+                <button onclick="logout()" class="w-full sm:w-auto bg-red-800 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded-lg flex-shrink-0">
+                    <i class="fa-solid fa-right-from-bracket"></i> Logout
+                </button>
+            </div>
+        </div>
+    </div>`;
     appContent.innerHTML = pengaturanHTML;
 }
+
 
 // =================================================================================
 // BAGIAN 4: LOGIKA WIDGET DASBOR & PROGRES
@@ -4929,7 +5045,6 @@ function initializeAppDashboardWidgets() {
     const namePart = email.split('@')[0];
     document.getElementById('user-greeting').innerHTML = `Halo, ${namePart.charAt(0).toUpperCase() + namePart.slice(1)} 👋`;
     
-    // Progres Keseluruhan
     const COMPLETED_KEY = 'userCompletedItems';
     const completedItems = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
     const totalItems = allContentData.materi.length + allContentData.video.length + allContentData.bankSoal.length;
@@ -4937,14 +5052,12 @@ function initializeAppDashboardWidgets() {
     
     document.getElementById('status-container').innerHTML = `<div><span class="text-sm">📚 Progress Keseluruhan (${completedItems.length}/${totalItems})</span><div class="w-full bg-gray-700 rounded-full h-2.5 mt-1"><div class="bg-cyan-500 h-2.5 rounded-full transition-all duration-500" style="width: ${progress}%"></div></div></div>`;
     
-    // Lencana
     let lencanaHTML = '';
     if (completedItems.length >= 1) lencanaHTML += `<div title="Langkah Pertama"><i class="fa-solid fa-shoe-prints text-cyan-400 text-2xl"></i></div>`;
     if (progress >= 50) lencanaHTML += `<div title="Setengah Jalan!"><i class="fa-solid fa-road-circle-check text-green-400 text-2xl"></i></div>`;
     if (progress === 100) lencanaHTML += `<div title="100% Selesai!"><i class="fa-solid fa-trophy text-amber-400 text-2xl"></i></div>`;
     document.getElementById('lencana-container').innerHTML = lencanaHTML || `<p class="text-sm text-gray-500">Selesaikan materi untuk dapat lencana!</p>`;
 
-    // Info Terbaru (Sosial Media)
     const socialContainer = document.getElementById('social-media-container');
     socialContainer.innerHTML = socialMediaUpdates.map(item => `
         <a href="${item.link}" target="_blank" class="flex items-start gap-3 p-2 rounded-lg hover:bg-gray-800">
@@ -4953,7 +5066,6 @@ function initializeAppDashboardWidgets() {
         </a>
     `).join('');
 
-    // Skor Terakhir
     const lastScoreContainer = document.getElementById('last-score-widget-container');
     const lastScoreData = JSON.parse(localStorage.getItem('lastQuizScore'));
     if (lastScoreData) {
@@ -4970,18 +5082,23 @@ function initializeAppDashboardWidgets() {
 }
 
 function resetProgress() {
-    const confirmation = confirm("Apakah Anda yakin ingin mereset semua progres belajar Anda? Aksi ini tidak dapat dibatalkan.");
-    if (confirmation) {
-        localStorage.removeItem('userCompletedItems');
-        localStorage.removeItem('lastQuizScore'); // Hapus juga skor terakhir
-        showToast("Progres belajar berhasil direset.", "success");
-        navigateTo('dashboard', document.querySelector('.sidebar-link'));
-    } else {
-        showToast("Aksi reset dibatalkan.", "info");
-    }
+    showConfirmationModal({
+        title: 'Konfirmasi Reset Progres',
+        message: 'Apakah Anda yakin ingin mereset semua progres belajar Anda? Aksi ini tidak dapat dibatalkan.',
+        confirmText: 'Ya, Reset',
+        confirmButtonClass: 'modal-btn-danger',
+        confirmAction: () => {
+            localStorage.removeItem('userCompletedItems');
+            localStorage.removeItem('lastQuizScore');
+            showToast("Progres belajar berhasil direset.", "success");
+            navigateTo('dashboard', document.querySelector('.sidebar-link'));
+        },
+        cancelAction: () => {
+            showToast("Aksi reset dibatalkan.", "info");
+        }
+    });
 }
 
-// Fungsi untuk menandai materi/video selesai
 function markAsCompleted(itemId) {
     const COMPLETED_KEY = 'userCompletedItems';
     let completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
@@ -4989,14 +5106,18 @@ function markAsCompleted(itemId) {
         completed.push(itemId);
         localStorage.setItem(COMPLETED_KEY, JSON.stringify(completed));
         showToast("Progres telah dicatat!", "success");
-        navigateTo('dashboard', document.querySelector('.sidebar-link')); // Kembali ke dasbor
+        if (!itemId.startsWith('pas-') && !itemId.startsWith('tka-') && !itemId.startsWith('hots-') && !itemId.startsWith('mots-') && !itemId.startsWith('lots-')) {
+             navigateTo('dashboard', document.querySelector('.sidebar-link'));
+        }
     } else {
-        showToast("Item ini sudah selesai.", "info");
+        if (!itemId.startsWith('pas-') && !itemId.startsWith('tka-') && !itemId.startsWith('hots-') && !itemId.startsWith('mots-') && !itemId.startsWith('lots-')) {
+            showToast("Item ini sudah selesai.", "info");
+        }
     }
 }
 
 // =================================================================================
-// BAGIAN 5: LOGIKA KUIS (FUNGSI TETAP SAMA, TAPI DIPANGGIL DARI ATAS)
+// BAGIAN 5: LOGIKA KUIS
 // =================================================================================
 let currentQuizData = null;
 let currentQuestionIndex = 0;
@@ -5014,9 +5135,9 @@ function startQuiz(quizId) {
 function renderQuizInterface() {
     const quiz = currentQuizData;
     const question = quiz.questions[currentQuestionIndex];
-    const quizHTML = `<div class="panel max-w-4xl mx-auto"><div class="flex justify-between items-start mb-4"><div><h2 class="text-xl font-bold text-cyan-400">${quiz.title}</h2><p class="text-sm text-gray-400">Pertanyaan ${currentQuestionIndex + 1} dari ${quiz.questions.length}</p></div><button onclick="navigateTo('bank_soal', null)" class="text-xs text-gray-400 hover:text-white">&times; Tutup</button></div><hr class="border-gray-700 my-4"/><div class="mb-6 min-h-[60px]"><div class="text-lg text-gray-200">${question.questionText}</div></div><div id="quiz-options" class="space-y-3">${question.options.map((opt, index) => `<div id="option-${index}" class="quiz-option p-4 rounded-lg cursor-pointer transition-colors" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}', ${index})">${opt}</div>`).join('')}</div><hr class="border-gray-700 my-6"/><div class="flex justify-end"><button id="next-btn" onclick="submitQuiz()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg">${currentQuestionIndex === quiz.questions.length - 1 ? 'Selesai & Lihat Hasil' : 'Lanjut'}</button></div></div>`;
+    const quizHTML = `<div class="panel max-w-4xl mx-auto"><div class="flex justify-between items-start mb-4"><div><h2 class="text-xl font-bold text-cyan-400">${quiz.title}</h2><p class="text-sm text-gray-400">Pertanyaan ${currentQuestionIndex + 1} dari ${quiz.questions.length}</p></div><button onclick="navigateTo('bank_soal', null)" class="text-xs text-gray-400 hover:text-white">× Tutup</button></div><hr class="border-gray-700 my-4"/><div class="mb-6 min-h-[60px]"><div class="text-lg text-gray-200">${question.questionText}</div></div><div id="quiz-options" class="space-y-3">${question.options.map((opt, index) => `<div id="option-${index}" class="quiz-option p-4 rounded-lg cursor-pointer transition-colors" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}', ${index})">${opt}</div>`).join('')}</div><hr class="border-gray-700 my-6"/><div class="flex justify-end"><button id="next-btn" onclick="submitQuiz()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg">${currentQuestionIndex === quiz.questions.length - 1 ? 'Selesai & Lihat Hasil' : 'Lanjut'}</button></div></div>`;
     appContent.innerHTML = quizHTML;
-    if (window.MathJax) { MathJax.typeset(); } // <--- TAMBAHKAN INI
+    if (window.MathJax) { MathJax.typeset(); }
 }
 
 function selectAnswer(answer, optionIndex) {
@@ -5035,10 +5156,8 @@ function renderQuizResults() {
     let score = 0;
     quiz.questions.forEach((q, index) => { if (q.correctAnswer === userAnswers[index]) { score++; } });
     
-    // Tandai kuis ini sebagai selesai untuk progres keseluruhan
     markAsCompleted(quiz.id);
 
-    // Simpan skor terakhir ke localStorage
     const finalScorePercentage = quiz.questions.length > 0 ? Math.round((score / quiz.questions.length) * 100) : 0;
     const lastScore = {
         title: quiz.title,
@@ -5064,7 +5183,7 @@ function renderSingleExplanation(index) {
     container.innerHTML = explanationHTML;
     document.getElementById('prev-explanation-btn').disabled = (index === 0);
     document.getElementById('next-explanation-btn').disabled = (index === quiz.questions.length - 1);
-    if (window.MathJax) { MathJax.typeset(); } // <--- TAMBAHKAN INI
+    if (window.MathJax) { MathJax.typeset(); }
 }
 
 function nextExplanation() { if (currentExplanationIndex < currentQuizData.questions.length - 1) { currentExplanationIndex++; renderSingleExplanation(currentExplanationIndex); } }
@@ -5079,6 +5198,78 @@ function initializeApp() {
 }
 
 function showToast(message, type = 'info') { const container = document.getElementById('toast-container'); const toast = document.createElement('div'); const icons = { info: 'fa-solid fa-circle-info', success: 'fa-solid fa-check-circle', error: 'fa-solid fa-triangle-exclamation' }; const colors = { info: 'text-cyan-400', success: 'text-green-400', error: 'text-red-400' }; const iconClass = icons[type] || icons['info']; const colorClass = colors[type] || colors['info']; toast.className = 'toast-in flex items-start p-4 rounded-lg shadow-lg text-sm'; toast.style.backgroundColor = 'var(--bg-panel)'; toast.style.border = '1px solid var(--border-color)'; toast.innerHTML = `<div class="flex-shrink-0"><i class="${iconClass} ${colorClass} text-xl"></i></div><div class="ml-3"><p class="font-bold capitalize ${colorClass}">${type}</p><p class="text-gray-300 mt-1">${message}</p></div>`; container.appendChild(toast); setTimeout(() => { toast.classList.remove('toast-in'); toast.classList.add('toast-out'); toast.addEventListener('animationend', () => { toast.remove(); }); }, 5000); }
+
+// =================================================================================
+// BAGIAN 7: SISTEM MODAL KUSTOM
+// =================================================================================
+function showConfirmationModal(options) {
+    const {
+        title,
+        message,
+        confirmText = 'Konfirmasi',
+        cancelText = 'Batal',
+        confirmAction,
+        cancelAction,
+        showCancelButton = true,
+        confirmButtonClass = 'modal-btn-confirm'
+    } = options;
+
+    const modalContainer = document.getElementById('modal-container');
+    
+    const modalHTML = `
+        <div class="modal-overlay" id="modal-overlay">
+            <div class="modal-box">
+                <h3 class="modal-title">${title}</h3>
+                <p class="modal-content">${message}</p>
+                <div class="modal-buttons">
+                    ${showCancelButton ? `<button id="modal-cancel-btn" class="modal-btn modal-btn-cancel">${cancelText}</button>` : ''}
+                    <button id="modal-confirm-btn" class="modal-btn ${confirmButtonClass}">${confirmText}</button>
+                </div>
+            </div>
+        </div>
+    `;
+
+    modalContainer.innerHTML = modalHTML;
+    modalContainer.style.display = 'block';
+
+    const closeModal = () => {
+        modalContainer.style.display = 'none';
+        modalContainer.innerHTML = '';
+    };
+
+    const confirmBtn = document.getElementById('modal-confirm-btn');
+    confirmBtn.addEventListener('click', () => {
+        if (typeof confirmAction === 'function') {
+            confirmAction();
+        }
+        closeModal();
+    });
+
+    if (showCancelButton) {
+        const cancelBtn = document.getElementById('modal-cancel-btn');
+        cancelBtn.addEventListener('click', () => {
+            if (typeof cancelAction === 'function') {
+                cancelAction();
+            }
+            closeModal();
+        });
+    }
+
+    const overlay = document.getElementById('modal-overlay');
+    overlay.addEventListener('click', (event) => {
+        if (event.target === overlay && showCancelButton) {
+            if (typeof cancelAction === 'function') {
+                cancelAction();
+            }
+            closeModal();
+        }
+    });
+}
+
+
+// Inisialisasi Aplikasi saat DOM siap
+document.addEventListener('DOMContentLoaded', initializeApp);
+
 </script>
 
 </body>
