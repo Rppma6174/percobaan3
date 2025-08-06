@@ -1,468 +1,505 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>UMT Pro Command Center</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - UMT</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" href="UMT-Logo.png">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600&family=Inter:wght@400;600;700&display=swap');
-        :root {
-            --bg-main: #0D1117; --bg-panel: #161B22; --border-color: #30363D;
-            --text-primary: #C9D1D9; --text-secondary: #8B949E; --accent-cyan: #2F81F7;
-            --accent-green: #39D353; --accent-red: #F85149;
-        }
-        body { background-color: var(--bg-main); color: var(--text-primary); font-family: 'Inter', sans-serif; }
-        .font-mono { font-family: 'Fira Code', monospace; }
-        .panel { background-color: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.5rem; }
-        
-        .bottom-nav-link.active { color: var(--accent-cyan); }
-        .sidebar-link.active { background-color: #30363D; color: white; }
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
 
-        .card-item { background-color: #21262D; transition: transform 0.2s; cursor: pointer; }
-        .card-item:hover { transform: translateY(-4px); background-color: #30363D; }
-        .quiz-option { border: 2px solid var(--border-color); }
-        .quiz-option:hover { border-color: var(--accent-cyan); }
-        .quiz-option.selected { border-color: var(--accent-cyan); background-color: rgba(47, 129, 247, 0.2); }
-        .correct-answer { background-color: rgba(57, 211, 83, 0.1); border-left: 4px solid var(--accent-green); }
-        .wrong-answer { background-color: rgba(248, 81, 73, 0.1); border-left: 4px solid var(--accent-red); }
-        .no-scrollbar::-webkit-scrollbar { display: none; }
-        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
-        .nav-btn:disabled { background-color: #30363D; color: #8B949E; cursor: not-allowed; }
+:root {
+    --primary-purple: #6A0DAD;
+    --secondary-purple: #7D2ED1;
+    --dark-bg: #141414;
+    --card-bg: #1c1c1c;
+    --text-primary: #ffffff;
+    --text-secondary: #ccc;
+    --border-color: #333;
+    --error-color: #f44336;
+}
 
-        @keyframes slideInRight {
-            from { opacity: 0; transform: translateX(100%); }
-            to { opacity: 1; transform: translateX(0); }
-        }
-        @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; transform: translateY(-20px); }
-        }
-        .toast-in { animation: slideInRight 0.5s forwards; }
-        .toast-out { animation: fadeOut 0.5s forwards; }
+body {
+    font-family: 'Poppins', sans-serif;
+    background: #141414;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0; /* Disesuaikan */
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animated background particles */
+.bg-animation {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* .particle {
+    position: absolute;
+    background: rgba(106, 13, 173, 0.1);
+    border-radius: 50%;
+    animation: float 15s infinite linear;
+} */
+
+.particle:nth-child(1) { width: 80px; height: 80px; top: 10%; left: 10%; animation-delay: 0s; }
+.particle:nth-child(2) { width: 60px; height: 60px; top: 70%; left: 80%; animation-delay: 2s; }
+.particle:nth-child(3) { width: 100px; height: 100px; top: 40%; left: 5%; animation-delay: 4s; }
+.particle:nth-child(4) { width: 40px; height: 40px; top: 20%; left: 90%; animation-delay: 6s; }
+.particle:nth-child(5) { width: 120px; height: 120px; top: 80%; left: 20%; animation-delay: 8s; }
+
+@keyframes float {
+    0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.3; }
+    50% { transform: translateY(-20px) rotate(180deg); opacity: 0.7; }
+}
+
+/* Overlay tetap ada karena bagian dari HTML, namun form di dalamnya disamakan */
+#login-modal-overlay {
+    position: relative;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #141414;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    backdrop-filter: blur(5px);
+}
+
+#login-form {
+    background: #141414;
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 24px;
+    padding: 50px 40px;
+    width: 90%;
+    max-width: 500px; /* Disesuaikan agar sama lebar dengan form pendaftaran */
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.4),
+        0 0 80px rgba(106, 13, 173, 0.1);
+    position: relative;
+    z-index: 1;
+    animation: slideInUp 0.8s ease-out;
+    text-align: center;
+}
+
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.login-header {
+    margin-bottom: 40px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+}
+
+.logo-image {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    margin-right: 15px;
+    box-shadow: 0 4px 15px rgba(106, 13, 173, 0.3);
+    object-fit: cover;
+}
+
+.logo-text {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-primary);
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+    /* Animasi dihapus agar sama dengan form pendaftaran */
+}
+
+.login-subtitle {
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-bottom: 1.5rem;
+    /* Animasi dihapus agar sama dengan form pendaftaran */
+}
+
+.form-group {
+    margin-bottom: 25px;
+    position: relative;
+    text-align: left;
+}
+
+.form-label {
+    display: block;
+    color: var(--text-secondary);
+    font-size: 14px;
+    font-weight: 500;
+    margin-bottom: 8px;
+}
+
+input[type="email"], input[type="password"] {
+    width: 100%;
+    padding: 16px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 2px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 16px;
+    font-family: inherit;
+    transition: all 0.3s ease;
+    outline: none;
+    box-sizing: border-box;
+}
+
+input[type="email"]:focus, input[type="password"]:focus {
+    border-color: var(--primary-purple);
+    background: rgba(255, 255, 255, 0.08);
+    box-shadow: 0 0 0 4px rgba(106, 13, 173, 0.1);
+    transform: translateY(-2px);
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 16px;
+    background: linear-gradient(135deg, var(--primary-purple) 0%, var(--secondary-purple) 100%);
+    border: none;
+    border-radius: 12px;
+    color: var(--text-primary);
+    font-size: 16px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    overflow: hidden;
+    margin-top: 10px; /* Disesuaikan */
+    margin-bottom: 20px;
+}
+
+/* Efek hover shimmer dihapus agar sama dengan form pendaftaran */
+button[type="submit"]:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(106, 13, 173, 0.4);
+}
+
+button[type="submit"]:active {
+    transform: translateY(-1px);
+}
+
+button[type="submit"]:disabled {
+    background: rgba(106, 13, 173, 0.5);
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+#error-message {
+    background: rgba(244, 67, 54, 0.1);
+    border: 1px solid rgba(244, 67, 54, 0.3);
+    color: var(--error-color);
+    padding: 12px 16px;
+    border-radius: 8px;
+    font-size: 14px;
+    min-height: 1.2em;
+    margin-top: 1rem;
+    display: none;
+    animation: slideDown 0.3s ease-out;
+    text-align: left; /* Disesuaikan */
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Loading animation (tetap ada karena bagian dari fungsionalitas login) */
+.loading {
+    display: none;
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top-color: white;
+    animation: spin 1s ease-in-out infinite;
+    margin: 0 auto;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.form-options {
+    text-align: center;
+    margin: 20px 0 30px 0;
+}
+
+.forgot-password {
+    color: var(--primary-purple);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 14px;
+    transition: all 0.3s ease;
+}
+
+.forgot-password:hover {
+    color: var(--secondary-purple);
+    text-decoration: underline;
+}
+
+.register-link {
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 14px;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.register-link a {
+    color: var(--primary-purple);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.3s ease;
+}
+
+/* Responsive Design (disamakan dengan form pendaftaran) */
+@media (max-width: 540px) {
+    #login-form {
+        padding: 40px 25px;
+    }
+}
+
+/* Ripple effect (tetap ada karena bagian dari fungsionalitas login) */
+.ripple {
+    position: absolute;
+    border-radius: 50%;
+    transform: scale(0);
+    animation: ripple 0.6s linear;
+    background-color: rgba(255, 255, 255, 0.3);
+}
+
+@keyframes ripple {
+    to {
+        transform: scale(4);
+        opacity: 0;
+    }
+}
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 25px;
+    font-size: 28px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    line-height: 1;
+}
+
+.close-btn:hover {
+    color: var(--text-primary);
+    transform: scale(1.2);
+}
     </style>
 </head>
-<body class="text-white">
-
-    <div class="flex min-h-screen">
-        <aside class="fixed bottom-0 left-0 z-50 w-full h-16 bg-[var(--bg-panel)] border-t border-[var(--border-color)] 
-                       md:relative md:w-64 md:h-screen md:flex md:flex-col md:border-t-0 md:border-r md:p-6">
-            
-            <h1 class="hidden text-xl font-bold mb-10 text-cyan-400 md:block md:text-2xl">UMT Pro</h1>
-            
-            <nav id="sidebar-nav" class="no-scrollbar flex overflow-x-auto h-full md:flex-col md:space-y-4 md:h-auto">
-                <div class="flex flex-nowrap items-center justify-start gap-2 px-2 md:flex-col md:items-stretch md:gap-0 md:px-0">
-                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('dashboard', this)">
-                        <i class="fa-solid fa-chart-pie text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Dashboard</span>
-                    </a>
-                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('materi', this)">
-                        <i class="fa-solid fa-book text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Materi</span>
-                    </a>
-                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('bank_soal', this)">
-                        <i class="fa-solid fa-list-check text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Bank Soal</span>
-                    </a>
-                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('video', this)">
-                        <i class="fa-solid fa-video text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Video</span>
-                    </a>
-                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('forum', this)">
-                        <i class="fa-solid fa-comments text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Forum</span>
-                    </a>
-                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('pengaturan', this)">
-                        <i class="fa-solid fa-user-gear text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Pengaturan</span>
-                    </a>
-                </div>
-            </nav>
-            <div class="hidden mt-auto md:block">
-                <button onclick="logout()" class="w-full bg-red-800 hover:bg-red-700 text-white py-2 px-3 rounded">
-                    <i class="fa-solid fa-right-from-bracket"></i><span class="md:inline"> Logout</span>
-                </button>
-            </div>
-        </aside>
-
-        <main id="app-content" class="flex-1 p-6 space-y-6 pb-20 md:pb-6"></main>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
     </div>
 
-    <div id="toast-container" class="fixed top-5 right-5 z-[100] space-y-3 w-80"></div>
+    <div id="login-modal-overlay">
+        <form id="login-form" onsubmit="handleLoginAttempt(event)">
+            <a href="index.html" class="close-btn" title="Keluar">&times;</a>
+            <div class="login-header">
+                <div class="logo-container">
+                    <img src="UMT-Logo.png" alt="Logo" class="logo-image">
+                    <span class="logo-text">UMTacademy</span>
+                </div>
+                <h2>Akses Terbatas</h2>
+                <p class="login-subtitle">Silakan login untuk melanjutkan.</p>
+            </div>
 
-<script>
-// =================================================================================
-// BAGIAN 0: KONFIGURASI DAN DATA MASTER
-// =================================================================================
-const masterContentList = [
-    { id: 'materi_1', title: 'Materi Aljabar', type: 'Materi' },
-    { id: 'materi_2', title: 'Materi Kalkulus', type: 'Materi' },
-    { id: 'video_1', title: 'Video Pembahasan Vektor', type: 'Video' },
-];
-const bankSoalData = [
-    {
-        id: 'tiu_1',
-        title: 'Paket Latihan TIU #1',
-        subject: 'Tes Intelegensi Umum - Analogi',
-        totalQuestions: 5,
-        questions: [
-            { questionText: 'MATA : WAJAH', options: ['A. Bantal : Ranjang', 'B. Buku : Perpustakaan', 'C. Jendela : Rumah', 'D. Air : Ember'], correctAnswer: 'C. Jendela : Rumah', explanation: 'Analogi ini adalah hubungan "bagian dari". MATA adalah bagian dari WAJAH, sebagaimana JENDELA adalah bagian dari RUMAH.' },
-            { questionText: 'API : BAKAR', options: ['A. Air : Minum', 'B. Es : Beku', 'C. Angin : Sejuk', 'D. Tanah : Subur'], correctAnswer: 'B. Es : Beku', explanation: 'Analogi ini menunjukkan sifat atau fungsi. Sifat API adalah MEMBAKAR, sebagaimana sifat ES adalah MEMBEKUKAN (atau menjadi BEKU).' },
-            { questionText: 'GELAP : TERANG', options: ['A. Siang : Malam', 'B. Basah : Kering', 'C. Panas : Hangat', 'D. Manis : Gula'], correctAnswer: 'B. Basah : Kering', explanation: 'Analogi ini adalah hubungan antonim atau lawan kata. GELAP adalah lawan kata dari TERANG, sebagaimana BASAH adalah lawan kata dari KERING.'},
-            { questionText: 'PADI : PETANI', options: ['A. Obat : Dokter', 'B. Buku : Penulis', 'C. Emas : Penambang', 'D. Murid : Guru'], correctAnswer: 'C. Emas : Penambang', explanation: 'Hubungan analogi ini adalah "hasil dari pekerjaan". PADI adalah hasil kerja PETANI, sebagaimana EMAS adalah hasil kerja PENAMBANG.'},
-            { questionText: 'JARUM : BENANG', options: ['A. Kuas : Cat', 'B. Palu : Paku', 'C. Pulpen : Tinta', 'D. Gunting : Kertas'], correctAnswer: 'A. Kuas : Cat', explanation: 'Hubungan ini adalah "alat dan bahan yang digunakan bersamaan". JARUM digunakan bersama BENANG, sebagaimana KUAS digunakan bersama CAT.'}
-        ]
-    }
-];
+            <div id="login-form-container">
 
-// =================================================================================
-// BAGIAN 1: LOGIKA SESI & KEAMANAN
-// =================================================================================
-const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec';
-const LOGIN_PAGE_URL = '../Login/index.html';
-let heartbeatIntervalId = null;
+                <div class="form-group">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" id="email" placeholder="Masukkan email Anda" required>
+                </div>
 
-function startSessionHeartbeat(token, email) {
-    if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
-    verifySession(token, email);
-    heartbeatIntervalId = setInterval(() => verifySession(token, email), 15000);
-}
-async function verifySession(token, email) {
-    try {
-        await fetch(WEB_APP_URL, {
-            method: 'POST', mode: 'no-cors',
-            body: JSON.stringify({ action: 'check_session', token: token, email: email })
+                <div class="form-group">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" id="password" placeholder="Masukkan password Anda" required>
+                </div>
+
+                <button id="login-button" type="submit">
+                    <span id="btnText">Login</span>
+                    <div class="loading" id="loading"></div>
+                </button>
+
+                <div class="form-options">
+                    <a href="reset-sandi.html" class="forgot-password">Lupa password?</a>
+                </div>
+
+                <div id="error-message"></div>
+
+                <div class="register-link">
+                    Belum punya akun? <a href="Form-Pendaftaran.html">Daftar sekarang</a>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script>
+        const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec';
+
+        // Cek jika pengguna sudah login, langsung arahkan
+        if (sessionStorage.getItem('sessionToken')) {
+            window.location.href = 'Pro_Member_Akses/index.html';
+        }
+
+        function getDeviceFingerprint() {
+            const userAgent = navigator.userAgent;
+            const language = navigator.language;
+            const resolution = `${screen.width}x${screen.height}`;
+            return `${userAgent}|${language}|${resolution}`;
+        }
+
+        async function handleLoginAttempt(event) {
+            event.preventDefault();
+            const loginButton = document.getElementById('login-button');
+            const errorMessage = document.getElementById('error-message');
+            const btnText = document.getElementById('btnText');
+            const loading = document.getElementById('loading');
+
+            // Show loading state
+            btnText.style.display = 'none';
+            loading.style.display = 'block';
+            loginButton.disabled = true;
+            errorMessage.textContent = '';
+            errorMessage.style.display = 'none';
+
+            const fingerprint = getDeviceFingerprint();
+
+            try {
+                const response = await fetch(WEB_APP_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+                    body: JSON.stringify({
+                        action: 'login',
+                        email: document.getElementById('email').value,
+                        password: document.getElementById('password').value,
+                        fingerprint: fingerprint
+                    })
+                });
+                const result = await response.json();
+                if (result.status === 'success') {
+                    // **PENTING: Simpan tiket sesi di browser**
+                    sessionStorage.setItem('sessionToken', result.token);
+                    sessionStorage.setItem('sessionEmail', result.email);
+
+                    // **PENTING: Arahkan ke halaman rahasia**
+                    window.location.href = 'Pro_Member_Akses/index.html';
+                } else {
+                    throw new Error(result.message || 'Terjadi kesalahan.');
+                }
+            } catch (error) {
+                errorMessage.textContent = error.message;
+                errorMessage.style.display = 'block';
+            } finally {
+                btnText.style.display = 'block';
+                loading.style.display = 'none';
+                loginButton.disabled = false;
+            }
+        }
+
+        // Add ripple effect to button
+        function createRipple(event) {
+            const button = event.currentTarget;
+            const circle = document.createElement("span");
+            const diameter = Math.max(button.clientWidth, button.clientHeight);
+            const radius = diameter / 2;
+
+            circle.style.width = circle.style.height = `${diameter}px`;
+            circle.style.left = `${event.clientX - button.offsetLeft - radius}px`;
+            circle.style.top = `${event.clientY - button.offsetTop - radius}px`;
+            circle.classList.add("ripple");
+
+            const ripple = button.getElementsByClassName("ripple")[0];
+            if (ripple) {
+                ripple.remove();
+            }
+
+            button.appendChild(circle);
+        }
+
+        // Apply ripple effect to login button
+        document.getElementById('login-button').addEventListener('click', createRipple);
+
+        // Add floating animation to form inputs
+        const formInputs = document.querySelectorAll('input[type="email"], input[type="password"]');
+        formInputs.forEach(input => {
+            input.addEventListener('focus', function() {
+                this.parentNode.style.transform = 'scale(1.02)';
+            });
+
+            input.addEventListener('blur', function() {
+                this.parentNode.style.transform = 'scale(1)';
+            });
         });
-    } catch (error) { console.error("Heartbeat check failed:", error); }
-}
-function logout() {
-    sessionStorage.removeItem('sessionToken');
-    sessionStorage.removeItem('sessionEmail');
-    if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
-    showToast("Anda telah berhasil logout.", "success");
-    setTimeout(() => {
-        window.location.href = LOGIN_PAGE_URL;
-    }, 1500);
-}
-function forceLogout(message) {
-    if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
-    showToast(message, 'error');
-    setTimeout(() => {
-        window.location.href = LOGIN_PAGE_URL;
-    }, 2000);
-}
-(function gatekeeper() {
-    const token = sessionStorage.getItem('sessionToken');
-    const email = sessionStorage.getItem('sessionEmail');
-    if (!token || !email) {
-        window.location.href = LOGIN_PAGE_URL;
-        return;
-    }
-    startSessionHeartbeat(token, email);
-    document.addEventListener('DOMContentLoaded', () => initializeApp());
-})();
 
-// =================================================================================
-// BAGIAN 2: LOGIKA APLIKASI UTAMA (NAVIGASI & RENDER)
-// =================================================================================
-const appContent = document.getElementById('app-content');
-
-function navigateTo(page, clickedElement) {
-    document.querySelectorAll('.sidebar-link, .bottom-nav-link').forEach(link => link.classList.remove('active'));
-    if (clickedElement) clickedElement.classList.add('active');
-
-    if (page === 'dashboard') {
-        renderDashboardPage();
-    } else if (page === 'bank_soal') {
-        renderBankSoalPage();
-    }
-    else {
-        fetchAndRenderPage(`halaman/${page}.html`);
-    }
-}
-
-async function fetchAndRenderPage(pageUrl) {
-    appContent.innerHTML = `<p class="text-center text-gray-400">Memuat...</p>`;
-    try {
-        const response = await fetch(pageUrl);
-        if (!response.ok) throw new Error(`Halaman tidak ditemukan: ${pageUrl}`);
-        const html = await response.text();
-        appContent.innerHTML = html;
-    } catch (error) {
-        console.error(error);
-        appContent.innerHTML = `<p class="text-center text-red-500">Gagal memuat konten. Pastikan file ${pageUrl} ada.</p>`;
-    }
-}
-
-function renderDashboardPage() {
-    appContent.innerHTML = `
-        <header class="panel flex justify-between items-center">
-            <div>
-                <h2 id="user-greeting" class="text-xl font-bold"></h2>
-                <p class="text-sm text-gray-400">Selamat datang di Command Center Anda.</p>
-            </div>
-        </header>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="col-span-1 lg:col-span-2 space-y-6">
-                <div class="panel">
-                    <h4 class="font-bold text-lg mb-4">Status Anda</h4>
-                    <div id="status-container" class="space-y-4"></div>
-                </div>
-            </div>
-            <div class="col-span-1 space-y-6">
-                <div class="panel">
-                    <h4 class="font-bold text-lg mb-4">Pencapaian</h4>
-                    <div id="lencana-container" class="flex gap-4"></div>
-                </div>
-            </div>
-        </div>
-    `;
-    initializeAppDashboardWidgets();
-}
-
-// =================================================================================
-// BAGIAN 3: LOGIKA LOCALSTORAGE & RENDER WIDGET DASBOR
-// =================================================================================
-function initializeAppDashboardWidgets() {
-    const email = sessionStorage.getItem('sessionEmail') || 'pengguna@email.com';
-    const namePart = email.split('@')[0];
-    document.getElementById('user-greeting').innerHTML = `Halo, ${namePart.charAt(0).toUpperCase() + namePart.slice(1)} 👋`;
-    const completed = JSON.parse(localStorage.getItem('userCompletedItems')) || [];
-    const totalItems = masterContentList.length;
-    const progress = totalItems > 0 ? Math.round((completed.length / totalItems) * 100) : 0;
-    
-    document.getElementById('status-container').innerHTML = `
-        <div><span class="text-sm">📚 Progress Keseluruhan (${completed.length}/${totalItems})</span><div class="w-full bg-gray-700 rounded-full h-2.5 mt-1"><div class="bg-cyan-500 h-2.5 rounded-full transition-all duration-500" style="width: ${progress}%"></div></div></div>
-    `;
-    let lencanaHTML = '';
-    if (completed.length >= 1) lencanaHTML += `<div title="Langkah Pertama"><i class="fa-solid fa-shoe-prints text-cyan-400 text-2xl"></i></div>`;
-    if (progress >= 50) lencanaHTML += `<div title="Setengah Jalan!"><i class="fa-solid fa-road-circle-check text-green-400 text-2xl"></i></div>`;
-    document.getElementById('lencana-container').innerHTML = lencanaHTML || `<p class="text-sm text-gray-500">Selesaikan materi untuk dapat lencana!</p>`;
-}
-
-
-// =================================================================================
-// BAGIAN 4: LOGIKA BANK SOAL & QUIZ
-// =================================================================================
-let currentQuizData = null;
-let currentQuestionIndex = 0;
-let userAnswers = [];
-let currentExplanationIndex = 0;
-
-function renderBankSoalPage() {
-    const bankSoalHTML = `
-        <div class="panel">
-            <h2 class="text-2xl font-bold mb-1 text-cyan-400">Bank Soal</h2>
-            <p class="text-sm text-gray-400 mb-6">Pilih paket soal untuk mulai berlatih.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                ${bankSoalData.map(quiz => `
-                    <div class="card-item p-6 rounded-lg flex flex-col" onclick="startQuiz('${quiz.id}')">
-                        <h3 class="font-bold text-lg mb-2">${quiz.title}</h3>
-                        <p class="text-sm text-gray-400 mb-4">${quiz.subject}</p>
-                        <div class="mt-auto text-xs font-mono bg-gray-900/50 text-cyan-300 rounded-full px-3 py-1 self-start">
-                            ${quiz.totalQuestions} Soal
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
-    appContent.innerHTML = bankSoalHTML;
-}
-
-function startQuiz(quizId) {
-    currentQuizData = bankSoalData.find(q => q.id === quizId);
-    if (!currentQuizData) { showToast('Kuis tidak ditemukan!', 'error'); return; }
-    currentQuestionIndex = 0;
-    userAnswers = new Array(currentQuizData.questions.length).fill(null);
-    renderQuizInterface();
-}
-
-function renderQuizInterface() {
-    const quiz = currentQuizData;
-    const question = quiz.questions[currentQuestionIndex];
-    const quizHTML = `
-        <div class="panel max-w-4xl mx-auto">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <h2 class="text-xl font-bold text-cyan-400">${quiz.title}</h2>
-                    <p class="text-sm text-gray-400">Pertanyaan ${currentQuestionIndex + 1} dari ${quiz.questions.length}</p>
-                </div>
-                <button onclick="renderBankSoalPage()" class="text-xs text-gray-400 hover:text-white">&times; Tutup</button>
-            </div>
-            <hr class="border-gray-700 my-4"/>
-            <div class="mb-6 min-h-[60px]">
-                <div class="text-lg text-gray-200">${question.questionText}</div>
-            </div>
-            <div id="quiz-options" class="space-y-3">
-                ${question.options.map((opt, index) => `
-                    <div id="option-${index}" class="quiz-option p-4 rounded-lg cursor-pointer transition-colors" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}', ${index})">
-                        ${opt}
-                    </div>
-                `).join('')}
-            </div>
-            <hr class="border-gray-700 my-6"/>
-            <div class="flex justify-end">
-                <button id="next-btn" onclick="submitQuiz()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg">
-                    ${currentQuestionIndex === quiz.questions.length - 1 ? 'Selesai & Lihat Hasil' : 'Lanjut'}
-                </button>
-            </div>
-        </div>`;
-    appContent.innerHTML = quizHTML;
-}
-
-function selectAnswer(answer, optionIndex) {
-    userAnswers[currentQuestionIndex] = answer;
-    document.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
-    document.getElementById(`option-${optionIndex}`).classList.add('selected');
-}
-
-function submitQuiz() {
-    if (userAnswers[currentQuestionIndex] === null) {
-        showToast('Silakan pilih jawaban terlebih dahulu!', 'error');
-        return;
-    }
-    if (currentQuestionIndex < currentQuizData.questions.length - 1) {
-        currentQuestionIndex++;
-        renderQuizInterface();
-    } else {
-        renderQuizResults();
-    }
-}
-
-function renderQuizResults() {
-    const quiz = currentQuizData;
-    let score = 0;
-    quiz.questions.forEach((q, index) => {
-        if (q.correctAnswer === userAnswers[index]) { score++; }
-    });
-    const finalScorePercentage = quiz.questions.length > 0 ? Math.round((score / quiz.questions.length) * 100) : 0;
-    
-    const resultShellHTML = `
-        <div class="panel max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold text-center">Hasil Kuis: ${quiz.title}</h2>
-            <div class="text-center my-6 bg-gray-900/50 p-4 rounded-lg">
-                <p class="text-gray-400">Skor Akhir Anda</p>
-                <p class="text-5xl font-bold text-cyan-400 mt-2">${finalScorePercentage}%</p>
-                <p class="text-gray-300 mt-2">(${score} dari ${quiz.questions.length} soal benar)</p>
-            </div>
-            
-            <h3 id="explanation-title" class="font-bold text-xl mt-10 mb-4 text-center">⭐ Pembahasan Soal</h3>
-            
-            <div id="single-explanation-container" class="min-h-[250px]"></div>
-
-            <div class="flex justify-between items-center mt-8">
-                <button id="prev-explanation-btn" onclick="prevExplanation()" class="nav-btn bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg">
-                    <i class="fa-solid fa-chevron-left"></i> Sebelumnya
-                </button>
-                <button onclick="renderBankSoalPage()" class="bg-cyan-800 hover:bg-cyan-700 text-white text-sm py-2 px-4 rounded-lg">
-                    Kembali ke Bank Soal
-                </button>
-                <button id="next-explanation-btn" onclick="nextExplanation()" class="nav-btn bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg">
-                    Selanjutnya <i class="fa-solid fa-chevron-right"></i>
-                </button>
-            </div>
-        </div>
-    `;
-    appContent.innerHTML = resultShellHTML;
-
-    currentExplanationIndex = 0;
-    renderSingleExplanation(currentExplanationIndex);
-}
-
-function renderSingleExplanation(index) {
-    const container = document.getElementById('single-explanation-container');
-    const title = document.getElementById('explanation-title');
-    const quiz = currentQuizData;
-    const q = quiz.questions[index];
-
-    title.innerText = `⭐ Pembahasan Soal ${index + 1} / ${quiz.questions.length}`;
-
-    const explanationHTML = `
-        <div class="bg-gray-900/50 p-4 rounded-lg">
-            <div class="mb-3 text-gray-300 text-lg">${q.questionText}</div>
-            <div class="space-y-2 text-sm">
-                <p class="${userAnswers[index] === q.correctAnswer ? 'correct-answer' : 'wrong-answer'} p-2 rounded">Jawaban Anda: ${userAnswers[index] || 'Tidak dijawab'}</p>
-                <p class="correct-answer p-2 rounded">Jawaban Benar: ${q.correctAnswer}</p>
-                <div class="bg-gray-800 p-3 mt-3 rounded-md">
-                    <p class="font-bold text-cyan-300">Pembahasan:</p>
-                    <p class="text-gray-400 mt-1">${q.explanation}</p>
-                </div>
-            </div>
-        </div>
-    `;
-    container.innerHTML = explanationHTML;
-
-    document.getElementById('prev-explanation-btn').disabled = (index === 0);
-    document.getElementById('next-explanation-btn').disabled = (index === quiz.questions.length - 1);
-}
-
-function nextExplanation() {
-    if (currentExplanationIndex < currentQuizData.questions.length - 1) {
-        currentExplanationIndex++;
-        renderSingleExplanation(currentExplanationIndex);
-    }
-}
-
-function prevExplanation() {
-    if (currentExplanationIndex > 0) {
-        currentExplanationIndex--;
-        renderSingleExplanation(currentExplanationIndex);
-    }
-}
-
-function initializeApp() {
-    const firstLink = document.querySelector('.sidebar-link');
-    navigateTo('dashboard', firstLink);
-}
-
-// =================================================================================
-// BAGIAN 5: SISTEM NOTIFIKASI TOAST
-// =================================================================================
-function showToast(message, type = 'info') {
-    const container = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-    
-    const icons = {
-        info: 'fa-solid fa-circle-info',
-        success: 'fa-solid fa-check-circle',
-        error: 'fa-solid fa-triangle-exclamation',
-    };
-    const colors = {
-        info: 'text-cyan-400',
-        success: 'text-green-400',
-        error: 'text-red-400',
-    };
-
-    const iconClass = icons[type] || icons['info'];
-    const colorClass = colors[type] || colors['info'];
-
-    toast.className = 'toast-in flex items-start p-4 rounded-lg shadow-lg text-sm';
-    toast.style.backgroundColor = 'var(--bg-panel)';
-    toast.style.border = '1px solid var(--border-color)';
-    
-    toast.innerHTML = `
-        <div class="flex-shrink-0">
-            <i class="${iconClass} ${colorClass} text-xl"></i>
-        </div>
-        <div class="ml-3">
-            <p class="font-bold capitalize ${colorClass}">${type}</p>
-            <p class="text-gray-300 mt-1">${message}</p>
-        </div>
-    `;
-
-    container.appendChild(toast);
-
-    setTimeout(() => {
-        toast.classList.remove('toast-in');
-        toast.classList.add('toast-out');
-        toast.addEventListener('animationend', () => {
-            toast.remove();
+        // Auto-focus first input on page load
+        window.addEventListener('load', function() {
+            document.getElementById('email').focus();
         });
-    }, 5000);
-}
 
-</script>
+        // Keyboard navigation enhancement
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const activeElement = document.activeElement;
+                if (activeElement.classList.contains('form-input') || activeElement.tagName === 'INPUT') {
+                    e.preventDefault();
+                    document.getElementById('login-form').dispatchEvent(new Event('submit'));
+                }
+            }
+        });
+    </script>
 </body>
+</html>
 </html>
