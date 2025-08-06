@@ -4808,7 +4808,7 @@ function renderVideoPage() {
 function renderBankSoalPage() {
     // 1. Kelompokkan soal berdasarkan kategori
     const groupedQuizzes = allContentData.bankSoal.reduce((acc, quiz) => {
-        const category = quiz.category || 'Lainnya'; // Jika tidak ada kategori, masukkan ke 'Lainnya'
+        const category = quiz.category || 'Lainnya';
         if (!acc[category]) {
             acc[category] = [];
         }
@@ -4839,8 +4839,9 @@ function renderBankSoalPage() {
         `;
     }).join('');
 
+    // PERBAIKAN: Tambahkan kelas "overflow-x-hidden" pada div panel utama
     const bankSoalHTML = `
-        <div class="panel">
+        <div class="panel overflow-x-hidden">
             <h2 class="text-2xl font-bold mb-1 text-cyan-400">Bank Soal</h2>
             <p class="text-sm text-gray-400 mb-6">Pilih paket soal untuk mulai berlatih.</p>
             <div>
