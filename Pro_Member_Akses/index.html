@@ -16,7 +16,11 @@
         body { background-color: var(--bg-main); color: var(--text-primary); font-family: 'Inter', sans-serif; }
         .font-mono { font-family: 'Fira Code', monospace; }
         .panel { background-color: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.5rem; }
+        
+        /* MODIFIKASI: Style untuk link aktif di navigasi bawah */
+        .bottom-nav-link.active { color: var(--accent-cyan); }
         .sidebar-link.active { background-color: #30363D; color: white; }
+
         .card-item { background-color: #21262D; transition: transform 0.2s; cursor: pointer; }
         .card-item:hover { transform: translateY(-4px); background-color: #30363D; }
         .quiz-option { border: 2px solid var(--border-color); }
@@ -29,39 +33,48 @@
 <body class="text-white">
 
     <div class="flex min-h-screen">
-        <aside class="bg-black/30 w-20 md:w-64 p-4 md:p-6 flex flex-col">
-            <h1 class="text-xl md:text-2xl font-bold mb-10 text-cyan-400">UMT Pro</h1>
-            <nav id="sidebar-nav" class="space-y-4">
-                <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg" onclick="event.preventDefault(); navigateTo('dashboard', this)">
-                    <i class="fa-solid fa-chart-pie w-6 text-center"></i><span class="hidden md:inline">Dashboard</span>
+        
+        <aside class="fixed bottom-0 left-0 z-50 w-full h-16 bg-[var(--bg-panel)] border-t border-[var(--border-color)] 
+                       md:relative md:w-64 md:h-screen md:flex md:flex-col md:border-t-0 md:border-r md:p-6">
+            
+            <h1 class="hidden text-xl font-bold mb-10 text-cyan-400 md:block md:text-2xl">UMT Pro</h1>
+            
+            <nav id="sidebar-nav" class="flex justify-around h-full md:flex-col md:space-y-4 md:h-auto">
+                
+                <a href="#" class="sidebar-link bottom-nav-link flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('dashboard', this)">
+                    <i class="fa-solid fa-chart-pie w-6"></i>
+                    <span class="text-xs mt-1 md:text-base md:mt-0">Dashboard</span>
                 </a>
-                <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('materi', this)">
-                    <i class="fa-solid fa-book w-6 text-center"></i><span class="hidden md:inline">Materi</span>
+                
+                <a href="#" class="sidebar-link bottom-nav-link flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('materi', this)">
+                    <i class="fa-solid fa-book w-6"></i>
+                    <span class="text-xs mt-1 md:text-base md:mt-0">Materi</span>
                 </a>
-                <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('bank_soal', this)">
-                    <i class="fa-solid fa-list-check w-6 text-center"></i><span class="hidden md:inline">Bank Soal</span>
+
+                <a href="#" class="sidebar-link bottom-nav-link flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('bank_soal', this)">
+                    <i class="fa-solid fa-list-check w-6"></i>
+                    <span class="text-xs mt-1 md:text-base md:mt-0">Bank Soal</span>
                 </a>
-                <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('video', this)">
-                    <i class="fa-solid fa-video w-6 text-center"></i><span class="hidden md:inline">Video</span>
+                
+                <a href="#" class="sidebar-link bottom-nav-link flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('video', this)">
+                    <i class="fa-solid fa-video w-6"></i>
+                    <span class="text-xs mt-1 md:text-base md:mt-0">Video</span>
                 </a>
-                <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('forum', this)">
-                    <i class="fa-solid fa-comments w-6 text-center"></i><span class="hidden md:inline">Forum</span>
-                </a>
-                 <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('artikel', this)">
-                    <i class="fa-solid fa-newspaper w-6 text-center"></i><span class="hidden md:inline">Wawasan Pro</span>
-                </a>
-                <a href="#" class="sidebar-link flex items-center gap-4 p-2 rounded-lg hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('pengaturan', this)">
-                    <i class="fa-solid fa-user-gear w-6 text-center"></i><span class="hidden md:inline">Pengaturan</span>
+
+                <a href="#" class="sidebar-link bottom-nav-link flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('pengaturan', this)">
+                    <i class="fa-solid fa-user-gear w-6"></i>
+                    <span class="text-xs mt-1 md:text-base md:mt-0">Pengaturan</span>
                 </a>
             </nav>
-            <div class="mt-auto">
-                <button onclick="logout()" class="w-full bg-red-800 hover:bg-red-700 text-white text-xs py-2 px-3 rounded">
-                    <i class="fa-solid fa-right-from-bracket"></i><span class="hidden md:inline"> Logout</span>
+            
+            <div class="hidden mt-auto md:block">
+                <button onclick="logout()" class="w-full bg-red-800 hover:bg-red-700 text-white py-2 px-3 rounded">
+                    <i class="fa-solid fa-right-from-bracket"></i><span class="md:inline"> Logout</span>
                 </button>
             </div>
         </aside>
 
-        <main id="app-content" class="flex-1 p-6 space-y-6">
+        <main id="app-content" class="flex-1 p-6 space-y-6 pb-20 md:pb-6">
             </main>
     </div>
 
@@ -89,7 +102,6 @@ const infoTerbaruUMT = [
     { text: 'Video baru: 3 Mitos Tes SKD di TikTok', link: 'https://tiktok.com', icon: 'fa-brands fa-tiktok'},
 ];
 
-// DATA BARU UNTUK BANK SOAL
 const bankSoalData = [
     {
         id: 'tiu_1',
@@ -128,10 +140,10 @@ const bankSoalData = [
 ];
 
 // =================================================================================
-// BAGIAN 1: LOGIKA SESI & KEAMANAN (TIDAK BERUBAH)
+// BAGIAN 1: LOGIKA SESI & KEAMANAN
 // =================================================================================
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec';
-const LOGIN_PAGE_URL = '../Login/index.html'; // Sesuaikan jika perlu
+const LOGIN_PAGE_URL = '../Login/index.html';
 let heartbeatIntervalId = null;
 
 function startSessionHeartbeat(token, email) {
@@ -141,7 +153,7 @@ function startSessionHeartbeat(token, email) {
 }
 async function verifySession(token, email) {
     try {
-        const response = await fetch(WEB_APP_URL, {
+        await fetch(WEB_APP_URL, {
             method: 'POST', mode: 'no-cors',
             body: JSON.stringify({ action: 'check_session', token: token, email: email })
         });
@@ -169,19 +181,19 @@ function forceLogout(message) {
 })();
 
 // =================================================================================
-// BAGIAN 2: LOGIKA APLIKASI UTAMA (NAVIGASI & RENDER) - DIMODIFIKASI
+// BAGIAN 2: LOGIKA APLIKASI UTAMA (NAVIGASI & RENDER)
 // =================================================================================
 const appContent = document.getElementById('app-content');
 
 function navigateTo(page, clickedElement) {
-    document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+    // MODIFIKASI: Logika untuk style 'active'
+    document.querySelectorAll('.sidebar-link, .bottom-nav-link').forEach(link => link.classList.remove('active'));
     if (clickedElement) clickedElement.classList.add('active');
 
-    // LOGIKA NAVIGASI DIMODIFIKASI
     if (page === 'dashboard') {
         renderDashboardPage();
     } else if (page === 'bank_soal') {
-        renderBankSoalPage(); // Panggil fungsi untuk render halaman bank soal
+        renderBankSoalPage();
     }
     else {
         fetchAndRenderPage(`halaman/${page}.html`);
@@ -236,9 +248,8 @@ function renderDashboardPage() {
 }
 
 // =================================================================================
-// BAGIAN 3: LOGIKA LOCALSTORAGE & RENDER WIDGET DASBOR (TIDAK BERUBAH)
+// BAGIAN 3: LOGIKA LOCALSTORAGE & RENDER WIDGET DASBOR
 // =================================================================================
-
 function logAndComplete(contentId) {
     const LOG_KEY = 'userActivityLog';
     const COMPLETED_KEY = 'userCompletedItems';
@@ -296,13 +307,12 @@ function initializeAppDashboardWidgets() {
 }
 
 // =================================================================================
-// BAGIAN 4: LOGIKA BANK SOAL & QUIZ (KODE BARU)
+// BAGIAN 4: LOGIKA BANK SOAL & QUIZ
 // =================================================================================
 let currentQuizData = null;
 let currentQuestionIndex = 0;
 let userAnswers = [];
 
-// Fungsi untuk menampilkan halaman utama Bank Soal (daftar kartu)
 function renderBankSoalPage() {
     const bankSoalHTML = `
         <div class="panel">
@@ -324,7 +334,6 @@ function renderBankSoalPage() {
     appContent.innerHTML = bankSoalHTML;
 }
 
-// Fungsi untuk memulai sebuah kuis
 function startQuiz(quizId) {
     currentQuizData = bankSoalData.find(q => q.id === quizId);
     if (!currentQuizData) {
@@ -336,7 +345,6 @@ function startQuiz(quizId) {
     renderQuizInterface();
 }
 
-// Fungsi untuk menampilkan antarmuka kuis (pertanyaan & pilihan)
 function renderQuizInterface() {
     const quiz = currentQuizData;
     const question = quiz.questions[currentQuestionIndex];
@@ -356,7 +364,7 @@ function renderQuizInterface() {
             </div>
             <div id="quiz-options" class="space-y-3">
                 ${question.options.map((opt, index) => `
-                    <div id="option-${index}" class="quiz-option p-4 rounded-lg cursor-pointer transition-colors" onclick="selectAnswer('${opt}', ${index})">
+                    <div id="option-${index}" class="quiz-option p-4 rounded-lg cursor-pointer transition-colors" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}', ${index})">
                         ${opt}
                     </div>
                 `).join('')}
@@ -372,17 +380,13 @@ function renderQuizInterface() {
     appContent.innerHTML = quizHTML;
 }
 
-// Fungsi yang dipanggil saat user memilih jawaban
 function selectAnswer(answer, optionIndex) {
     userAnswers[currentQuestionIndex] = answer;
-    // Highlight jawaban yang dipilih
     document.querySelectorAll('.quiz-option').forEach(el => el.classList.remove('selected'));
     document.getElementById(`option-${optionIndex}`).classList.add('selected');
 }
 
-// Fungsi untuk submit (ke soal berikutnya atau selesai)
 function submitQuiz() {
-    // Cek apakah user sudah menjawab sebelum lanjut
     if (userAnswers[currentQuestionIndex] === null) {
         alert('Silakan pilih jawaban terlebih dahulu!');
         return;
@@ -392,12 +396,10 @@ function submitQuiz() {
         currentQuestionIndex++;
         renderQuizInterface();
     } else {
-        // Kuis selesai, tampilkan hasil
         renderQuizResults();
     }
 }
 
-// Fungsi untuk menampilkan hasil kuis dan pembahasan
 function renderQuizResults() {
     const quiz = currentQuizData;
     let score = 0;
@@ -406,7 +408,7 @@ function renderQuizResults() {
             score++;
         }
     });
-    const finalScorePercentage = Math.round((score / quiz.totalQuestions) * 100);
+    const finalScorePercentage = quiz.totalQuestions > 0 ? Math.round((score / quiz.totalQuestions) * 100) : 0;
 
     const resultHTML = `
         <div class="panel max-w-4xl mx-auto">
@@ -444,7 +446,6 @@ function renderQuizResults() {
     appContent.innerHTML = resultHTML;
 }
 
-
 // Fungsi inisialisasi aplikasi utama
 function initializeApp() {
     const firstLink = document.querySelector('.sidebar-link');
@@ -452,5 +453,6 @@ function initializeApp() {
 }
 
 </script>
+
 </body>
 </html>
