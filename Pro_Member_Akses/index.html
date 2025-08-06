@@ -33,6 +33,139 @@
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-20px); } }
         .toast-in { animation: slideInRight 0.5s forwards; }
         .toast-out { animation: fadeOut 0.5s forwards; }
+/* ================================================= */
+/* ==  STYLE UNTUK HALAMAN FORUM UMT              == */
+/* ================================================= */
+
+.forum-container {
+    background-color: var(--bg-panel);
+    border: 1px solid var(--border-color);
+    border-radius: 0.75rem; /* Sesuai dengan style .panel */
+    padding: 2.5rem 2rem;
+    max-width: 800px;
+    margin: 2rem auto;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+}
+
+/* Bagian Judul dan Deskripsi Awal */
+.intro h1 {
+    font-size: 2.25rem; /* 36px */
+    font-weight: 700;
+    color: var(--accent-cyan);
+    margin-bottom: 0.75rem;
+}
+
+.intro p {
+    color: var(--text-secondary);
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+/* Bagian Link Komunitas */
+.community-links {
+    margin-top: 3rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.community-links h2 {
+    font-size: 1.25rem; /* 20px */
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 1.5rem;
+}
+
+/* Tombol untuk Join Komunitas */
+.community-btn {
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    padding: 0.75rem 1.5rem; /* py-3 px-6 */
+    border-radius: 9999px; /* rounded-full */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.75rem; /* gap-3 */
+    transition: all 0.3s ease;
+    border: 2px solid transparent;
+}
+
+.community-btn i {
+    font-size: 1.25rem;
+}
+
+.community-btn:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
+}
+
+.whatsapp-btn {
+    background-color: #25D366; /* Warna resmi WhatsApp */
+}
+.whatsapp-btn:hover {
+    background-color: #1DAA54;
+}
+
+.telegram-btn {
+    background-color: #229ED9; /* Warna resmi Telegram */
+}
+.telegram-btn:hover {
+    background-color: #1C84B3;
+}
+
+/* Teks kecil di bawah tombol */
+.community-links .subtext {
+    color: var(--text-secondary);
+    margin-top: 1.5rem;
+    font-size: 0.875rem;
+}
+
+/* Penyesuaian untuk layar mobile */
+@media (max-width: 768px) {
+    .intro h1 {
+        font-size: 1.75rem; /* Perkecil judul di mobile */
+    }
+    .forum-container {
+        padding: 2rem 1rem;
+        margin: 1rem;
+    }
+    .community-btn {
+        width: 100%; /* Buat tombol memenuhi lebar di mobile */
+        justify-content: center;
+    }
+}
+
+/* Bagian Bank Soal  */
+ @media (max-width: 640px) {
+     #single-explanation-container > div {
+         padding: 1rem;
+         margin-bottom: 1rem;
+         overflow-x: auto; /* Tambahkan scroll horizontal jika konten terlalu lebar */
+     }
+
+     #single-explanation-container .text-lg {
+         font-size: 1rem;
+     }
+
+     #single-explanation-container .text-sm {
+         font-size: 0.875rem;
+     }
+
+     #single-explanation-container .font-bold {
+         font-size: 1rem;
+     }
+
+     .flex.justify-between.items-center.mt-8 {
+         flex-direction: column;
+         gap: 0.75rem;
+     }
+
+     .flex.justify-between.items-center.mt-8 > button {
+         width: 100%;
+     }
+ }
     </style>
 </head>
 <body class="text-white">
@@ -303,3 +436,4 @@ function showToast(message, type = 'info') { const container = document.getEleme
 </script>
 </body>
 </html>
+
