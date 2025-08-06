@@ -16,10 +16,8 @@
         body { background-color: var(--bg-main); color: var(--text-primary); font-family: 'Inter', sans-serif; }
         .font-mono { font-family: 'Fira Code', monospace; }
         .panel { background-color: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.5rem; }
-        
         .bottom-nav-link.active { color: var(--accent-cyan); }
         .sidebar-link.active { background-color: #30363D; color: white; }
-
         .card-item { background-color: #21262D; transition: transform 0.2s; cursor: pointer; }
         .card-item:hover { transform: translateY(-4px); background-color: #30363D; }
         .quiz-option { border: 2px solid var(--border-color); }
@@ -35,34 +33,6 @@
         @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-20px); } }
         .toast-in { animation: slideInRight 0.5s forwards; }
         .toast-out { animation: fadeOut 0.5s forwards; }
- @media (max-width: 640px) {
-     #single-explanation-container > div {
-         padding: 1rem;
-         margin-bottom: 1rem;
-         overflow-x: auto; /* Tambahkan scroll horizontal jika konten terlalu lebar */
-     }
-
-     #single-explanation-container .text-lg {
-         font-size: 1rem;
-     }
-
-     #single-explanation-container .text-sm {
-         font-size: 0.875rem;
-     }
-
-     #single-explanation-container .font-bold {
-         font-size: 1rem;
-     }
-
-     .flex.justify-between.items-center.mt-8 {
-         flex-direction: column;
-         gap: 0.75rem;
-     }
-
-     .flex.justify-between.items-center.mt-8 > button {
-         width: 100%;
-     }
- }
     </style>
 </head>
 <body class="text-white">
@@ -76,28 +46,22 @@
             <nav id="sidebar-nav" class="no-scrollbar flex overflow-x-auto h-full md:flex-col md:space-y-4 md:h-auto">
                 <div class="flex flex-nowrap items-center justify-start gap-2 px-2 md:flex-col md:items-stretch md:gap-0 md:px-0">
                     <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('dashboard', this)">
-                        <i class="fa-solid fa-chart-pie text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Dashboard</span>
+                        <i class="fa-solid fa-chart-pie text-lg md:w-6"></i><span class="text-xs mt-1 md:text-base md:mt-0">Dashboard</span>
                     </a>
                     <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('materi', this)">
-                        <i class="fa-solid fa-book text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Materi</span>
+                        <i class="fa-solid fa-book text-lg md:w-6"></i><span class="text-xs mt-1 md:text-base md:mt-0">Materi</span>
                     </a>
                     <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('bank_soal', this)">
-                        <i class="fa-solid fa-list-check text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Bank Soal</span>
+                        <i class="fa-solid fa-list-check text-lg md:w-6"></i><span class="text-xs mt-1 md:text-base md:mt-0">Bank Soal</span>
                     </a>
                     <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('video', this)">
-                        <i class="fa-solid fa-video text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Video</span>
+                        <i class="fa-solid fa-video text-lg md:w-6"></i><span class="text-xs mt-1 md:text-base md:mt-0">Video</span>
                     </a>
                     <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('forum', this)">
-                        <i class="fa-solid fa-comments text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Forum</span>
+                        <i class="fa-solid fa-comments text-lg md:w-6"></i><span class="text-xs mt-1 md:text-base md:mt-0">Forum</span>
                     </a>
                     <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('pengaturan', this)">
-                        <i class="fa-solid fa-user-gear text-lg md:w-6"></i>
-                        <span class="text-xs mt-1 md:text-base md:mt-0">Pengaturan</span>
+                        <i class="fa-solid fa-user-gear text-lg md:w-6"></i><span class="text-xs mt-1 md:text-base md:mt-0">Pengaturan</span>
                     </a>
                 </div>
             </nav>
@@ -124,10 +88,7 @@ const masterContentList = [
 ];
 const bankSoalData = [
     {
-        id: 'tiu_1',
-        title: 'Paket Latihan TIU #1',
-        subject: 'Tes Intelegensi Umum - Analogi',
-        totalQuestions: 5,
+        id: 'tiu_1', title: 'Paket Latihan TIU #1', subject: 'Tes Intelegensi Umum - Analogi', totalQuestions: 5,
         questions: [
             { questionText: 'MATA : WAJAH', options: ['A. Bantal : Ranjang', 'B. Buku : Perpustakaan', 'C. Jendela : Rumah', 'D. Air : Ember'], correctAnswer: 'C. Jendela : Rumah', explanation: 'Analogi ini adalah hubungan "bagian dari". MATA adalah bagian dari WAJAH, sebagaimana JENDELA adalah bagian dari RUMAH.' },
             { questionText: 'API : BAKAR', options: ['A. Air : Minum', 'B. Es : Beku', 'C. Angin : Sejuk', 'D. Tanah : Subur'], correctAnswer: 'B. Es : Beku', explanation: 'Analogi ini menunjukkan sifat atau fungsi. Sifat API adalah MEMBAKAR, sebagaimana sifat ES adalah MEMBEKUKAN (atau menjadi BEKU).' },
@@ -144,46 +105,11 @@ const bankSoalData = [
 const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec';
 const LOGIN_PAGE_URL = '../Login/index.html';
 let heartbeatIntervalId = null;
-
-function startSessionHeartbeat(token, email) {
-    if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
-    verifySession(token, email);
-    heartbeatIntervalId = setInterval(() => verifySession(token, email), 15000);
-}
-async function verifySession(token, email) {
-    try {
-        await fetch(WEB_APP_URL, {
-            method: 'POST', mode: 'no-cors',
-            body: JSON.stringify({ action: 'check_session', token: token, email: email })
-        });
-    } catch (error) { console.error("Heartbeat check failed:", error); }
-}
-function logout() {
-    sessionStorage.removeItem('sessionToken');
-    sessionStorage.removeItem('sessionEmail');
-    if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
-    showToast("Anda telah berhasil logout.", "success");
-    setTimeout(() => {
-        window.location.href = LOGIN_PAGE_URL;
-    }, 1500);
-}
-function forceLogout(message) {
-    if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
-    showToast(message, 'error');
-    setTimeout(() => {
-        window.location.href = LOGIN_PAGE_URL;
-    }, 2000);
-}
-(function gatekeeper() {
-    const token = sessionStorage.getItem('sessionToken');
-    const email = sessionStorage.getItem('sessionEmail');
-    if (!token || !email) {
-        window.location.href = LOGIN_PAGE_URL;
-        return;
-    }
-    startSessionHeartbeat(token, email);
-    document.addEventListener('DOMContentLoaded', () => initializeApp());
-})();
+function startSessionHeartbeat(token, email) { if (heartbeatIntervalId) clearInterval(heartbeatIntervalId); verifySession(token, email); heartbeatIntervalId = setInterval(() => verifySession(token, email), 15000); }
+async function verifySession(token, email) { try { await fetch(WEB_APP_URL, { method: 'POST', mode: 'no-cors', body: JSON.stringify({ action: 'check_session', token: token, email: email }) }); } catch (error) { console.error("Heartbeat check failed:", error); } }
+function logout() { sessionStorage.removeItem('sessionToken'); sessionStorage.removeItem('sessionEmail'); if (heartbeatIntervalId) clearInterval(heartbeatIntervalId); showToast("Anda telah berhasil logout.", "success"); setTimeout(() => { window.location.href = LOGIN_PAGE_URL; }, 1500); }
+function forceLogout(message) { if (heartbeatIntervalId) clearInterval(heartbeatIntervalId); showToast(message, 'error'); setTimeout(() => { window.location.href = LOGIN_PAGE_URL; }, 2000); }
+(function gatekeeper() { const token = sessionStorage.getItem('sessionToken'); const email = sessionStorage.getItem('sessionEmail'); if (!token || !email) { window.location.href = LOGIN_PAGE_URL; return; } startSessionHeartbeat(token, email); document.addEventListener('DOMContentLoaded', () => initializeApp()); })();
 
 // =================================================================================
 // BAGIAN 2: LOGIKA APLIKASI UTAMA (NAVIGASI & RENDER)
@@ -199,6 +125,10 @@ function navigateTo(page, clickedElement) {
     } else if (page === 'bank_soal') {
         renderBankSoalPage();
     }
+    // PERBAIKAN: Menambahkan render untuk halaman pengaturan
+    else if (page === 'pengaturan') {
+        renderPengaturanPage();
+    }
     else {
         fetchAndRenderPage(`halaman/${page}.html`);
     }
@@ -213,33 +143,13 @@ async function fetchAndRenderPage(pageUrl) {
         appContent.innerHTML = html;
     } catch (error) {
         console.error(error);
-        appContent.innerHTML = `<p class="text-center text-red-500">Gagal memuat konten. Pastikan file ${pageUrl} ada.</p>`;
+        showToast(`Gagal memuat halaman: ${pageUrl}`, 'error');
+        appContent.innerHTML = `<p class="text-center text-red-500">Gagal memuat konten.</p>`;
     }
 }
 
 function renderDashboardPage() {
-    appContent.innerHTML = `
-        <header class="panel flex justify-between items-center">
-            <div>
-                <h2 id="user-greeting" class="text-xl font-bold"></h2>
-                <p class="text-sm text-gray-400">Selamat datang di Command Center Anda.</p>
-            </div>
-        </header>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="col-span-1 lg:col-span-2 space-y-6">
-                <div class="panel">
-                    <h4 class="font-bold text-lg mb-4">Status Anda</h4>
-                    <div id="status-container" class="space-y-4"></div>
-                </div>
-            </div>
-            <div class="col-span-1 space-y-6">
-                <div class="panel">
-                    <h4 class="font-bold text-lg mb-4">Pencapaian</h4>
-                    <div id="lencana-container" class="flex gap-4"></div>
-                </div>
-            </div>
-        </div>
-    `;
+    appContent.innerHTML = `<header class="panel flex justify-between items-center"><div><h2 id="user-greeting" class="text-xl font-bold"></h2><p class="text-sm text-gray-400">Selamat datang di Command Center Anda.</p></div></header><div class="grid grid-cols-1 lg:grid-cols-3 gap-6"><div class="col-span-1 lg:col-span-2 space-y-6"><div class="panel"><h4 class="font-bold text-lg mb-4">Status Anda</h4><div id="status-container" class="space-y-4"></div></div></div><div class="col-span-1 space-y-6"><div class="panel"><h4 class="font-bold text-lg mb-4">Pencapaian</h4><div id="lencana-container" class="flex gap-4"></div></div></div></div>`;
     initializeAppDashboardWidgets();
 }
 
@@ -252,20 +162,59 @@ function initializeAppDashboardWidgets() {
     document.getElementById('user-greeting').innerHTML = `Halo, ${namePart.charAt(0).toUpperCase() + namePart.slice(1)} 👋`;
     
     const COMPLETED_KEY = 'userCompletedItems';
-    const completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
+    let completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
     
     const totalItems = masterContentList.length + bankSoalData.length;
     
+    // PERBAIKAN: Pastikan jumlah item selesai tidak melebihi total item
+    if (completed.length > totalItems) {
+      completed.length = totalItems;
+    }
+
     const progress = totalItems > 0 ? Math.round((completed.length / totalItems) * 100) : 0;
     
-    document.getElementById('status-container').innerHTML = `
-        <div><span class="text-sm">📚 Progress Keseluruhan (${completed.length}/${totalItems})</span><div class="w-full bg-gray-700 rounded-full h-2.5 mt-1"><div class="bg-cyan-500 h-2.5 rounded-full transition-all duration-500" style="width: ${progress}%"></div></div></div>
-    `;
+    document.getElementById('status-container').innerHTML = `<div><span class="text-sm">📚 Progress Keseluruhan (${completed.length}/${totalItems})</span><div class="w-full bg-gray-700 rounded-full h-2.5 mt-1"><div class="bg-cyan-500 h-2.5 rounded-full transition-all duration-500" style="width: ${progress}%"></div></div></div>`;
     let lencanaHTML = '';
     if (completed.length >= 1) lencanaHTML += `<div title="Langkah Pertama"><i class="fa-solid fa-shoe-prints text-cyan-400 text-2xl"></i></div>`;
     if (progress >= 50) lencanaHTML += `<div title="Setengah Jalan!"><i class="fa-solid fa-road-circle-check text-green-400 text-2xl"></i></div>`;
     if (progress === 100) lencanaHTML += `<div title="100% Selesai!"><i class="fa-solid fa-trophy text-amber-400 text-2xl"></i></div>`;
     document.getElementById('lencana-container').innerHTML = lencanaHTML || `<p class="text-sm text-gray-500">Selesaikan materi untuk dapat lencana!</p>`;
+}
+
+// PERBAIKAN: Fungsi untuk merender halaman Pengaturan
+function renderPengaturanPage() {
+    const pengaturanHTML = `
+        <div class="panel max-w-2xl mx-auto">
+            <h2 class="text-2xl font-bold mb-1 text-cyan-400">Pengaturan</h2>
+            <p class="text-sm text-gray-400 mb-6">Kelola data aplikasi Anda di sini.</p>
+            
+            <div class="bg-gray-900/50 p-4 rounded-lg">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <h4 class="font-bold">Reset Progres Belajar</h4>
+                        <p class="text-xs text-gray-400 mt-1">Aksi ini akan menghapus semua progres dan lencana Anda. Tidak dapat diurungkan.</p>
+                    </div>
+                    <button onclick="resetProgress()" class="bg-red-800 hover:bg-red-700 text-white text-sm font-bold py-2 px-4 rounded-lg flex-shrink-0">
+                        Reset Data
+                    </button>
+                </div>
+            </div>
+        </div>
+    `;
+    appContent.innerHTML = pengaturanHTML;
+}
+
+// PERBAIKAN: Fungsi untuk mereset progres
+function resetProgress() {
+    const confirmation = confirm("Apakah Anda yakin ingin mereset semua progres belajar Anda? Aksi ini tidak dapat dibatalkan.");
+    if (confirmation) {
+        localStorage.removeItem('userCompletedItems');
+        showToast("Progres belajar berhasil direset.", "success");
+        // Kembali ke dasbor untuk melihat perubahan
+        navigateTo('dashboard', document.querySelector('.sidebar-link'));
+    } else {
+        showToast("Aksi reset dibatalkan.", "info");
+    }
 }
 
 
@@ -278,32 +227,13 @@ let userAnswers = [];
 let currentExplanationIndex = 0;
 
 function renderBankSoalPage() {
-    const bankSoalHTML = `
-        <div class="panel">
-            <h2 class="text-2xl font-bold mb-1 text-cyan-400">Bank Soal</h2>
-            <p class="text-sm text-gray-400 mb-6">Pilih paket soal untuk mulai berlatih.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                ${bankSoalData.map(quiz => `
-                    <div class="card-item p-6 rounded-lg flex flex-col" onclick="startQuiz('${quiz.id}')">
-                        <h3 class="font-bold text-lg mb-2">${quiz.title}</h3>
-                        <p class="text-sm text-gray-400 mb-4">${quiz.subject}</p>
-                        <div class="mt-auto text-xs font-mono bg-gray-900/50 text-cyan-300 rounded-full px-3 py-1 self-start">
-                            ${quiz.totalQuestions} Soal
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-        </div>
-    `;
+    const bankSoalHTML = `<div class="panel"><h2 class="text-2xl font-bold mb-1 text-cyan-400">Bank Soal</h2><p class="text-sm text-gray-400 mb-6">Pilih paket soal untuk mulai berlatih.</p><div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">${bankSoalData.map(quiz => `<div class="card-item p-6 rounded-lg flex flex-col" onclick="startQuiz('${quiz.id}')"><h3 class="font-bold text-lg mb-2">${quiz.title}</h3><p class="text-sm text-gray-400 mb-4">${quiz.subject}</p><div class="mt-auto text-xs font-mono bg-gray-900/50 text-cyan-300 rounded-full px-3 py-1 self-start">${quiz.totalQuestions} Soal</div></div>`).join('')}</div></div>`;
     appContent.innerHTML = bankSoalHTML;
 }
 
 function startQuiz(quizId) {
     currentQuizData = bankSoalData.find(q => q.id === quizId);
-    if (!currentQuizData) {
-        showToast('Kuis tidak ditemukan!', 'error');
-        return;
-    }
+    if (!currentQuizData) { showToast('Kuis tidak ditemukan!', 'error'); return; }
     currentQuestionIndex = 0;
     userAnswers = new Array(currentQuizData.questions.length).fill(null);
     renderQuizInterface();
@@ -312,34 +242,7 @@ function startQuiz(quizId) {
 function renderQuizInterface() {
     const quiz = currentQuizData;
     const question = quiz.questions[currentQuestionIndex];
-    const quizHTML = `
-        <div class="panel max-w-4xl mx-auto">
-            <div class="flex justify-between items-start mb-4">
-                <div>
-                    <h2 class="text-xl font-bold text-cyan-400">${quiz.title}</h2>
-                    <p class="text-sm text-gray-400">Pertanyaan ${currentQuestionIndex + 1} dari ${quiz.questions.length}</p>
-                </div>
-                <button onclick="renderBankSoalPage()" class="text-xs text-gray-400 hover:text-white">&times; Tutup</button>
-            </div>
-            <hr class="border-gray-700 my-4"/>
-            <div class="mb-6 min-h-[60px]">
-                <div class="text-lg text-gray-200">${question.questionText}</div>
-            </div>
-            <div id="quiz-options" class="space-y-3">
-                ${question.options.map((opt, index) => `
-                    <div id="option-${index}" class="quiz-option p-4 rounded-lg cursor-pointer transition-colors" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}', ${index})">
-                        ${opt}
-                    </div>
-                `).join('')}
-            </div>
-            <hr class="border-gray-700 my-6"/>
-            <div class="flex justify-end">
-                <button id="next-btn" onclick="submitQuiz()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg">
-                    ${currentQuestionIndex === quiz.questions.length - 1 ? 'Selesai & Lihat Hasil' : 'Lanjut'}
-                </button>
-            </div>
-        </div>
-    `;
+    const quizHTML = `<div class="panel max-w-4xl mx-auto"><div class="flex justify-between items-start mb-4"><div><h2 class="text-xl font-bold text-cyan-400">${quiz.title}</h2><p class="text-sm text-gray-400">Pertanyaan ${currentQuestionIndex + 1} dari ${quiz.questions.length}</p></div><button onclick="renderBankSoalPage()" class="text-xs text-gray-400 hover:text-white">&times; Tutup</button></div><hr class="border-gray-700 my-4"/><div class="mb-6 min-h-[60px]"><div class="text-lg text-gray-200">${question.questionText}</div></div><div id="quiz-options" class="space-y-3">${question.options.map((opt, index) => `<div id="option-${index}" class="quiz-option p-4 rounded-lg cursor-pointer transition-colors" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}', ${index})">${opt}</div>`).join('')}</div><hr class="border-gray-700 my-6"/><div class="flex justify-end"><button id="next-btn" onclick="submitQuiz()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg">${currentQuestionIndex === quiz.questions.length - 1 ? 'Selesai & Lihat Hasil' : 'Lanjut'}</button></div></div>`;
     appContent.innerHTML = quizHTML;
 }
 
@@ -350,24 +253,14 @@ function selectAnswer(answer, optionIndex) {
 }
 
 function submitQuiz() {
-    if (userAnswers[currentQuestionIndex] === null) {
-        showToast('Silakan pilih jawaban terlebih dahulu!', 'error');
-        return;
-    }
-    if (currentQuestionIndex < currentQuizData.questions.length - 1) {
-        currentQuestionIndex++;
-        renderQuizInterface();
-    } else {
-        renderQuizResults();
-    }
+    if (userAnswers[currentQuestionIndex] === null) { showToast('Silakan pilih jawaban terlebih dahulu!', 'error'); return; }
+    if (currentQuestionIndex < currentQuizData.questions.length - 1) { currentQuestionIndex++; renderQuizInterface(); } else { renderQuizResults(); }
 }
 
 function renderQuizResults() {
     const quiz = currentQuizData;
     let score = 0;
-    quiz.questions.forEach((q, index) => {
-        if (q.correctAnswer === userAnswers[index]) { score++; }
-    });
+    quiz.questions.forEach((q, index) => { if (q.correctAnswer === userAnswers[index]) { score++; } });
     
     const COMPLETED_KEY = 'userCompletedItems';
     let completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
@@ -378,23 +271,7 @@ function renderQuizResults() {
 
     const finalScorePercentage = quiz.questions.length > 0 ? Math.round((score / quiz.questions.length) * 100) : 0;
     
-    const resultShellHTML = `
-        <div class="panel max-w-4xl mx-auto">
-            <h2 class="text-2xl font-bold text-center">Hasil Kuis: ${quiz.title}</h2>
-            <div class="text-center my-6 bg-gray-900/50 p-4 rounded-lg">
-                <p class="text-gray-400">Skor Akhir Anda</p>
-                <p class="text-5xl font-bold text-cyan-400 mt-2">${finalScorePercentage}%</p>
-                <p class="text-gray-300 mt-2">(${score} dari ${quiz.questions.length} soal benar)</p>
-            </div>
-            <h3 id="explanation-title" class="font-bold text-xl mt-10 mb-4 text-center">⭐ Pembahasan Soal</h3>
-            <div id="single-explanation-container" class="min-h-[250px]"></div>
-            <div class="flex justify-between items-center mt-8">
-                <button id="prev-explanation-btn" onclick="prevExplanation()" class="nav-btn bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg"><i class="fa-solid fa-chevron-left"></i> Sebelumnya</button>
-                <button onclick="renderBankSoalPage()" class="bg-cyan-800 hover:bg-cyan-700 text-white text-sm py-2 px-4 rounded-lg">Kembali ke Bank Soal</button>
-                <button id="next-explanation-btn" onclick="nextExplanation()" class="nav-btn bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg">Selanjutnya <i class="fa-solid fa-chevron-right"></i></button>
-            </div>
-        </div>
-    `;
+    const resultShellHTML = `<div class="panel max-w-4xl mx-auto"><h2 class="text-2xl font-bold text-center">Hasil Kuis: ${quiz.title}</h2><div class="text-center my-6 bg-gray-900/50 p-4 rounded-lg"><p class="text-gray-400">Skor Akhir Anda</p><p class="text-5xl font-bold text-cyan-400 mt-2">${finalScorePercentage}%</p><p class="text-gray-300 mt-2">(${score} dari ${quiz.questions.length} soal benar)</p></div><h3 id="explanation-title" class="font-bold text-xl mt-10 mb-4 text-center">⭐ Pembahasan Soal</h3><div id="single-explanation-container" class="min-h-[250px]"></div><div class="flex justify-between items-center mt-8 flex-wrap gap-4"><button id="prev-explanation-btn" onclick="prevExplanation()" class="nav-btn bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg"><i class="fa-solid fa-chevron-left"></i> Sebelumnya</button><button onclick="renderBankSoalPage()" class="bg-cyan-800 hover:bg-cyan-700 text-white text-sm py-2 px-4 rounded-lg">Kembali ke Bank Soal</button><button id="next-explanation-btn" onclick="nextExplanation()" class="nav-btn bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg">Selanjutnya <i class="fa-solid fa-chevron-right"></i></button></div></div>`;
     appContent.innerHTML = resultShellHTML;
     currentExplanationIndex = 0;
     renderSingleExplanation(currentExplanationIndex);
@@ -405,41 +282,14 @@ function renderSingleExplanation(index) {
     const title = document.getElementById('explanation-title');
     const quiz = currentQuizData;
     const q = quiz.questions[index];
-
     title.innerText = `⭐ Pembahasan Soal ${index + 1} / ${quiz.questions.length}`;
-
-    const explanationHTML = `
-        <div class="bg-gray-900/50 p-4 rounded-lg">
-            <div class="mb-3 text-gray-300 text-lg">${q.questionText}</div>
-            <div class="space-y-2 text-sm">
-                <p class="${userAnswers[index] === q.correctAnswer ? 'correct-answer' : 'wrong-answer'} p-2 rounded">Jawaban Anda: ${userAnswers[index] || 'Tidak dijawab'}</p>
-                <p class="correct-answer p-2 rounded">Jawaban Benar: ${q.correctAnswer}</p>
-                <div class="bg-gray-800 p-3 mt-3 rounded-md">
-                    <p class="font-bold text-cyan-300">Pembahasan:</p>
-                    <p class="text-gray-400 mt-1">${q.explanation}</p>
-                </div>
-            </div>
-        </div>
-    `;
+    const explanationHTML = `<div class="bg-gray-900/50 p-4 rounded-lg"><div class="mb-3 text-gray-300 text-lg">${q.questionText}</div><div class="space-y-2 text-sm"><p class="${userAnswers[index] === q.correctAnswer ? 'correct-answer' : 'wrong-answer'} p-2 rounded">Jawaban Anda: ${userAnswers[index] || 'Tidak dijawab'}</p><p class="correct-answer p-2 rounded">Jawaban Benar: ${q.correctAnswer}</p><div class="bg-gray-800 p-3 mt-3 rounded-md"><p class="font-bold text-cyan-300">Pembahasan:</p><p class="text-gray-400 mt-1">${q.explanation}</p></div></div></div>`;
     container.innerHTML = explanationHTML;
-
     document.getElementById('prev-explanation-btn').disabled = (index === 0);
     document.getElementById('next-explanation-btn').disabled = (index === quiz.questions.length - 1);
 }
-
-function nextExplanation() {
-    if (currentExplanationIndex < currentQuizData.questions.length - 1) {
-        currentExplanationIndex++;
-        renderSingleExplanation(currentExplanationIndex);
-    }
-}
-
-function prevExplanation() {
-    if (currentExplanationIndex > 0) {
-        currentExplanationIndex--;
-        renderSingleExplanation(currentExplanationIndex);
-    }
-}
+function nextExplanation() { if (currentExplanationIndex < currentQuizData.questions.length - 1) { currentExplanationIndex++; renderSingleExplanation(currentExplanationIndex); } }
+function prevExplanation() { if (currentExplanationIndex > 0) { currentExplanationIndex--; renderSingleExplanation(currentExplanationIndex); } }
 
 function initializeApp() {
     const firstLink = document.querySelector('.sidebar-link');
@@ -449,41 +299,7 @@ function initializeApp() {
 // =================================================================================
 // BAGIAN 5: SISTEM NOTIFIKASI TOAST
 // =================================================================================
-function showToast(message, type = 'info') {
-    const container = document.getElementById('toast-container');
-    const toast = document.createElement('div');
-    
-    const icons = { info: 'fa-solid fa-circle-info', success: 'fa-solid fa-check-circle', error: 'fa-solid fa-triangle-exclamation' };
-    const colors = { info: 'text-cyan-400', success: 'text-green-400', error: 'text-red-400' };
-
-    const iconClass = icons[type] || icons['info'];
-    const colorClass = colors[type] || colors['info'];
-
-    toast.className = 'toast-in flex items-start p-4 rounded-lg shadow-lg text-sm';
-    toast.style.backgroundColor = 'var(--bg-panel)';
-    toast.style.border = '1px solid var(--border-color)';
-    
-    toast.innerHTML = `
-        <div class="flex-shrink-0">
-            <i class="${iconClass} ${colorClass} text-xl"></i>
-        </div>
-        <div class="ml-3">
-            <p class="font-bold capitalize ${colorClass}">${type}</p>
-            <p class="text-gray-300 mt-1">${message}</p>
-        </div>
-    `;
-    container.appendChild(toast);
-
-    setTimeout(() => {
-        toast.classList.remove('toast-in');
-        toast.classList.add('toast-out');
-        toast.addEventListener('animationend', () => {
-            toast.remove();
-        });
-    }, 5000);
-}
-
+function showToast(message, type = 'info') { const container = document.getElementById('toast-container'); const toast = document.createElement('div'); const icons = { info: 'fa-solid fa-circle-info', success: 'fa-solid fa-check-circle', error: 'fa-solid fa-triangle-exclamation' }; const colors = { info: 'text-cyan-400', success: 'text-green-400', error: 'text-red-400' }; const iconClass = icons[type] || icons['info']; const colorClass = colors[type] || colors['info']; toast.className = 'toast-in flex items-start p-4 rounded-lg shadow-lg text-sm'; toast.style.backgroundColor = 'var(--bg-panel)'; toast.style.border = '1px solid var(--border-color)'; toast.innerHTML = `<div class="flex-shrink-0"><i class="${iconClass} ${colorClass} text-xl"></i></div><div class="ml-3"><p class="font-bold capitalize ${colorClass}">${type}</p><p class="text-gray-300 mt-1">${message}</p></div>`; container.appendChild(toast); setTimeout(() => { toast.classList.remove('toast-in'); toast.classList.add('toast-out'); toast.addEventListener('animationend', () => { toast.remove(); }); }, 5000); }
 </script>
 </body>
 </html>
-
