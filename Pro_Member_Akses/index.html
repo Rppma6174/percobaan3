@@ -4691,7 +4691,7 @@ const socialMediaUpdates = [
 // BAGIAN 1: LOGIKA SESI & KEAMANAN
 // =================================================================================
 // ... (Kode Bagian 1 tidak berubah, jadi saya singkat)
-const WEB_APP_URL = '#'; const LOGIN_PAGE_URL = '#'; let heartbeatIntervalId = null;
+const WEB_APP_URL = 'https://script.google.com/macros/s/AKfycbyP3jpWgs6ikQcA-9MsInRZYbLFQsshjxgo22twwXrzpACSPV9BREogrKUd-60crXV_mg/exec'; const LOGIN_PAGE_URL = '../'; let heartbeatIntervalId = null;
 function startSessionHeartbeat(token, email) { /* ... */ } async function verifySession(token, email) { /* ... */ }
 function logout() { sessionStorage.clear(); if (heartbeatIntervalId) clearInterval(heartbeatIntervalId); showToast("Anda telah berhasil logout.", "success"); setTimeout(() => { window.location.href = LOGIN_PAGE_URL; }, 1500); }
 function forceLogout(message) { if (heartbeatIntervalId) clearInterval(heartbeatIntervalId); showToast(message, 'error'); setTimeout(() => { window.location.href = LOGIN_PAGE_URL; }, 2000); }
@@ -5024,3 +5024,4 @@ function showToast(message, type = 'info') { const container = document.getEleme
 
 </body>
 </html>
+
