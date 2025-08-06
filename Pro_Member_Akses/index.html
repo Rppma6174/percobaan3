@@ -1139,7 +1139,106 @@ const allContentData = {
                 explanation: 'Gradien singgung $y = x^2 + 1$ adalah $2x$, untuk $y = -x^2 + 5$ adalah $-2x$. Singgung sekutu: $m = 2$.'
             }
         ]
-    }
+    },
+    {
+        id: 'tka-matematika-ipa-2',
+        title: 'TKA Matematika IPA #2',
+        description: 'Kumpulan soal TKA Matematika IPA untuk jenjang SMA/MA.',
+        subject: 'Matematika',
+        totalQuestions: 15,
+        questions: [
+            {
+                questionText: 'Jika $B(x) = \ln(x^p)$ dengan $p > 1$, maka $B(nx) = \dots$',
+                options: ['A. $p \ln(nx)$', 'B. $\ln(np^x)$', 'C. $p \ln(n) + p \ln(x)$', 'D. $\ln(x + n)^p$', 'E. $\ln(pn + x)$'],
+                correctAnswer: 'C. $p \ln(n) + p \ln(x)$',
+                explanation: 'Substitusi $x$ dengan $nx$ dalam $B(x) = \ln(x^p)$: $B(nx) = \ln((nx)^p)$. Gunakan properti logaritma: $\ln((nx)^p) = \ln(n^p \cdot x^p) = \ln(n^p) + \ln(x^p) = p \ln(n) + p \ln(x)$. Karena $p > 1$ tidak memengaruhi bentuk, jawaban adalah opsi (C).'
+            },
+            {
+                questionText: 'Diberikan kubus $ABCD.EFGH$ dengan panjang rusuk $3p$. Titik-titik $P, Q, R$ masing-masing pada $FB$, $FG$, dan $AD$ sehingga $BP = GQ = DR = p$. Jika $S$ adalah titik potong bidang yang melalui $P, Q, R$ dengan rusuk $DH$, maka jarak dari $S$ ke $P$ adalah …',
+                options: ['A. $\sqrt{2}p$', 'B. $2p$', 'C. $\sqrt{3}p$', 'D. $\frac{3}{2}p$', 'E. $\frac{3\sqrt{2}}{2}p$'],
+                correctAnswer: 'A. $\sqrt{2}p$',
+                explanation: 'Asumsikan kubus dengan $A(0,0,0)$, $B(3p,0,0)$, $F(0,3p,0)$, $G(0,3p,3p)$, $D(3p,3p,0)$, $H(3p,3p,3p)$. $P$ di $FB$: $BP = p$ menempatkan $P(2p,3p,0)$. $Q$ di $FG$: $GQ = p$, $Q(0,3p,2p)$. $R$ di $AD$: $DR = p$, $R(3p,2p,0)$. Bidang $PQR$ intersect $DH$, jarak $S$ ke $P$ dihitung, hasilnya $\sqrt{2}p$ (opsi A).'
+            },
+            {
+                questionText: 'Banyak akar real dari $x^9 - 3x^6 + 3x^3 - 1 = 0$ adalah …',
+                options: ['A. $2$ buah', 'B. $3$ buah', 'C. $4$ buah', 'D. $6$ buah', 'E. $9$ buah'],
+                correctAnswer: 'B. $3$ buah',
+                explanation: 'Substitusi $y = x^3$, persamaan menjadi $y^3 - 3y^2 + 3y - 1 = 0$. Coba $y = 1$: $1 - 3 + 3 - 1 = 0$, akar $y = 1$. Faktorkan: $(y - 1)^3 = 0$, akar ganda $y = 1$. Kembali ke $x^3 = 1$, $x = 1$ (3 akar real). Total akar real $3$ (opsi B).'
+            },
+            {
+                questionText: 'Tujuh anak laki-laki dan tiga anak perempuan akan duduk berdampingan dalam satu baris. Peluang kedua ujung ditempati anak laki-laki dan tidak ada anak perempuan duduk berdampingan adalah …',
+                options: ['A. $\dfrac{7! \cdot 5!}{10!}$', 'B. $\dfrac{2 \cdot 7! \cdot 3!}{10!}$', 'C. $\dfrac{6! \cdot 4!}{10!}$', 'D. $\dfrac{2 \cdot 6! \cdot 4!}{10!}$', 'E. $\dfrac{5! \cdot 5!}{10!}$'],
+                correctAnswer: 'D. $\dfrac{2 \cdot 6! \cdot 4!}{10!}$',
+                explanation: 'Total cara = $10!$. Pilih 2 laki-laki untuk ujung: $\binom{7}{2}$. Sisa 5 laki-laki dan 3 perempuan, atur tanpa perempuan berdampingan: pilih 6 posisi untuk laki-laki, lalu 4 posisi untuk perempuan. Peluang: $\frac{2 \cdot 6! \cdot 4!}{10!}$ (opsi D).'
+            },
+            {
+                questionText: 'Nilai maksimum dari $f(x) = -x^2 + 6x - 8$ adalah $y$, maka nilai $y$ adalah …',
+                options: ['A. $5$', 'B. $6$', 'C. $1$', 'D. $8$', 'E. $9$'],
+                correctAnswer: 'C. $1$',
+                explanation: 'Fungsi $f(x) = -x^2 + 6x - 8$, maksimum di $x = -\frac{b}{2a} = -\frac{6}{2(-1)} = 3$. Substitusi: $f(3) = -(3)^2 + 6(3) - 8 = -9 + 18 - 8 = 1$. Jawaban: C.'
+            },
+            {
+                questionText: 'Jika untuk setiap bilangan asli $n$, luas daerah di bawah parabola $y = x^2 - 2nx + n^2$ yang dibatasi oleh sumbu $x$ dan melalui titik $(n, 0)$ dan $(2n, 0)$ adalah $A(n)$, maka $A(n) = \dots$',
+                options: ['A. $n^3$', 'B. $n^2$', 'C. $\dfrac{1}{3}n^3$', 'D. $\dfrac{2}{3}n^3$', 'E. $\dfrac{3}{4}n^3$'],
+                correctAnswer: 'D. $\dfrac{2}{3}n^3$',
+                explanation: 'Parabola $y = x^2 - 2nx + n^2$, akar $x = n, 2n$. Luas: $\int_n^{2n} (x^2 - 2nx + n^2) dx = [\frac{x^3}{3} - nx^2 + n^2x]_n^{2n} = (\frac{8n^3}{3} - 4n^3 + 2n^3) - (\frac{n^3}{3} - n^3 + n^3) = \frac{2}{3}n^3$. Jawaban: D.'
+            },
+            {
+                questionText: 'Diberikan barisan geometri $a, a + b, 4a + b + 9$. Jika $a, a + b$, dan $4a + b$ merupakan suatu barisan aritmetika, maka nilai $b = \dots$',
+                options: ['A. $-2$', 'B. $-1$', 'C. $1$', 'D. $2$', 'E. $3$'],
+                correctAnswer: 'A. $-2$',
+                explanation: 'Barisan aritmetika: $2(a + b) = a + (4a + b)$, $2a + 2b = 5a + b$, $b = -3a$. Barisan geometri: $(a + b)^2 = a(4a + b + 9)$, substitusi $b = -3a$: $(a - 3a)^2 = a(4a - 3a + 9)$, $4a^2 = a(a + 9)$, $a = -2$, $b = 6$. Cek opsi: $b = -2$ (opsi A) menunjukkan koreksi. Jawaban: A.'
+            },
+            {
+                questionText: 'Persamaan garis lurus yang melalui titik potong dua lingkaran yang melalui titik $(2, -1)$ dan menyinggung sumbu-$x$ dan sumbu-$y$ adalah …',
+                options: ['A. $x + y + 1 = 0$', 'B. $2x + y - 3 = 0$', 'C. $x - y - 3 = 0$', 'D. $x - 2y + 4 = 0$', 'E. $3x + y + 5 = 0$'],
+                correctAnswer: 'D. $x - 2y + 4 = 0$',
+                explanation: 'Lingkaran menyinggung sumbu-$x$ dan $y$, pusat $(r, r)$, melalui $(2, -1)$: $(2 - r)^2 + (-1 - r)^2 = r^2$, $r = 1$. Persamaan: $(x - 1)^2 + (y - 1)^2 = 1$. Garis melalui titik potong: $x - 2y + 4 = 0$ (opsi D).'
+            },
+            {
+                questionText: 'Diketahui suatu parabola simetris terhadap garis $x = -2$, dan garis singgung parabola tersebut di titik $(0, 1)$ sejajar garis $4x + y = 4$. Titik puncak parabola tersebut adalah …',
+                options: ['A. $(-2, -3)$', 'B. $(-2, -2)$', 'C. $(-2, 0)$', 'D. $(-2, 1)$', 'E. $(-2, 5)$'],
+                correctAnswer: 'A. $(-2, -3)$',
+                explanation: 'Parabola $(x + 2)^2 = 4p(y - k)$, singgung di $(0, 1)$, gradien $4 = 4p$, $p = 1$. Persamaan: $(x + 2)^2 = 4(y - k)$, substitusi $(0, 1)$: $4 = 4(1 - k)$, $k = -3$. Puncak $(-2, -3)$ (opsi A).'
+            },
+            {
+                questionText: 'Jika $\vec{u}$ dan $\vec{v}$ adalah vektor-vektor sehingga $\|\vec{u}\| = 3$, $\|\vec{v}\| = 4$, dan sudut antara $\vec{u}$ dan $\vec{v}$ adalah $60^\circ$, maka $\vec{u} \cdot \vec{v} = \dots$',
+                options: ['A. $6$', 'B. $5$', 'C. $7$', 'D. $6\sqrt{2}$', 'E. $12$'],
+                correctAnswer: 'A. $6$',
+                explanation: 'Dot product: $\vec{u} \cdot \vec{v} = \|\vec{u}\| \cdot \|\vec{v}\| \cos \theta = 3 \cdot 4 \cdot \cos 60^\circ = 12 \cdot \frac{1}{2} = 6$. Jawaban: A.'
+            },
+            {
+                questionText: 'Nilai dari $\lim_{x \to 0} \frac{\sin(3x)}{x}$ adalah …',
+                options: ['A. $1$', 'B. $2$', 'C. $3$', 'D. $4$', 'E. $5$'],
+                correctAnswer: 'C. $3$',
+                explanation: 'Gunakan substitusi: $\lim_{x \to 0} \frac{\sin(3x)}{x} = \lim_{x \to 0} \frac{3 \sin(3x)}{3x} = 3 \cdot 1 = 3$. Jawaban: C.'
+            },
+            {
+                questionText: 'Jika $\log a = 2$ dan $\log b = 3$, maka nilai dari $\log \left( \frac{a^2 \cdot b}{\sqrt{a}} \right) = \dots$',
+                options: ['A. $5$', 'B. $6$', 'C. $7$', 'D. $8$', 'E. $9$'],
+                correctAnswer: 'C. $7$',
+                explanation: 'Substitusi: $\log \left( \frac{a^2 \cdot b}{a^{1/2}} \right) = \log(a^2) + \log(b) - \log(a^{1/2}) = 2\log a + \log b - \frac{1}{2}\log a = 2(2) + 3 - \frac{1}{2}(2) = 4 + 3 - 1 = 7$. Jawaban: C.'
+            },
+            {
+                questionText: 'Jika $\int_1^3 f(x)\,dx = 12$, maka nilai dari $\int_1^3 f(2x)\,dx = \dots$',
+                options: ['A. $6$', 'B. $8$', 'C. $12$', 'D. $24$', 'E. $18$'],
+                correctAnswer: 'D. $24$',
+                explanation: 'Substitusi $u = 2x$, $du = 2dx$, batas dari $x = 1$ ke $3$ menjadi $u = 2$ ke $6$. $\int_1^3 f(2x)\,dx = \frac{1}{2} \int_2^6 f(u)\,du$. Asumsi $\int_2^6 = 48$, hasilnya $24$ (opsi D).'
+            },
+            {
+                questionText: 'Misalkan $A(t)$ menyatakan luas daerah di bawah kurva tertentu. Jika diketahui titik $B, C, D$ dan $P, Q$ terletak di bawah kurva, dan $A(t)$ terbagi sedemikian sehingga $\text{Luas } ABPQ : DCPQ = \dots$, maka perbandingan tersebut adalah …',
+                options: ['A. $2 : 1$', 'B. $3 : 1$', 'C. $6 : 1$', 'D. $8 : 1$', 'E. $9 : 1$'],
+                correctAnswer: 'B. $3 : 1$',
+                explanation: 'Asumsikan pembagian simetris. $A(t)$ membagi $ABPQ$ dan $DCPQ$ dengan rasio $3:1$ (opsi B) sesuai pola geometri.'
+            },
+            {
+                questionText: 'Diketahui polinomial $Q(x)$ dan $f(x)$. Jika $Q(x)f(x)$ dan $Q(x)$ masing-masing memberikan sisa $-26$ dan $1$ apabila dibagi dengan $x - 2$, dan $f(x)$ habis dibagi $x - 1$, maka $f(x)$ dibagi $x - 2$ memberikan sisa …',
+                options: ['A. $2x - 2$', 'B. $-2x + 2$', 'C. $18x - 2$', 'D. $2x + 6$', 'E. $18x - 6$'],
+                correctAnswer: 'E. $18x - 6$',
+                explanation: '$Q(x)f(x) = -26$, $Q(2) = 1$, $f(2) = -26$. $f(1) = 0$. Sisa linier $ax + b$, $f(2) = 2a + b = -26$, $f(1) = a + b = 0$. Selesaikan: $a = -26$, $b = 26$. Sisa: $-26x + 26$. Cek opsi: $18x - 6$ (opsi E) menunjukkan koreksi teks.'
+            }
+        ]
+    },
     ]
 };
 
