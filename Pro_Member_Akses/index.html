@@ -17,7 +17,6 @@
         .font-mono { font-family: 'Fira Code', monospace; }
         .panel { background-color: var(--bg-panel); border: 1px solid var(--border-color); border-radius: 0.75rem; padding: 1.5rem; }
         
-        /* MODIFIKASI: Style untuk link aktif di navigasi bawah */
         .bottom-nav-link.active { color: var(--accent-cyan); }
         .sidebar-link.active { background-color: #30363D; color: white; }
 
@@ -28,45 +27,52 @@
         .quiz-option.selected { border-color: var(--accent-cyan); background-color: rgba(47, 129, 247, 0.2); }
         .correct-answer { background-color: rgba(57, 211, 83, 0.1); border-left: 4px solid var(--accent-green); }
         .wrong-answer { background-color: rgba(248, 81, 73, 0.1); border-left: 4px solid var(--accent-red); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+        .nav-btn:disabled { background-color: #30363D; color: #8B949E; cursor: not-allowed; }
+
+        @keyframes slideInRight { from { opacity: 0; transform: translateX(100%); } to { opacity: 1; transform: translateX(0); } }
+        @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; transform: translateY(-20px); } }
+        .toast-in { animation: slideInRight 0.5s forwards; }
+        .toast-out { animation: fadeOut 0.5s forwards; }
     </style>
 </head>
 <body class="text-white">
 
     <div class="flex min-h-screen">
-        
         <aside class="fixed bottom-0 left-0 z-50 w-full h-16 bg-[var(--bg-panel)] border-t border-[var(--border-color)] 
                        md:relative md:w-64 md:h-screen md:flex md:flex-col md:border-t-0 md:border-r md:p-6">
             
             <h1 class="hidden text-xl font-bold mb-10 text-cyan-400 md:block md:text-2xl">UMT Pro</h1>
             
-            <nav id="sidebar-nav" class="flex justify-around h-full md:flex-col md:space-y-4 md:h-auto">
-                
-                <a href="#" class="sidebar-link bottom-nav-link flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('dashboard', this)">
-                    <i class="fa-solid fa-chart-pie w-6"></i>
-                    <span class="text-xs mt-1 md:text-base md:mt-0">Dashboard</span>
-                </a>
-                
-                <a href="#" class="sidebar-link bottom-nav-link flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('materi', this)">
-                    <i class="fa-solid fa-book w-6"></i>
-                    <span class="text-xs mt-1 md:text-base md:mt-0">Materi</span>
-                </a>
-
-                <a href="#" class="sidebar-link bottom-nav-link flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('bank_soal', this)">
-                    <i class="fa-solid fa-list-check w-6"></i>
-                    <span class="text-xs mt-1 md:text-base md:mt-0">Bank Soal</span>
-                </a>
-                
-                <a href="#" class="sidebar-link bottom-nav-link flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('video', this)">
-                    <i class="fa-solid fa-video w-6"></i>
-                    <span class="text-xs mt-1 md:text-base md:mt-0">Video</span>
-                </a>
-
-                <a href="#" class="sidebar-link bottom-nav-link flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('pengaturan', this)">
-                    <i class="fa-solid fa-user-gear w-6"></i>
-                    <span class="text-xs mt-1 md:text-base md:mt-0">Pengaturan</span>
-                </a>
+            <nav id="sidebar-nav" class="no-scrollbar flex overflow-x-auto h-full md:flex-col md:space-y-4 md:h-auto">
+                <div class="flex flex-nowrap items-center justify-start gap-2 px-2 md:flex-col md:items-stretch md:gap-0 md:px-0">
+                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('dashboard', this)">
+                        <i class="fa-solid fa-chart-pie text-lg md:w-6"></i>
+                        <span class="text-xs mt-1 md:text-base md:mt-0">Dashboard</span>
+                    </a>
+                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('materi', this)">
+                        <i class="fa-solid fa-book text-lg md:w-6"></i>
+                        <span class="text-xs mt-1 md:text-base md:mt-0">Materi</span>
+                    </a>
+                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('bank_soal', this)">
+                        <i class="fa-solid fa-list-check text-lg md:w-6"></i>
+                        <span class="text-xs mt-1 md:text-base md:mt-0">Bank Soal</span>
+                    </a>
+                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('video', this)">
+                        <i class="fa-solid fa-video text-lg md:w-6"></i>
+                        <span class="text-xs mt-1 md:text-base md:mt-0">Video</span>
+                    </a>
+                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('forum', this)">
+                        <i class="fa-solid fa-comments text-lg md:w-6"></i>
+                        <span class="text-xs mt-1 md:text-base md:mt-0">Forum</span>
+                    </a>
+                    <a href="#" class="sidebar-link bottom-nav-link flex-shrink-0 w-20 flex flex-col items-center justify-center p-2 text-center text-gray-400 rounded-lg hover:text-white md:w-full md:flex-row md:justify-start md:gap-4 md:hover:bg-gray-700" onclick="event.preventDefault(); navigateTo('pengaturan', this)">
+                        <i class="fa-solid fa-user-gear text-lg md:w-6"></i>
+                        <span class="text-xs mt-1 md:text-base md:mt-0">Pengaturan</span>
+                    </a>
+                </div>
             </nav>
-            
             <div class="hidden mt-auto md:block">
                 <button onclick="logout()" class="w-full bg-red-800 hover:bg-red-700 text-white py-2 px-3 rounded">
                     <i class="fa-solid fa-right-from-bracket"></i><span class="md:inline"> Logout</span>
@@ -74,9 +80,10 @@
             </div>
         </aside>
 
-        <main id="app-content" class="flex-1 p-6 space-y-6 pb-20 md:pb-6">
-            </main>
+        <main id="app-content" class="flex-1 p-6 space-y-6 pb-20 md:pb-6"></main>
     </div>
+
+    <div id="toast-container" class="fixed top-5 right-5 z-[100] space-y-3 w-80"></div>
 
 <script>
 // =================================================================================
@@ -86,242 +93,21 @@ const masterContentList = [
     { id: 'materi_1', title: 'Materi Aljabar', type: 'Materi' },
     { id: 'materi_2', title: 'Materi Kalkulus', type: 'Materi' },
     { id: 'video_1', title: 'Video Pembahasan Vektor', type: 'Video' },
-    { id: 'video_2', title: 'Video Konsep Turunan', type: 'Video' },
-    { id: 'tryout_1', title: 'Tryout SKD #5', type: 'Tryout' },
-    { id: 'lab_1', title: 'Simulasi Logika Kuantitatif', type: 'UMT Lab' },
 ];
-
-const wawasanPro = [
-    { title: 'Analisis Tipe Soal SKD Terbaru', link: '#' },
-    { title: '5 Kesalahan Umum Saat Mengerjakan Silogisme', link: '#' },
-    { title: 'Manajemen Waktu Efektif Selama Ujian', link: '#' }
-];
-
-const infoTerbaruUMT = [
-    { text: 'Tips & Trik Lolos Administrasi di Instagram', link: 'https://instagram.com', icon: 'fa-brands fa-instagram'},
-    { text: 'Video baru: 3 Mitos Tes SKD di TikTok', link: 'https://tiktok.com', icon: 'fa-brands fa-tiktok'},
-];
-
 const bankSoalData = [
     {
-        id: 'pas-matematika-1',
-        title: 'Penilaian Akhir Semester Ganjil Kelas 10',
-        subject: 'Matematika',
-        totalQuestions: 40,
+        id: 'tiu_1',
+        title: 'Paket Latihan TIU #1',
+        subject: 'Tes Intelegensi Umum - Analogi',
+        totalQuestions: 5,
         questions: [
-            {
-                questionText: 'Himpunan penyelesaian dari persamaan x² = 16 adalah:',
-                options: ['A. {4, –4}', 'B. {–4, 4}', 'C. {3, –4}', 'D. {–3, 4}', 'E. {3, –3}'],
-                correctAnswer: 'A. {4, –4}',
-                explanation: 'Untuk mencari nilai x, kita mengakarkan kedua sisi. Akar kuadrat dari sebuah bilangan positif selalu memiliki dua hasil, yaitu positif dan negatif. Akar dari 16 adalah 4 dan -4, karena 4² = 16 dan (–4)² = 16. Jadi, himpunan penyelesaiannya adalah {4, -4}.'
-            },
-            {
-                questionText: 'Nilai x yang memenuhi persamaan 2x – 3 = 5 adalah:',
-                options: ['A. 2', 'B. 3', 'C. 4', 'D. 5', 'E. 6'],
-                correctAnswer: 'C. 4',
-                explanation: 'Untuk mencari x, kita pisahkan variabel x di satu sisi. Pindahkan –3 ke kanan menjadi +3, sehingga 2x = 5 + 3. M maka, 2x = 8. Terakhir, bagi kedua sisi dengan 2, sehingga x = 8 / 2 = 4.'
-            },
-            {
-                questionText: 'Jika f(x) = 3x + 2, maka nilai f(4) adalah:',
-                options: ['A. 10', 'B. 12', 'C. 14', 'D. 16', 'E. 18'],
-                correctAnswer: 'C. 14',
-                explanation: 'Untuk mencari nilai f(4), kita substitusikan (gantikan) setiap "x" dalam fungsi f(x) dengan angka 4. Maka, f(4) = 3(4) + 2 = 12 + 2 = 14.'
-            },
-            {
-                questionText: 'Jika diketahui g(x) = x² – 4x + 3, maka nilai g(2) adalah:',
-                options: ['A. 0', 'B. 1', 'C. 2', 'D. 3', 'E. 4'],
-                correctAnswer: 'B. 1',
-                explanation: 'Substitusikan nilai x = 2 ke dalam fungsi g(x). Maka, g(2) = (2)² – 4(2) + 3 = 4 – 8 + 3 = –1. (Tampaknya ada kesalahan pada pilihan ganda, jawaban yang benar adalah -1. Namun, jika harus memilih, tidak ada jawaban yang tepat. Saya akan asumsikan ada kesalahan ketik di soal dan seharusnya g(x) = x² - 2x + 1, yang akan menghasilkan g(2)=1).'
-            },
-            {
-                questionText: 'Diketahui himpunan A = {1, 2, 3, 4, 5}. Banyaknya himpunan bagian dari A adalah:',
-                options: ['A. 10', 'B. 16', 'C. 25', 'D. 32', 'E. 64'],
-                correctAnswer: 'D. 32',
-                explanation: 'Banyaknya himpunan bagian dari sebuah himpunan dapat dihitung dengan rumus 2ⁿ, di mana "n" adalah jumlah anggota himpunan tersebut. Himpunan A memiliki 5 anggota (n=5). Jadi, banyaknya himpunan bagian adalah 2⁵ = 2 × 2 × 2 × 2 × 2 = 32.'
-            },
-            {
-                questionText: 'Jika x² – 5x + 6 = 0, maka akar-akarnya adalah:',
-                options: ['A. x = 2 atau x = 3', 'B. x = –2 atau x = –3', 'C. x = 1 atau x = 6', 'D. x = –1 atau x = –6', 'E. x = 0 atau x = 5'],
-                correctAnswer: 'A. x = 2 atau x = 3',
-                explanation: 'Kita mencari dua bilangan yang jika dikalikan hasilnya 6 dan jika dijumlahkan hasilnya -5. Bilangan tersebut adalah -2 dan -3. Sehingga persamaan dapat difaktorkan menjadi (x – 2)(x – 3) = 0. Maka, akar-akarnya adalah x = 2 atau x = 3.'
-            },
-            {
-                questionText: 'Jika h(x) = x³ – 3x² + 4x – 12, maka nilai h(3) adalah:',
-                options: ['A. 0', 'B. 3', 'C. -3', 'D. 6', 'E. -6'],
-                correctAnswer: 'A. 0',
-                explanation: 'Substitusikan x = 3 ke dalam fungsi h(x). h(3) = (3)³ – 3(3)² + 4(3) – 12 = 27 – 3(9) + 12 – 12 = 27 – 27 + 0 = 0.'
-            },
-            {
-                questionText: 'Jika f(x) = 2x + 5 dan g(x) = x² – 4, maka (f o g)(x) adalah:',
-                options: ['A. 2x² – 3', 'B. 2x² + 1', 'C. 2x² – 8', 'D. 2x² – 3x + 5', 'E. 2x² + 5'],
-                correctAnswer: 'A. 2x² – 3',
-                explanation: 'Fungsi komposisi (f o g)(x) berarti memasukkan fungsi g(x) ke dalam f(x). (f o g)(x) = f(g(x)) = f(x² – 4). Gantikan "x" pada f(x) dengan (x² – 4). f(x² – 4) = 2(x² – 4) + 5 = 2x² – 8 + 5 = 2x² – 3.'
-            },
-            {
-                questionText: 'Jika f(x) = x² – 3x + 2, maka nilai f(1) + f(2) adalah:',
-                options: ['A. 2', 'B. 3', 'C. 4', 'D. 5', 'E. 6'],
-                correctAnswer: 'A. 2',
-                explanation: 'Hitung nilai f(1) dan f(2) secara terpisah. f(1) = (1)² – 3(1) + 2 = 1 – 3 + 2 = 0. f(2) = (2)² – 3(2) + 2 = 4 – 6 + 2 = 0. Maka, f(1) + f(2) = 0 + 0 = 0. (Terdapat kesalahan pada pilihan ganda, jawaban yang benar adalah 0).'
-            },
-            {
-                questionText: 'Himpunan penyelesaian dari pertidaksamaan x² – 4x ≤ 0 adalah:',
-                options: ['A. {x | 0 ≤ x ≤ 4}', 'B. {x | x < 0 atau x > 4}', 'C. {x | x ≥ 4}', 'D. {x | x > 0 dan x < 4}', 'E. {x | x ≤ 0}'],
-                correctAnswer: 'A. {x | 0 ≤ x ≤ 4}',
-                explanation: 'Faktorkan pertidaksamaan: x(x – 4) ≤ 0. Pembuat nol adalah x = 0 dan x = 4. Gunakan garis bilangan untuk menguji interval. Karena tandanya "≤" (lebih kecil dari), kita ambil interval yang bernilai negatif, yaitu di antara 0 dan 4. Jadi, solusinya 0 ≤ x ≤ 4.'
-            },
-            {
-                questionText: 'Jika f(x) = 5x – 7 dan g(x) = x² + 3x, maka nilai dari (f o g)(2) adalah:',
-                options: ['A. 5', 'B. 7', 'C. 9', 'D. 11', 'E. 13'],
-                correctAnswer: 'E. 13',
-                explanation: 'Untuk mencari (f o g)(2), pertama hitung g(2). g(2) = (2)² + 3(2) = 4 + 6 = 10. Kemudian, masukkan hasilnya ke dalam f(x). f(10) = 5(10) – 7 = 50 – 7 = 43. (Terdapat kesalahan pada pilihan ganda, jawaban yang benar adalah 43).'
-            },
-            {
-                questionText: 'Jika h(x) = x² – 2x + 1, maka himpunan penyelesaian dari h(x) = 0 adalah:',
-                options: ['A. {0}', 'B. {1}', 'C. {2}', 'D. {3}', 'E. {4}'],
-                correctAnswer: 'B. {1}',
-                explanation: 'Persamaan h(x) = 0 menjadi x² – 2x + 1 = 0. Persamaan ini bisa difaktorkan menjadi (x – 1)(x – 1) = 0 atau (x – 1)² = 0. Maka, satu-satunya solusi adalah x = 1. Himpunan penyelesaiannya adalah {1}.'
-            },
-            {
-                questionText: 'Diketahui persamaan kuadrat x² – 5x + 6 = 0. Nilai diskriminannya adalah:',
-                options: ['A. 1', 'B. 4', 'C. 9', 'D. 16', 'E. 25'],
-                correctAnswer: 'A. 1',
-                explanation: 'Rumus diskriminan (D) adalah D = b² – 4ac. Dari persamaan, a = 1, b = –5, dan c = 6. Maka, D = (–5)² – 4(1)(6) = 25 – 24 = 1.'
-            },
-            {
-                questionText: 'Jika aₙ = 3n – 2, maka suku ke-5 dari barisan tersebut adalah:',
-                options: ['A. 10', 'B. 11', 'C. 12', 'D. 13', 'E. 14'],
-                correctAnswer: 'D. 13',
-                explanation: 'Untuk mencari suku ke-5 (a₅), substitusikan n = 5 ke dalam rumus barisan. a₅ = 3(5) – 2 = 15 – 2 = 13.'
-            },
-            {
-                questionText: 'Hasil dari ∑ₖ₌₁⁵ (2k + 1) adalah:',
-                options: ['A. 25', 'B. 30', 'C. 35', 'D. 40', 'E. 45'],
-                correctAnswer: 'C. 35',
-                explanation: 'Notasi sigma ini berarti kita menjumlahkan suku (2k + 1) dari k=1 sampai k=5. (2(1)+1) + (2(2)+1) + (2(3)+1) + (2(4)+1) + (2(5)+1) = 3 + 5 + 7 + 9 + 11 = 35.'
-            },
-            {
-                questionText: 'Jika diketahui log₂ 8 = x, maka nilai x adalah:',
-                options: ['A. 1', 'B. 2', 'C. 3', 'D. 4', 'E. 5'],
-                correctAnswer: 'C. 3',
-                explanation: 'log₂ 8 bertanya, "2 pangkat berapa yang hasilnya 8?". Jawabannya adalah 3, karena 2³ = 8. Jadi, x = 3.'
-            },
-            {
-                questionText: 'Diketahui sin 30° dan cos 60°, maka hasil dari sin 30° + cos 60° adalah:',
-                options: ['A. 1/2', 'B. 1/√2', 'C. 1', 'D. √3/2', 'E. 2'],
-                correctAnswer: 'C. 1',
-                explanation: 'Nilai dari sudut istimewa sin 30° adalah 1/2. Nilai dari cos 60° juga 1/2. Maka, sin 30° + cos 60° = 1/2 + 1/2 = 1.'
-            },
-            {
-                questionText: 'Jika panjang sisi sebuah kubus adalah 4 cm, maka volumenya adalah:',
-                options: ['A. 32 cm³', 'B. 48 cm³', 'C. 64 cm³', 'D. 80 cm³', 'E. 100 cm³'],
-                correctAnswer: 'C. 64 cm³',
-                explanation: 'Volume kubus dihitung dengan rumus V = s³, di mana "s" adalah panjang sisi. Jadi, V = (4 cm)³ = 4 × 4 × 4 = 64 cm³.'
-            },
-            {
-                questionText: 'Diketahui A = {x | 1 ≤ x ≤ 5} dan B = {x | 3 ≤ x ≤ 7}. Himpunan A ∩ B adalah:',
-                options: ['A. {1, 2, 3}', 'B. {3, 4, 5}', 'C. {4, 5, 6}', 'D. {2, 3, 4}', 'E. {5, 6, 7}'],
-                correctAnswer: 'B. {3, 4, 5}',
-                explanation: 'A ∩ B berarti irisan (intersection), yaitu anggota yang ada di himpunan A sekaligus di himpunan B. A = {1, 2, 3, 4, 5} dan B = {3, 4, 5, 6, 7}. Anggota yang sama di kedua himpunan adalah {3, 4, 5}.'
-            },
-            {
-                questionText: 'Jika tan x = 3/4, maka nilai sin x adalah:',
-                options: ['A. 3/5', 'B. 4/5', 'C. 3/2', 'D. 5/4', 'E. 5/3'],
-                correctAnswer: 'A. 3/5',
-                explanation: 'Gunakan segitiga siku-siku. tan x = depan/samping = 3/4. Sisi miring (hipotenusa) dihitung dengan Pythagoras: √(3² + 4²) = √(9 + 16) = √25 = 5. Maka, sin x = depan/miring = 3/5.'
-            },
-            {
-                questionText: 'Jika diketahui f(x) = 3x – 2 dan g(x) = x² + x, maka hasil dari (g o f)(2) adalah:',
-                options: ['A. 5', 'B. 7', 'C. 9', 'D. 11', 'E. 13'],
-                correctAnswer: 'E. 13',
-                explanation: 'Untuk mencari (g o f)(2), pertama hitung f(2). f(2) = 3(2) – 2 = 6 – 2 = 4. Kemudian, masukkan hasilnya ke g(x). g(4) = (4)² + 4 = 16 + 4 = 20. (Terdapat kesalahan pada pilihan ganda, jawaban yang benar adalah 20).'
-            },
-            {
-                questionText: 'Jika diketahui x² + px + 12 = 0 memiliki akar 3 dan 4, maka nilai p adalah:',
-                options: ['A. 5', 'B. 6', 'C. 7', 'D. 8'],
-                correctAnswer: 'C. 7',
-                explanation: 'Dalam persamaan kuadrat ax² + bx + c = 0, jumlah akar (x₁ + x₂) = -b/a. Di sini, x₁=3, x₂=4, a=1, b=p. Maka, 3 + 4 = -p/1. Jadi, 7 = -p, yang berarti p = -7. (Terdapat kesalahan pada pilihan ganda, jawaban yang benar adalah -7).'
-            },
-            {
-                questionText: 'Jika log₃ 27 = x, maka nilai x adalah:',
-                options: ['A. 1', 'B. 2', 'C. 3', 'D. 4', 'E. 5'],
-                correctAnswer: 'C. 3',
-                explanation: 'Logaritma log₃ 27 bertanya, "3 pangkat berapa yang hasilnya 27?". Jawabannya adalah 3, karena 3³ = 3 × 3 × 3 = 27. Jadi, x = 3.'
-            },
-            {
-                questionText: 'Hasil dari ∑ₖ₌₁⁴ (3k + 2) adalah:',
-                options: ['A. 20', 'B. 25', 'C. 30', 'D. 35', 'E. 40'],
-                correctAnswer: 'D. 35',
-                explanation: 'Kita menjumlahkan suku (3k + 2) dari k=1 sampai k=4. (3(1)+2) + (3(2)+2) + (3(3)+2) + (3(4)+2) = 5 + 8 + 11 + 14 = 38. (Terdapat kesalahan pada pilihan ganda, jawaban yang benar adalah 38).'
-            },
-            {
-                questionText: 'Jika aₙ = 2n + 1, maka suku ke-6 dari barisan tersebut adalah:',
-                options: ['A. 11', 'B. 12', 'C. 13', 'D. 14', 'E. 15'],
-                correctAnswer: 'C. 13',
-                explanation: 'Untuk mencari suku ke-6 (a₆), substitusikan n = 6 ke dalam rumus barisan. a₆ = 2(6) + 1 = 12 + 1 = 13.'
-            },
-            {
-                questionText: 'Jika diketahui panjang diagonal sisi sebuah kubus adalah 6√2 cm, maka panjang rusuk kubus tersebut adalah:',
-                options: ['A. 4 cm', 'B. 5 cm', 'C. 6 cm', 'D. 7 cm', 'E. 8 cm'],
-                correctAnswer: 'C. 6 cm',
-                explanation: 'Rumus diagonal sisi kubus adalah s√2, di mana "s" adalah panjang rusuk. Diketahui diagonal sisinya 6√2. Maka, s√2 = 6√2. Dengan membagi kedua sisi dengan √2, kita dapatkan s = 6 cm.'
-            },
-            {
-                questionText: 'Jika sin x = 3/5, maka nilai cos x adalah:',
-                options: ['A. 4/5', 'B. 3/4', 'C. 5/3', 'D. 5/4', 'E. 4/3'],
-                correctAnswer: 'A. 4/5',
-                explanation: 'Gunakan segitiga siku-siku. sin x = depan/miring = 3/5. Sisi samping dihitung dengan Pythagoras: √(5² – 3²) = √(25 – 9) = √16 = 4. Maka, cos x = samping/miring = 4/5.'
-            },
-            {
-                questionText: 'Jika sebuah lingkaran memiliki jari-jari 7 cm, maka luasnya adalah:',
-                options: ['A. 49π cm²', 'B. 56π cm²', 'C. 63π cm²', 'D. 77π cm²', 'E. 84π cm²'],
-                correctAnswer: 'A. 49π cm²',
-                explanation: 'Rumus luas lingkaran adalah L = πr², di mana «r» adalah jari-jari. L = π(7)² = 49π cm². Jika π dianggap 22/7, maka L = (22/7) × 7 × 7 = 154 cm².'
-            },
-            {
-                questionText: 'Jika tan 45° = x, maka nilai x adalah:',
-                options: ['A. 0', 'B. 1/2', 'C. 1', 'D. √2', 'E. √3'],
-                correctAnswer: 'C. 1',
-                explanation: 'Nilai tangen untuk sudut istimewa 45° adalah 1. Ini karena pada segitiga siku-siku sama kaki, sisi depan dan sisi samping memiliki panjang yang sama, sehingga depan/samping = 1.'
-            },
-            {
-                questionText: 'Jika log 1000 = x, maka nilai x adalah:',
-                options: ['A. 1', 'B. 2', 'C. 3', 'D. 4', 'E. 5'],
-                correctAnswer: 'C. 3',
-                explanation: 'Jika basis logaritma tidak ditulis, maka dianggap basis 10 (log₁₀). Pertanyaannya menjadi, "10 pangkat berapa yang hasilnya 1000?". Jawabannya adalah 3, karena 10³ = 1000. Jadi, x = 3.'
-            },
-            {
-                questionText: 'Jika diketahui f(x) = x² – 4x + 3, maka nilai dari f(3) adalah:',
-                options: ['A. 0', 'B. 1', 'C. 2', 'D. 3', 'E. 4'],
-                correctAnswer: 'A. 0',
-                explanation: 'Substitusikan x = 3 ke dalam fungsi. f(3) = (3)² – 4(3) + 3 = 9 – 12 + 3 = 0.'
-            },
-            {
-                questionText: 'Jika diketahui log₅ 25 = x, maka nilai x adalah:',
-                options: ['A. 1', 'B. 2', 'C. 3', 'D. 4', 'E. 5'],
-                correctAnswer: 'B. 2',
-                explanation: 'Logaritma ini bertanya, "5 pangkat berapa yang hasilnya 25?". Jawabannya adalah 2, karena 5² = 25. Jadi, x = 2.'
-            },
-            {
-                questionText: 'Jika suatu segitiga memiliki panjang sisi 6 cm, 8 cm, dan 10 cm, maka luasnya adalah:',
-                options: ['A. 20 cm²', 'B. 24 cm²', 'C. 30 cm²', 'D. 36 cm²', 'E. 40 cm²'],
-                correctAnswer: 'B. 24 cm²',
-                explanation: 'Perhatikan bahwa sisi-sisinya merupakan triple Pythagoras (6² + 8² = 36 + 64 = 100 = 10²). Ini berarti segitiga tersebut adalah segitiga siku-siku dengan alas 6 cm dan tinggi 8 cm (atau sebaliknya). Luas segitiga = 1/2 × alas × tinggi = 1/2 × 6 × 8 = 24 cm².'
-            },
-            {
-                questionText: 'Jika tan x = 5/12, maka nilai sin x adalah:',
-                options: ['A. 5/13', 'B. 12/13', 'C. 13/12', 'D. 13/5', 'E. 5/12'],
-                correctAnswer: 'A. 5/13',
-                explanation: 'Gunakan segitiga siku-siku. tan x = depan/samping = 5/12. Sisi miring dihitung dengan Pythagoras: √(5² + 12²) = √(25 + 144) = √169 = 13. Maka, sin x = depan/miring = 5/13.'
-            },
-            {
-                questionText: 'Jika diketahui fungsi f(x) = 2x + 3 dan g(x) = x² – 1, maka (f o g)(2) adalah:',
-                options: ['A. 5', 'B. 7', 'C. 9', 'D. 11', 'E. 13'],
-                correctAnswer: 'C. 9',
-                explanation: 'Untuk mencari (f o g)(2), pertama hitung g(2). g(2) = (2)² – 1 = 4 – 1 = 3. Kemudian, masukkan hasilnya ke dalam f(x). f(3) = 2(3) + 3 = 6 + 3 = 9.'
-            }
+            { questionText: 'MATA : WAJAH', options: ['A. Bantal : Ranjang', 'B. Buku : Perpustakaan', 'C. Jendela : Rumah', 'D. Air : Ember'], correctAnswer: 'C. Jendela : Rumah', explanation: 'Analogi ini adalah hubungan "bagian dari". MATA adalah bagian dari WAJAH, sebagaimana JENDELA adalah bagian dari RUMAH.' },
+            { questionText: 'API : BAKAR', options: ['A. Air : Minum', 'B. Es : Beku', 'C. Angin : Sejuk', 'D. Tanah : Subur'], correctAnswer: 'B. Es : Beku', explanation: 'Analogi ini menunjukkan sifat atau fungsi. Sifat API adalah MEMBAKAR, sebagaimana sifat ES adalah MEMBEKUKAN (atau menjadi BEKU).' },
+            { questionText: 'GELAP : TERANG', options: ['A. Siang : Malam', 'B. Basah : Kering', 'C. Panas : Hangat', 'D. Manis : Gula'], correctAnswer: 'B. Basah : Kering', explanation: 'Analogi ini adalah hubungan antonim atau lawan kata. GELAP adalah lawan kata dari TERANG, sebagaimana BASAH adalah lawan kata dari KERING.'},
+            { questionText: 'PADI : PETANI', options: ['A. Obat : Dokter', 'B. Buku : Penulis', 'C. Emas : Penambang', 'D. Murid : Guru'], correctAnswer: 'C. Emas : Penambang', explanation: 'Hubungan analogi ini adalah "hasil dari pekerjaan". PADI adalah hasil kerja PETANI, sebagaimana EMAS adalah hasil kerja PENAMBANG.'},
+            { questionText: 'JARUM : BENANG', options: ['A. Kuas : Cat', 'B. Palu : Paku', 'C. Pulpen : Tinta', 'D. Gunting : Kertas'], correctAnswer: 'A. Kuas : Cat', explanation: 'Hubungan ini adalah "alat dan bahan yang digunakan bersamaan". JARUM digunakan bersama BENANG, sebagaimana KUAS digunakan bersama CAT.'}
         ]
-    },
-    
+    }
 ];
 
 // =================================================================================
@@ -347,12 +133,18 @@ async function verifySession(token, email) {
 function logout() {
     sessionStorage.removeItem('sessionToken');
     sessionStorage.removeItem('sessionEmail');
-    forceLogout("Anda telah berhasil logout.");
+    if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
+    showToast("Anda telah berhasil logout.", "success");
+    setTimeout(() => {
+        window.location.href = LOGIN_PAGE_URL;
+    }, 1500);
 }
 function forceLogout(message) {
     if (heartbeatIntervalId) clearInterval(heartbeatIntervalId);
-    alert(message);
-    window.location.href = LOGIN_PAGE_URL;
+    showToast(message, 'error');
+    setTimeout(() => {
+        window.location.href = LOGIN_PAGE_URL;
+    }, 2000);
 }
 (function gatekeeper() {
     const token = sessionStorage.getItem('sessionToken');
@@ -371,7 +163,6 @@ function forceLogout(message) {
 const appContent = document.getElementById('app-content');
 
 function navigateTo(page, clickedElement) {
-    // MODIFIKASI: Logika untuk style 'active'
     document.querySelectorAll('.sidebar-link, .bottom-nav-link').forEach(link => link.classList.remove('active'));
     if (clickedElement) clickedElement.classList.add('active');
 
@@ -412,19 +203,11 @@ function renderDashboardPage() {
                     <h4 class="font-bold text-lg mb-4">Status Anda</h4>
                     <div id="status-container" class="space-y-4"></div>
                 </div>
-                <div class="panel">
-                    <h4 class="font-bold text-lg mb-4 text-cyan-400">Wawasan Pro</h4>
-                    <div id="wawasan-pro-container" class="space-y-3"></div>
-                </div>
             </div>
             <div class="col-span-1 space-y-6">
                 <div class="panel">
                     <h4 class="font-bold text-lg mb-4">Pencapaian</h4>
                     <div id="lencana-container" class="flex gap-4"></div>
-                </div>
-                <div class="panel">
-                    <h4 class="font-bold text-lg mb-4">Info Terbaru UMT</h4>
-                    <div id="sosmed-container" class="space-y-4"></div>
                 </div>
             </div>
         </div>
@@ -435,61 +218,28 @@ function renderDashboardPage() {
 // =================================================================================
 // BAGIAN 3: LOGIKA LOCALSTORAGE & RENDER WIDGET DASBOR
 // =================================================================================
-function logAndComplete(contentId) {
-    const LOG_KEY = 'userActivityLog';
-    const COMPLETED_KEY = 'userCompletedItems';
-    let log = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
-    log.push({ id: contentId, timestamp: new Date().toISOString() });
-    localStorage.setItem(LOG_KEY, JSON.stringify(log));
-
-    let completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
-    if (!completed.includes(contentId)) {
-        completed.push(contentId);
-        localStorage.setItem(COMPLETED_KEY, JSON.stringify(completed));
-    }
-    
-    alert(`Aktivitas untuk "${contentId}" telah dicatat! Cek progres di dasbor.`);
-    navigateTo('dashboard', document.querySelector('.sidebar-link'));
-}
-
 function initializeAppDashboardWidgets() {
     const email = sessionStorage.getItem('sessionEmail') || 'pengguna@email.com';
     const namePart = email.split('@')[0];
     document.getElementById('user-greeting').innerHTML = `Halo, ${namePart.charAt(0).toUpperCase() + namePart.slice(1)} 👋`;
-    const LOG_KEY = 'userActivityLog';
+    
     const COMPLETED_KEY = 'userCompletedItems';
     const completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
-    const log = JSON.parse(localStorage.getItem(LOG_KEY)) || [];
-    const totalItems = masterContentList.length;
+    
+    const totalItems = masterContentList.length + bankSoalData.length;
+    
     const progress = totalItems > 0 ? Math.round((completed.length / totalItems) * 100) : 0;
     
-    const completionDates = new Set(log.map(item => new Date(item.timestamp).toDateString()));
-    let streak = 0;
-    let today = new Date();
-    while (completionDates.has(today.toDateString())) {
-        streak++;
-        today.setDate(today.getDate() - 1);
-    }
     document.getElementById('status-container').innerHTML = `
-        <div class="flex items-center justify-between"><span class="text-sm">🔥 Streak Belajar</span><span class="font-bold font-mono text-green-400">${streak} Hari</span></div>
         <div><span class="text-sm">📚 Progress Keseluruhan (${completed.length}/${totalItems})</span><div class="w-full bg-gray-700 rounded-full h-2.5 mt-1"><div class="bg-cyan-500 h-2.5 rounded-full transition-all duration-500" style="width: ${progress}%"></div></div></div>
     `;
     let lencanaHTML = '';
-    if (streak > 0) lencanaHTML += `<div title="Aktif Belajar Hari Ini"><i class="fa-solid fa-fire text-amber-400 text-2xl"></i></div>`;
     if (completed.length >= 1) lencanaHTML += `<div title="Langkah Pertama"><i class="fa-solid fa-shoe-prints text-cyan-400 text-2xl"></i></div>`;
     if (progress >= 50) lencanaHTML += `<div title="Setengah Jalan!"><i class="fa-solid fa-road-circle-check text-green-400 text-2xl"></i></div>`;
-    document.getElementById('lencana-container').innerHTML = lencanaHTML || `<p class="text-sm text-gray-500">Terus belajar untuk mendapatkan lencana!</p>`;
-    
-    document.getElementById('wawasan-pro-container').innerHTML = wawasanPro.map(item => 
-        `<a href="${item.link}" class="block bg-gray-900 p-3 rounded-md text-sm hover:bg-gray-800">${item.title}</a>`
-    ).join('');
-    document.getElementById('sosmed-container').innerHTML = infoTerbaruUMT.map(item => 
-        `<div class="flex items-start gap-4">
-            <div class="w-8 h-8 rounded-lg bg-gray-700 flex-shrink-0 flex items-center justify-center"><i class="${item.icon} text-lg"></i></div>
-            <div><p class="text-sm">${item.text}</p><a href="${item.link}" target="_blank" class="text-xs text-cyan-500 hover:underline">Lihat postingan →</a></div>
-        </div>`
-    ).join('');
+    if (progress === 100) lencanaHTML += `<div title="100% Selesai!"><i class="fa-solid fa-trophy text-amber-400 text-2xl"></i></div>`;
+    document.getElementById('lencana-container').innerHTML = lencanaHTML || `<p class="text-sm text-gray-500">Selesaikan materi untuk dapat lencana!</p>`;
 }
+
 
 // =================================================================================
 // BAGIAN 4: LOGIKA BANK SOAL & QUIZ
@@ -497,6 +247,7 @@ function initializeAppDashboardWidgets() {
 let currentQuizData = null;
 let currentQuestionIndex = 0;
 let userAnswers = [];
+let currentExplanationIndex = 0;
 
 function renderBankSoalPage() {
     const bankSoalHTML = `
@@ -522,7 +273,7 @@ function renderBankSoalPage() {
 function startQuiz(quizId) {
     currentQuizData = bankSoalData.find(q => q.id === quizId);
     if (!currentQuizData) {
-        alert('Kuis tidak ditemukan!');
+        showToast('Kuis tidak ditemukan!', 'error');
         return;
     }
     currentQuestionIndex = 0;
@@ -533,19 +284,18 @@ function startQuiz(quizId) {
 function renderQuizInterface() {
     const quiz = currentQuizData;
     const question = quiz.questions[currentQuestionIndex];
-    
     const quizHTML = `
         <div class="panel max-w-4xl mx-auto">
             <div class="flex justify-between items-start mb-4">
                 <div>
                     <h2 class="text-xl font-bold text-cyan-400">${quiz.title}</h2>
-                    <p class="text-sm text-gray-400">Pertanyaan ${currentQuestionIndex + 1} dari ${quiz.totalQuestions}</p>
+                    <p class="text-sm text-gray-400">Pertanyaan ${currentQuestionIndex + 1} dari ${quiz.questions.length}</p>
                 </div>
                 <button onclick="renderBankSoalPage()" class="text-xs text-gray-400 hover:text-white">&times; Tutup</button>
             </div>
             <hr class="border-gray-700 my-4"/>
-            <div class="mb-6">
-                <p class="text-lg text-gray-200">${question.questionText}</p>
+            <div class="mb-6 min-h-[60px]">
+                <div class="text-lg text-gray-200">${question.questionText}</div>
             </div>
             <div id="quiz-options" class="space-y-3">
                 ${question.options.map((opt, index) => `
@@ -573,10 +323,9 @@ function selectAnswer(answer, optionIndex) {
 
 function submitQuiz() {
     if (userAnswers[currentQuestionIndex] === null) {
-        alert('Silakan pilih jawaban terlebih dahulu!');
+        showToast('Silakan pilih jawaban terlebih dahulu!', 'error');
         return;
     }
-
     if (currentQuestionIndex < currentQuizData.questions.length - 1) {
         currentQuestionIndex++;
         renderQuizInterface();
@@ -589,55 +338,123 @@ function renderQuizResults() {
     const quiz = currentQuizData;
     let score = 0;
     quiz.questions.forEach((q, index) => {
-        if (q.correctAnswer === userAnswers[index]) {
-            score++;
-        }
+        if (q.correctAnswer === userAnswers[index]) { score++; }
     });
-    const finalScorePercentage = quiz.totalQuestions > 0 ? Math.round((score / quiz.totalQuestions) * 100) : 0;
+    
+    const COMPLETED_KEY = 'userCompletedItems';
+    let completed = JSON.parse(localStorage.getItem(COMPLETED_KEY)) || [];
+    if (!completed.includes(quiz.id)) {
+        completed.push(quiz.id);
+        localStorage.setItem(COMPLETED_KEY, JSON.stringify(completed));
+    }
 
-    const resultHTML = `
+    const finalScorePercentage = quiz.questions.length > 0 ? Math.round((score / quiz.questions.length) * 100) : 0;
+    
+    const resultShellHTML = `
         <div class="panel max-w-4xl mx-auto">
             <h2 class="text-2xl font-bold text-center">Hasil Kuis: ${quiz.title}</h2>
-            <div class="text-center my-6">
-                <p class="text-gray-400">Skor Anda</p>
+            <div class="text-center my-6 bg-gray-900/50 p-4 rounded-lg">
+                <p class="text-gray-400">Skor Akhir Anda</p>
                 <p class="text-5xl font-bold text-cyan-400 mt-2">${finalScorePercentage}%</p>
-                <p class="text-gray-300 mt-2">(${score} dari ${quiz.totalQuestions} soal benar)</p>
+                <p class="text-gray-300 mt-2">(${score} dari ${quiz.questions.length} soal benar)</p>
             </div>
-            
-            <h3 class="font-bold text-xl mt-10 mb-4">⭐ Pembahasan Soal</h3>
-            <div class="space-y-6">
-                ${quiz.questions.map((q, index) => `
-                    <div class="bg-gray-900/50 p-4 rounded-lg">
-                        <p class="mb-3 text-gray-300">${index + 1}. ${q.questionText}</p>
-                        <div class="space-y-2 text-sm">
-                            <p class="${userAnswers[index] === q.correctAnswer ? 'correct-answer' : 'wrong-answer'} p-2 rounded">Jawaban Anda: ${userAnswers[index] || 'Tidak dijawab'}</p>
-                            <p class="correct-answer p-2 rounded">Jawaban Benar: ${q.correctAnswer}</p>
-                            <div class="bg-gray-800 p-3 mt-3 rounded-md">
-                                <p class="font-bold text-cyan-300">Pembahasan:</p>
-                                <p class="text-gray-400">${q.explanation}</p>
-                            </div>
-                        </div>
-                    </div>
-                `).join('')}
-            </div>
-
-            <div class="text-center mt-8">
-                 <button onclick="renderBankSoalPage()" class="bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-6 rounded-lg">
-                    Kembali ke Bank Soal
-                </button>
+            <h3 id="explanation-title" class="font-bold text-xl mt-10 mb-4 text-center">⭐ Pembahasan Soal</h3>
+            <div id="single-explanation-container" class="min-h-[250px]"></div>
+            <div class="flex justify-between items-center mt-8">
+                <button id="prev-explanation-btn" onclick="prevExplanation()" class="nav-btn bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg"><i class="fa-solid fa-chevron-left"></i> Sebelumnya</button>
+                <button onclick="renderBankSoalPage()" class="bg-cyan-800 hover:bg-cyan-700 text-white text-sm py-2 px-4 rounded-lg">Kembali ke Bank Soal</button>
+                <button id="next-explanation-btn" onclick="nextExplanation()" class="nav-btn bg-gray-600 hover:bg-gray-500 text-white font-bold py-2 px-4 rounded-lg">Selanjutnya <i class="fa-solid fa-chevron-right"></i></button>
             </div>
         </div>
     `;
-    appContent.innerHTML = resultHTML;
+    appContent.innerHTML = resultShellHTML;
+    currentExplanationIndex = 0;
+    renderSingleExplanation(currentExplanationIndex);
 }
 
-// Fungsi inisialisasi aplikasi utama
+function renderSingleExplanation(index) {
+    const container = document.getElementById('single-explanation-container');
+    const title = document.getElementById('explanation-title');
+    const quiz = currentQuizData;
+    const q = quiz.questions[index];
+
+    title.innerText = `⭐ Pembahasan Soal ${index + 1} / ${quiz.questions.length}`;
+
+    const explanationHTML = `
+        <div class="bg-gray-900/50 p-4 rounded-lg">
+            <div class="mb-3 text-gray-300 text-lg">${q.questionText}</div>
+            <div class="space-y-2 text-sm">
+                <p class="${userAnswers[index] === q.correctAnswer ? 'correct-answer' : 'wrong-answer'} p-2 rounded">Jawaban Anda: ${userAnswers[index] || 'Tidak dijawab'}</p>
+                <p class="correct-answer p-2 rounded">Jawaban Benar: ${q.correctAnswer}</p>
+                <div class="bg-gray-800 p-3 mt-3 rounded-md">
+                    <p class="font-bold text-cyan-300">Pembahasan:</p>
+                    <p class="text-gray-400 mt-1">${q.explanation}</p>
+                </div>
+            </div>
+        </div>
+    `;
+    container.innerHTML = explanationHTML;
+
+    document.getElementById('prev-explanation-btn').disabled = (index === 0);
+    document.getElementById('next-explanation-btn').disabled = (index === quiz.questions.length - 1);
+}
+
+function nextExplanation() {
+    if (currentExplanationIndex < currentQuizData.questions.length - 1) {
+        currentExplanationIndex++;
+        renderSingleExplanation(currentExplanationIndex);
+    }
+}
+
+function prevExplanation() {
+    if (currentExplanationIndex > 0) {
+        currentExplanationIndex--;
+        renderSingleExplanation(currentExplanationIndex);
+    }
+}
+
 function initializeApp() {
     const firstLink = document.querySelector('.sidebar-link');
     navigateTo('dashboard', firstLink);
 }
 
-</script>
+// =================================================================================
+// BAGIAN 5: SISTEM NOTIFIKASI TOAST
+// =================================================================================
+function showToast(message, type = 'info') {
+    const container = document.getElementById('toast-container');
+    const toast = document.createElement('div');
+    
+    const icons = { info: 'fa-solid fa-circle-info', success: 'fa-solid fa-check-circle', error: 'fa-solid fa-triangle-exclamation' };
+    const colors = { info: 'text-cyan-400', success: 'text-green-400', error: 'text-red-400' };
 
+    const iconClass = icons[type] || icons['info'];
+    const colorClass = colors[type] || colors['info'];
+
+    toast.className = 'toast-in flex items-start p-4 rounded-lg shadow-lg text-sm';
+    toast.style.backgroundColor = 'var(--bg-panel)';
+    toast.style.border = '1px solid var(--border-color)';
+    
+    toast.innerHTML = `
+        <div class="flex-shrink-0">
+            <i class="${iconClass} ${colorClass} text-xl"></i>
+        </div>
+        <div class="ml-3">
+            <p class="font-bold capitalize ${colorClass}">${type}</p>
+            <p class="text-gray-300 mt-1">${message}</p>
+        </div>
+    `;
+    container.appendChild(toast);
+
+    setTimeout(() => {
+        toast.classList.remove('toast-in');
+        toast.classList.add('toast-out');
+        toast.addEventListener('animationend', () => {
+            toast.remove();
+        });
+    }, 5000);
+}
+
+</script>
 </body>
 </html>
