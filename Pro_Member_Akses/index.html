@@ -1295,6 +1295,7 @@ function renderQuizInterface() {
     const question = quiz.questions[currentQuestionIndex];
     const quizHTML = `<div class="panel max-w-4xl mx-auto"><div class="flex justify-between items-start mb-4"><div><h2 class="text-xl font-bold text-cyan-400">${quiz.title}</h2><p class="text-sm text-gray-400">Pertanyaan ${currentQuestionIndex + 1} dari ${quiz.questions.length}</p></div><button onclick="navigateTo('bank_soal', null)" class="text-xs text-gray-400 hover:text-white">&times; Tutup</button></div><hr class="border-gray-700 my-4"/><div class="mb-6 min-h-[60px]"><div class="text-lg text-gray-200">${question.questionText}</div></div><div id="quiz-options" class="space-y-3">${question.options.map((opt, index) => `<div id="option-${index}" class="quiz-option p-4 rounded-lg cursor-pointer transition-colors" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}', ${index})">${opt}</div>`).join('')}</div><hr class="border-gray-700 my-6"/><div class="flex justify-end"><button id="next-btn" onclick="submitQuiz()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg">${currentQuestionIndex === quiz.questions.length - 1 ? 'Selesai & Lihat Hasil' : 'Lanjut'}</button></div></div>`;
     appContent.innerHTML = quizHTML;
+    if (window.MathJax) { MathJax.typeset(); } // <--- TAMBAHKAN INI
 }
 
 function selectAnswer(answer, optionIndex) {
@@ -1342,6 +1343,7 @@ function renderSingleExplanation(index) {
     container.innerHTML = explanationHTML;
     document.getElementById('prev-explanation-btn').disabled = (index === 0);
     document.getElementById('next-explanation-btn').disabled = (index === quiz.questions.length - 1);
+    if (window.MathJax) { MathJax.typeset(); } // <--- TAMBAHKAN INI
 }
 
 function nextExplanation() { if (currentExplanationIndex < currentQuizData.questions.length - 1) { currentExplanationIndex++; renderSingleExplanation(currentExplanationIndex); } }
@@ -1360,3 +1362,4 @@ function showToast(message, type = 'info') { const container = document.getEleme
 
 </body>
 </html>
+
