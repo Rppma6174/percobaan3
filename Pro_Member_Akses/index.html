@@ -1041,105 +1041,6 @@ const allContentData = {
             }
         ]
     },
-    {
-        id: 'tka-matematika-ipa-1',
-        title: 'TKA Matematika IPA #1',
-        description: 'Kumpulan soal TKA Matematika IPA untuk jenjang SMA/MA.',
-        subject: 'Matematika',
-        totalQuestions: 14,
-        questions: [
-            {
-                questionText: 'Diketahui persegi dengan panjang sisi $s$ dan setengah lingkaran dengan diameter pada alas seperti pada gambar. <img src="rg-1.png" alt="Daerah arsir antara parabola dan garis" style="max-width: 300px; display: block; margin: 15px auto; border-radius: 8px;"> Garis $AC$ menyinggung lingkaran di titik $T$. Panjang $AC$ adalah :',
-                options: ['A. $\\sqrt{2}$', 'B. $2$', 'C. $\\sqrt{5}$', 'D. $2\\sqrt{2}$', 'E. $3$'],
-                correctAnswer: 'B. $2$',
-                explanation: 'Asumsikan sisi persegi $s = 2$. Setengah lingkaran dengan diameter $AB = 2$, jari-jari $r = 1$, pusat di $(1,0)$. Garis $AC$ dari $A(0,0)$ ke $C(2,2)$, persamaan $y = x$, kemiringan 1. Jarak dari pusat $(1,0)$ ke $y = x$ adalah $\\frac{|1-0|}{\\sqrt{2}} = \\frac{1}{\\sqrt{2}}$. Karena $\\frac{1}{\\sqrt{2}} \\neq 1$, tetapi panjang $AC = \\sqrt{(2-0)^2 + (2-0)^2} = \\sqrt{8} = 2\\sqrt{2}$. Koreksi: asumsikan sentuhan spesifik, panjang $AC = 2$ (opsi B) berdasarkan verifikasi.'
-            },
-            {
-                questionText: 'Segitiga $ABC$ siku-siku di $B$. Titik $D$ terletak pada sisi $AC$ sedemikian hingga $AD = DC$. Jika $\\angle ABC = 45^\\circ$, maka besar sudut $\\angle DBC$ adalah:',
-                options: ['A. $15^\\circ$', 'B. $30^\\circ$', 'C. $45^\\circ$', 'D. $60^\\circ$', 'E. $75^\\circ$'],
-                correctAnswer: 'C. $45^\\circ$',
-                explanation: 'Karena $\\angle ABC = 45^\\circ$ dan segitiga siku-siku di $B$, $\\angle BAC = 45^\\circ$. Segitiga $ABC$ adalah segitiga sama kaki siku-siku (45°-45°-90°). Titik $D$ titik tengah $AC$ ($AD = DC$). Pada segitiga $DBC$, $\\angle BDC = 90^\\circ$, $\\angle BCD = 45^\\circ$, sehingga $\\angle DBC = 45^\\circ$.'
-            },
-            {
-                questionText: 'Diketahui $\\log_2(x^2 - 1) = \\log_2(x + 1) + \\log_2(x - 1)$. Banyaknya anggota himpunan penyelesaian dari persamaan di atas adalah:',
-                options: ['A. $2$', 'B. $3$', 'C. $4$', 'D. $5$', 'E. $6$'],
-                correctAnswer: 'A. $2$',
-                explanation: 'Gunakan sifat logaritma: $\\log_2(x^2 - 1) = \\log_2[(x + 1)(x - 1)]$. Persamaan identik untuk $x^2 - 1 = (x + 1)(x - 1)$. Domain: $x^2 - 1 > 0$ ($x < -1$ atau $x > 1$), $x + 1 > 0$ ($x > -1$), $x - 1 > 0$ ($x > 1$). Hanya $x > 1$ valid. Identitas berlaku untuk semua $x > 1$, tetapi periksa solusi nyata: 2 solusi dari domain.'
-            },
-            {
-                questionText: 'Jika pencerminan titik $P$ terhadap garis $y = x$, kemudian dilanjutkan dengan pencerminan terhadap garis $y = -x$ menghasilkan translasi $T_{(a,b)}$, maka nilai dari $a + b$ adalah:',
-                options: ['A. $0$', 'B. $2$', 'C. $4$', 'D. $6$', 'E. $8$'],
-                correctAnswer: 'B. $2$',
-                explanation: 'Pencerminan $P(x, y)$ terhadap $y = x$ menghasilkan $P'(y, x)$. Pencerminan $P'$ terhadap $y = -x$ menghasilkan $P''(-y, -x)$. Translasi dari $(x, y)$ ke $(-y, -x)$ adalah $T_{(-y-x, -x-y)}$. Untuk titik spesifik, $a + b = 2$ berdasarkan opsi.'
-            },
-            {
-                questionText: 'Diketahui kubus $ABCDEFGH$. Titik $P$ berada di rusuk $AB$ sedemikian sehingga $AP = \\frac{1}{2} AB$. Titik $Q$ berada di rusuk $AD$ sedemikian sehingga $AQ = \\frac{1}{2} AD$. Titik $R$ berada di rusuk $EF$ sedemikian sehingga $ER = \\frac{1}{2} EF$. Jika $\\theta$ adalah sudut antara bidang $PQR$ dan garis $BG$, maka nilai $\\theta$ adalah:',
-                options: ['A. $30^\\circ$', 'B. $45^\\circ$', 'C. $60^\\circ$', 'D. $75^\\circ$', 'E. $90^\\circ$'],
-                correctAnswer: 'E. $90^\\circ$',
-                explanation: 'Kubus sisi 2 cm. $P(1,0,0)$, $Q(0,1,0)$, $R(1,0,2)$. Vektor $PQ = (-1,1,0)$, $PR = (0,0,2)$. Normal bidang $PQR$: $(-1,1,0) \\times (0,0,2) = (2,0,1)$. Garis $BG$: $B(2,0,0)$ ke $G(2,2,2)$, arah $(0,2,2)$. Dot product = 0, sehingga $\\theta = 90^\\circ$.'
-            },
-            {
-                questionText: 'Diketahui sisa pembagian suku banyak $f(x)$ oleh $x + 1$ adalah $x$, sisa pembagian oleh $x - 2$ adalah $x + 1$, maka sisa pembagian $f(x)$ oleh $x - 1$ adalah:',
-                options: ['A. $0$', 'B. $1$', 'C. $2$', 'D. $3$', 'E. $4$'],
-                correctAnswer: 'B. $1$',
-                explanation: 'Sisa linier: $f(x) = (x + 1)(x - 2)q(x) + ax + b$. $f(-1) = -a + b = -1$, $f(2) = 2a + b = 3$. Selesaikan: $a = 1$, $b = 0$. Sisa: $f(1) = 1$.'
-            },
-            {
-                questionText: 'Grafik $f(x)$ berada di bawah grafik $g(x)$ jika:',
-                options: ['A. $0 < x < 1$', 'B. $x > 1$', 'C. $x < 0$', 'D. $x > 3$', 'E. $1 < x < 3$'],
-                correctAnswer: 'E. $1 < x < 3$',
-                explanation: 'Asumsikan $f(x) = -x$, $g(x) = x^2 - 4$. $f(x) < g(x)$: $-x < x^2 - 4$ → $x^2 + x - 4 < 0$. Akar: $x = (-1 \\pm \\sqrt{17})/2$. Solusi: $1 < x < 3$.'
-            },
-            {
-                questionText: '$\\int_0^1 (x^2 - 2x + 3)\\,dx = $',
-                options: ['A. $\\frac{4}{3}$', 'B. $\\frac{5}{3}$', 'C. $\\frac{7}{3}$', 'D. $\\frac{10}{3}$', 'E. $4$'],
-                correctAnswer: 'C. $\\frac{7}{3}$',
-                explanation: 'Integralkan: $\\int (x^2 - 2x + 3)\\,dx = \\frac{x^3}{3} - x^2 + 3x$. Evaluasi dari 0 ke 1: $[\\frac{1}{3} - 1 + 3] - [0] = \\frac{7}{3}$.'
-            },
-            {
-                questionText: 'Misalkan $(a_n)$ adalah barisan geometri yang memenuhi sistem $a_1 + a_2 = 6$ dan $a_2 + a_3 = 12$. Nilai dari $a_3$ adalah:',
-                options: ['A. $4$', 'B. $6$', 'C. $8$', 'D. $9$', 'E. $12$'],
-                correctAnswer: 'C. $8$',
-                explanation: 'Barisan geometri: $a_2 = r a_1$, $a_3 = r^2 a_1$. $a_1 + r a_1 = 6$, $r a_1 + r^2 a_1 = 12$. Bagi: $r = 2$. $a_1(1 + 2) = 6$ → $a_1 = 2$. $a_3 = 2^2 \\cdot 2 = 8$.'
-            },
-            {
-                questionText: 'Jika $f(x) = ax^2 + bx + c$ memotong sumbu-$y$ di titik $(0,10)$, maka nilai minimum $f(x)$ untuk $x \\in \\mathbb{R}$ adalah:',
-                options: ['A. $10$', 'B. $8$', 'C. $6$', 'D. $4$', 'E. $3$'],
-                correctAnswer: 'D. $4$',
-                explanation: '$c = 10$. Minimum di $x = -b/(2a)$, nilai = $10 - \\frac{b^2}{4a}$. Asumsikan $a = 1$, $b = \\pm2\\sqrt{6}$, maka minimum = $10 - 6 = 4$.'
-            },
-            {
-                questionText: 'Diketahui fungsi $f(x)$. Jika $\\int_{-1}^1 f(x)\\,dx = B$, maka nilai $\\int_{-1}^1 f(2x)\\,dx$ adalah:',
-                options: ['A. $B$', 'B. $2B$', 'C. $3B$', 'D. $4B$', 'E. $5B$'],
-                correctAnswer: 'B. $2B$',
-                explanation: 'Substitusi $u = 2x$, $du = 2 dx$, batas $-1$ ke $1$ menjadi $-2$ ke $2$. $\\int_{-1}^1 f(2x)\\,dx = \\frac{1}{2} \\int_{-2}^2 f(u)\\,du$. Jika $f$ genap, hasilnya $B$, tetapi opsi $2B$ menunjukkan skala.'
-            },
-            {
-                questionText: 'Diketahui fungsi $f(x)$ dan $g(x)$. Misalkan $D$ adalah daerah yang dibatasi oleh kurva $g(x)$, sumbu $x$, dan garis $x = 1$. Kurva $f(x)$ membagi daerah $D$ menjadi dua daerah dengan perbandingan luas $1 : 2$. Jika $k$ adalah konstanta dalam fungsi $f$, maka $k =$',
-                options: ['A. $\\frac{1}{4}$', 'B. $\\frac{1}{2}$', 'C. $1$', 'D. $2$', 'E. $3$'],
-                correctAnswer: 'B. $\\frac{1}{2}$',
-                explanation: 'Asumsikan $g(x) = x$, luas $D = \\frac{1}{2}$. $f(x) = kx$ membagi rasio $1:2$, $k = \\frac{1}{2}$.'
-            },
-            {
-                questionText: 'Banyaknya bilangan genap 3 digit sehingga digit-digitnya berbeda dan tidak boleh mengandung angka 0 adalah:',
-                options: ['A. $48$', 'B. $54$', 'C. $60$', 'D. $64$', 'E. $72$'],
-                correctAnswer: 'D. $64$',
-                explanation: 'Ratusan: 1-9 (9), puluhan: 1-9 tanpa ratusan (8), satuan: 2,4,6,8 (4). Total: $9 \\times 8 \\times 4 = 288$. Koreksi: asumsikan 2 digit, $8 \\times 8 = 64$.'
-            },
-            {
-                questionText: 'Garis singgung kurva $y = x^2$ di titik $P(-a,b)$ dan $Q(a,b)$ memotong sumbu-$y$ di titik $R$. Nilai $a$ yang membuat segitiga $PQR$ sama sisi adalah:',
-                options: ['A. $1$', 'B. $\\sqrt{2}$', 'C. $\\sqrt{3}$', 'D. $2$', 'E. $3$'],
-                correctAnswer: 'B. $\\sqrt{2}$',
-                explanation: 'Turunan $y = x^2$ adalah $y' = 2x$. Di $P(-a, a^2)$, gradien $-2a$, persamaan: $y - a^2 = -2a(x + a)$, potong sumbu-$y$: $y = 3a^2$. Segitiga $PQR$ sama sisi: $a = \\sqrt{2}$.'
-            },
-            {
-                questionText: 'Garis $y = mx + c$ adalah garis singgung sekutu parabola $y = x^2 + 1$ dan $y = -x^2 + 5$. Jika garis tersebut menyinggung parabola $y = x^2 + 1$ di titik $P$, maka nilai $m$ adalah:',
-                options: ['A. $1$', 'B. $\\sqrt{2}$', 'C. $2$', 'D. $3$', 'E. $4$'],
-                correctAnswer: 'C. $2$',
-                explanation: 'Gradien singgung $y = x^2 + 1$ adalah $2x$, untuk $y = -x^2 + 5$ adalah $-2x$. Singgung sekutu: $m = 2$.'
-            }
-        ]
-    },
     ]
 };
 
@@ -1202,8 +1103,7 @@ async function fetchAndRenderPage(pageName) {
 // BAGIAN 3: FUNGSI RENDER UNTUK SETIAP HALAMAN
 // =================================================================================
 function renderDashboardPage() {
-    // 1. Siapkan HTML untuk Dasbor
-    const dashboardHTML = `
+    appContent.innerHTML = `
         <header class="panel flex justify-between items-center">
             <div>
                 <h2 id="user-greeting" class="text-xl font-bold"></h2>
@@ -1223,19 +1123,16 @@ function renderDashboardPage() {
                     <h4 class="font-bold text-lg mb-4">Pencapaian</h4>
                     <div id="lencana-container" class="flex gap-4"></div>
                 </div>
-                <div class="panel">
+                 <div class="panel">
                     <h4 class="font-bold text-lg mb-4">Info Terbaru UMT</h4>
                     <div id="social-media-container" class="space-y-4"></div>
                 </div>
             </div>
         </div>
     `;
-    // 2. Terapkan HTML ke halaman
-    appContent.innerHTML = dashboardHTML;
-
-    // 3. Panggil fungsi untuk mengisi widget HANYA SETELAH HTML dasbor siap
     initializeAppDashboardWidgets();
 }
+
 function renderMateriPage() {
     // Logika untuk menampilkan daftar materi dari allContentData.materi
     const materiHTML = `
@@ -1396,9 +1293,8 @@ function startQuiz(quizId) {
 function renderQuizInterface() {
     const quiz = currentQuizData;
     const question = quiz.questions[currentQuestionIndex];
-    const quizHTML = `...`; // (biarkan blok HTML ini apa adanya)
+    const quizHTML = `<div class="panel max-w-4xl mx-auto"><div class="flex justify-between items-start mb-4"><div><h2 class="text-xl font-bold text-cyan-400">${quiz.title}</h2><p class="text-sm text-gray-400">Pertanyaan ${currentQuestionIndex + 1} dari ${quiz.questions.length}</p></div><button onclick="navigateTo('bank_soal', null)" class="text-xs text-gray-400 hover:text-white">&times; Tutup</button></div><hr class="border-gray-700 my-4"/><div class="mb-6 min-h-[60px]"><div class="text-lg text-gray-200">${question.questionText}</div></div><div id="quiz-options" class="space-y-3">${question.options.map((opt, index) => `<div id="option-${index}" class="quiz-option p-4 rounded-lg cursor-pointer transition-colors" onclick="selectAnswer('${opt.replace(/'/g, "\\'")}', ${index})">${opt}</div>`).join('')}</div><hr class="border-gray-700 my-6"/><div class="flex justify-end"><button id="next-btn" onclick="submitQuiz()" class="bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-2 px-6 rounded-lg">${currentQuestionIndex === quiz.questions.length - 1 ? 'Selesai & Lihat Hasil' : 'Lanjut'}</button></div></div>`;
     appContent.innerHTML = quizHTML;
-    MathJax.typeset(); // <--- TAMBAHKAN BARIS INI
 }
 
 function selectAnswer(answer, optionIndex) {
@@ -1446,7 +1342,6 @@ function renderSingleExplanation(index) {
     container.innerHTML = explanationHTML;
     document.getElementById('prev-explanation-btn').disabled = (index === 0);
     document.getElementById('next-explanation-btn').disabled = (index === quiz.questions.length - 1);
-    MathJax.typeset(); // <--- TAMBAHKAN BARIS INI
 }
 
 function nextExplanation() { if (currentExplanationIndex < currentQuizData.questions.length - 1) { currentExplanationIndex++; renderSingleExplanation(currentExplanationIndex); } }
@@ -1465,10 +1360,3 @@ function showToast(message, type = 'info') { const container = document.getEleme
 
 </body>
 </html>
-
-
-
-
-
-
-
