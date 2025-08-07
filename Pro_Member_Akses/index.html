@@ -7,7 +7,16 @@
     <link rel="icon" type="image/png" href="UMT-Logo - Copy.png">
     <script>
       MathJax = {
-        tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] }
+        tex: {
+          inlineMath: [['$', '$'], ['\\(', '\\)']]
+        },
+        chtml: {
+          matchFontHeight: false, // Opsi tambahan agar lebih konsisten
+          linebreaks: {
+            automatic: true, // INI BAGIAN PENTINGNYA
+            width: "90%"     // Potong jika rumus melebihi 90% lebar kontainer
+          }
+        }
       };
     </script>
     <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -1238,4 +1247,5 @@ document.addEventListener('DOMContentLoaded', initializeApp);
 
 </body>
 </html>
+
 
