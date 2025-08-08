@@ -50,7 +50,7 @@ const allContentData = {
         { 
             id: 'vid_1', 
             title: 'Esensi Nilai Mutlak',
-            videoId: '-pETqV252Zc?si=7Hd75Gl-r1zPjYfF',
+            videoId: '-pETqV252Zc',
             category: 'Nilai Mutlak' // <-- Kategori baru
         },
         { 
